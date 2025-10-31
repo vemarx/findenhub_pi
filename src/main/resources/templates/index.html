@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FindenHub</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top"
+    >
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+  <img src="/img/logo.png" alt="FindenHub Logo" width="70" height="70" class="me-2">
+</a>
+
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/services}">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/login}">Entrar</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-primary btn-sm ms-2" th:href="@{/register}"
+                >Registre-se</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>Conecte | Personalize | Celebre</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a th:href="@{/register}" class="btn btn-light btn-lg">
+            <i class="bi bi-person-plus"></i> Começar Agora
+          </a>
+          <a th:href="@{/services}" class="btn btn-outline-light btn-lg">
+            <i class="bi bi-search"></i> Explorar Serviços
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="stats text-center">
+              <div class="stat-number" th:text="${serviceCount}">0</div>
+              <p class="text-muted mb-0">Serviços Disponíveis</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stats text-center">
+              <div class="stat-number" th:text="${supplierCount}">0</div>
+              <p class="text-muted mb-0">Fornecedores Cadastrados</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stats text-center">
+              <div class="stat-number">12</div>
+              <p class="text-muted mb-0">Categorias</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Categorias de Serviços</h2>
+
+        <div class="row g-4">
+          <div class="col-md-3 col-sm-6" th:each="category : ${categories}">
+            <a
+              th:href="@{'/services/category/' + ${category.id}}"
+              class="text-decoration-none"
+            >
+              <div
+                class="card category-card"
+                th:style="'background: ' + ${category.color} + '20'"
+              >
+                <div class="category-icon" th:text="${category.icon}">🎨</div>
+                <h5 th:text="${category.name}" class="mb-2">Categoria</h5>
+                <p
+                  class="text-muted small mb-0"
+                  th:text="${category.serviceCount + ' serviços'}"
+                >
+                  0 serviços
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Services -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Serviços em Destaque</h2>
+
+        <div class="row g-4">
+          <div class="col-md-4" th:each="service : ${featuredServices}">
+            <div class="card service-card">
+              <div
+                class="service-img"
+                th:if="${service.imageUrl == null}"
+              ></div>
+              <img
+                th:if="${service.imageUrl != null}"
+                th:src="${service.imageUrl}"
+                class="card-img-top"
+                alt="Serviço"
+              />
+
+              <div class="card-body">
+                <h5 class="card-title" th:text="${service.title}">
+                  Título do Serviço
+                </h5>
+                <p
+                  class="card-text text-muted small"
+                  th:text="${#strings.abbreviate(service.description, 100)}"
+                >
+                  Descrição do serviço...
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-primary fw-bold fs-5">
+                    R$
+                    <span
+                      th:text="${#numbers.formatDecimal(service.price, 1, 2)}"
+                      >0,00</span
+                    >
+                  </span>
+                  <a
+                    th:href="@{'/services/' + ${service.id}}"
+                    class="btn btn-primary btn-sm"
+                  >
+                    Ver Detalhes
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a th:href="@{/services}" class="btn btn-outline-primary">
+            Ver Todos os Serviços <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Como Funciona</h2>
+
+        <div class="row g-4">
+          <div class="col-md-4 text-center">
+            <div class="mb-3">
+              <i
+                class="bi bi-person-plus-fill text-primary"
+                style="font-size: 4rem"
+              ></i>
+            </div>
+            <h4>1. Cadastre-se</h4>
+            <p class="text-muted">
+              Crie sua conta como organizador ou fornecedor
+            </p>
+          </div>
+
+          <div class="col-md-4 text-center">
+            <div class="mb-3">
+              <i class="bi bi-search text-primary" style="font-size: 4rem"></i>
+            </div>
+            <h4>2. Encontre Serviços</h4>
+            <p class="text-muted">Busque por categorias ou palavras-chave</p>
+          </div>
+
+          <div class="col-md-4 text-center">
+            <div class="mb-3">
+              <i
+                class="bi bi-check-circle-fill text-primary"
+                style="font-size: 4rem"
+              ></i>
+            </div>
+            <h4>3. Contrate</h4>
+            <p class="text-muted">Entre em contato e feche negócio</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section
+      class="py-5"
+      style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    >
+      <div class="container text-center text-white">
+        <h2 class="mb-4">Pronto para Começar?</h2>
+        <p class="lead mb-4">
+          Cadastre-se gratuitamente e comece a encontrar os melhores
+          fornecedores!
+        </p>
+        <a th:href="@{/register}" class="btn btn-light btn-lg">
+          <i class="bi bi-rocket-takeoff"></i> Criar Conta Grátis
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container text-center">
+        <p class="mb-2">&copy; 2024 FindenHub. Todos os direitos reservados.</p>
+        <p class="small mb-0">
+          Marketplace de Eventos - Conectando organizadores e fornecedores
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
