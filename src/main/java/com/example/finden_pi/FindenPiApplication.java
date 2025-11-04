@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class FindenPiApplication {
 
+    
     public static void main(String[] args) {
         SpringApplication.run(FindenPiApplication.class, args);
         System.out.println("\n==============================================");
