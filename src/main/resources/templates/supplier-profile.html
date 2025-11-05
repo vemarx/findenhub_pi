@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil do Fornecedor - FindenPI</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <style>
+      body {
+        background: #f8f9fa;
+      }
+      .profile-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 3rem 0;
+      }
+      .profile-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+      .service-card {
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.3s;
+      }
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+      .rating-stars {
+        color: #ffc107;
+        font-size: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
+          <i class="bi bi-calendar-event"></i> FindenPI
+        </a>
+        <button class="btn btn-outline-primary" onclick="history.back()">
+          <i class="bi bi-arrow-left"></i> Voltar
+        </button>
+      </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="container text-center">
+        <i class="bi bi-person-circle" style="font-size: 6rem"></i>
+        <h1 class="mt-3" th:text="${supplier.name}">Nome do Fornecedor</h1>
+        <p
+          class="lead mb-0"
+          th:if="${supplier.companyName}"
+          th:text="${supplier.companyName}"
+        >
+          Nome da Empresa
+        </p>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container py-5">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <div class="card profile-card mb-4">
+            <div class="card-body p-4">
+              <h5 class="card-title mb-4">
+                <i class="bi bi-info-circle"></i> Informações
+              </h5>
+
+              <!-- Avaliação -->
+              <div class="text-center mb-4">
+                <div class="rating-stars">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                </div>
+                <h3
+                  class="mt-2"
+                  th:text="${#numbers.formatDecimal(supplier.rating, 1, 1)}"
+                >
+                  4.5
+                </h3>
+                <p class="text-muted">
+                  <span th:text="${supplier.totalReviews}">0</span> avaliações
+                </p>
+              </div>
+
+              <hr />
+
+              <!-- Contato -->
+              <div class="mb-3" th:if="${supplier.phone}">
+                <i class="bi bi-telephone text-primary me-2"></i>
+                <span th:text="${supplier.phone}">Telefone</span>
+              </div>
+
+              <div class="mb-3">
+                <i class="bi bi-envelope text-primary me-2"></i>
+                <span th:text="${supplier.email}">Email</span>
+              </div>
+
+              <div class="mb-3" th:if="${supplier.city}">
+                <i class="bi bi-geo-alt text-primary me-2"></i>
+                <span th:text="${supplier.city + ', ' + supplier.state}"
+                  >Localização</span
+                >
+              </div>
+
+              <div class="mb-3" th:if="${supplier.website}">
+                <i class="bi bi-globe text-primary me-2"></i>
+                <a th:href="${supplier.website}" target="_blank">Website</a>
+              </div>
+
+              <hr />
+
+              <!-- Botões de Ação -->
+              <div class="d-grid gap-2">
+                <a
+                  th:href="'https://wa.me/55' + ${#strings.replace(#strings.replace(supplier.phone, '(', ''), ')', '').replace(' ', '').replace('-', '')} + '?text=Olá! Vi seu perfil no FindenPI e gostaria de solicitar um orçamento.'"
+                  target="_blank"
+                  class="btn btn-success"
+                >
+                  <i class="bi bi-whatsapp"></i> WhatsApp
+                </a>
+
+                <a
+                  th:href="'mailto:' + ${supplier.email}"
+                  class="btn btn-primary"
+                >
+                  <i class="bi bi-envelope"></i> Enviar Email
+                </a>
+
+                <button
+                  class="btn btn-outline-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#messageModal"
+                >
+                  <i class="bi bi-chat-dots"></i> Enviar Mensagem
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estatísticas -->
+          <div class="card profile-card">
+            <div class="card-body text-center">
+              <p class="mb-2">
+                <i class="bi bi-briefcase"></i>
+                <strong th:text="${serviceCount}">0</strong> serviços
+              </p>
+              <p class="mb-0">
+                <i class="bi bi-calendar"></i>
+                Membro desde
+                <span
+                  th:text="${#temporals.format(supplier.createdAt, 'MM/yyyy')}"
+                  >01/2024</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-8">
+          <!-- Sobre -->
+          <div class="card profile-card mb-4">
+            <div class="card-body p-4">
+              <h4 class="card-title mb-3">
+                <i class="bi bi-person-lines-fill"></i> Sobre
+              </h4>
+              <p
+                th:if="${supplier.description}"
+                th:text="${supplier.description}"
+              >
+                Descrição do fornecedor...
+              </p>
+              <p th:if="${supplier.description == null}" class="text-muted">
+                Nenhuma descrição disponível.
+              </p>
+            </div>
+          </div>
+
+          <!-- Serviços -->
+          <div class="card profile-card">
+            <div class="card-body p-4">
+              <h4 class="card-title mb-4">
+                <i class="bi bi-briefcase"></i> Serviços Oferecidos
+              </h4>
+
+              <div class="row g-4">
+                <div class="col-md-6" th:each="service : ${services}">
+                  <div class="card service-card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title" th:text="${service.title}">
+                        Serviço
+                      </h5>
+                      <p
+                        class="card-text text-muted small"
+                        th:text="${#strings.abbreviate(service.description, 100)}"
+                      >
+                        Descrição...
+                      </p>
+
+                      <div class="mb-2" th:if="${service.capacity}">
+                        <i class="bi bi-people"></i>
+                        <span th:text="${service.capacity + ' pessoas'}"
+                          >Capacidade</span
+                        >
+                      </div>
+
+                      <div class="mb-2" th:if="${service.duration}">
+                        <i class="bi bi-clock"></i>
+                        <span th:text="${service.duration}">Duração</span>
+                      </div>
+
+                      <div
+                        class="d-flex justify-content-between align-items-center mt-3"
+                      >
+                        <span class="text-success fw-bold fs-5">
+                          R$
+                          <span
+                            th:text="${#numbers.formatDecimal(service.price, 1, 2)}"
+                            >0,00</span
+                          >
+                        </span>
+                        <a
+                          th:href="@{'/services/' + ${service.id}}"
+                          class="btn btn-primary btn-sm"
+                        >
+                          Ver Detalhes
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div th:if="${services.isEmpty()}" class="col-12">
+                  <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle"></i> Nenhum serviço disponível
+                    no momento.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Mensagem -->
+    <div class="modal fade" id="messageModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Enviar Mensagem</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" th:action="@{/messages/send}">
+              <input
+                type="hidden"
+                name="receiverId"
+                th:value="${supplier.id}"
+              />
+
+              <div class="mb-3">
+                <label class="form-label">Assunto:</label>
+                <input
+                  type="text"
+                  name="subject"
+                  class="form-control"
+                  value="Solicitação de Orçamento"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Mensagem:</label>
+                <textarea
+                  name="content"
+                  class="form-control"
+                  rows="5"
+                  placeholder="Digite sua mensagem..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-send"></i> Enviar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
