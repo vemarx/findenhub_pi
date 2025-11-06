@@ -13,7 +13,7 @@ public class FindenPiApplication {
     public static void main(String[] args) {
         SpringApplication.run(FindenPiApplication.class, args);
         System.out.println("\n==============================================");
-        System.out.println("  FindenPI - Marketplace de Eventos");
+        System.out.println("  FindenHub");
         System.out.println("  Aplicação rodando em: http://localhost:8081");
         System.out.println("==============================================\n");
     }
