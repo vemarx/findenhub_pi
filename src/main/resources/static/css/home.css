@@ -1,0 +1,152 @@
+/* HOME.CSS - INDEX.CSS */
+
+/* Hero */
+.hero-section {
+  text-align: center;
+  padding: 6rem 2rem;
+}
+
+/* ===== HERO SECTION PERSONALIZADA ===== */
+.hero h1 {
+  margin-bottom: 1rem; /* Aumenta o espaço abaixo do título */
+}
+
+/* Padding entre os botões */
+.hero .btn {
+  margin-top: 0.5rem;
+}
+
+/* Botões começar agora */
+.btn-outline-primary:hover {
+  border-color: var(--azul-inovador);
+  color: var(--verde-ciano);
+  background-color: transparent;
+}
+
+/* ===== BOTÕES DE CATEGORIA ===== */
+.btn-categoria {
+  background-color: var(--branco-gelo); /* Fundo neutro */
+  color: var(--azul-petroleo); /* Texto em azul petróleo para contraste */
+  border: 1px solid var(--cinza-neutro-claro);
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* ===== EFEITO HOVER ===== */
+.btn-categoria:hover {
+  background-color: var(--verde-ciano); /* Usa o verde da marca */
+  color: #fff;
+  border-color: var(--verde-ciano);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 209, 193, 0.25);
+}
+
+
+/* Banners */
+.banner-image {
+  height: 200px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* Filtros de busca */
+.filter-box input, .filter-box select {
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+  background: var(--color-light-blue);
+}
+
+.btn-search {
+  background: var(--cyan);
+  font-weight: bold;
+}
+
+/* ===== CATEGORIAS DE SERVIÇOS ===== */
+.category-card {  
+  background-color: var(--azul-neve-claro);
+  border: 1px solid var(--cinza-neutro-claro);
+  border-radius: 12px;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--azul-petroleo);
+  transition: all 0.3s ease;
+  height: 100%;
+  box-shadow: 0 2px 6px rgba(30, 42, 56, 0.05);
+}
+
+/* Ícone da categoria */
+.category-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--verde-ciano);
+}
+
+/* Nome e texto */
+.category-card h5 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.category-card p {
+  color: var(--cinza-grafite);
+  font-size: 0.9rem;
+}
+
+/* Efeito ao passar o mouse */
+.category-card:hover {
+  background-color: var(#dce6ef);
+  border-color: var(--verde-ciano);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 209, 193, 0.15);
+}
+
+
+
+/* ===== CTA FINAL ===== */
+.cta-section {
+  background: linear-gradient(135deg, var(--azul-inovador) 0%, var(--verde-ciano) 100%);
+  color: #fff;
+  text-align: center;
+  padding: 6rem 1rem;
+}
+
+.cta-section h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.cta-section p {
+  font-family: "Inter", sans-serif;
+  font-size: 1.2rem;
+  color: #f8f9fa;
+  margin-bottom: 2rem;
+}
+
+/* Botão  */
+.cta-section .btn-primary {
+  background-color: var(--verde-ciano);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.cta-section .btn-primary:hover {
+  background-color: #00b5a8;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
+}
+
+
+
+
+
+
+

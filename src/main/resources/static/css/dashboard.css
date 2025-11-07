@@ -1,0 +1,17 @@
+/* DASHBOARD.CSS */
+organizer-dashboard.html
+supplier-dashboard.html
+.dashboard-header {
+  background: var(--color-dark-blue);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.dashboard-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+

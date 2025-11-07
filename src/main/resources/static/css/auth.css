@@ -1,0 +1,16 @@
+/*LOGIN.HTML + REGISTER.HTML */
+
+.auth-container {
+  max-width: 450px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.auth-title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}

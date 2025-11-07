@@ -1,0 +1,14 @@
+/* PROFILE.CSS - PROFILE.HTML - BOTÃO DELETE*/
+
+.profile-card {
+  padding: 2rem !important;
+}
+
+.btn-delete {
+  background: #ff4e4e;
+  border: none;
+  width: 100%;
+}
+.btn-delete:hover {
+  background: #d93b3b;
+}
