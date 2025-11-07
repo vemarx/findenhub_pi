@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <lombok.version>1.18.28</lombok.version>
+        <lombok.version>1.18.32</lombok.version>
     </properties>
 
     <dependencies>
@@ -81,14 +81,12 @@
 
     <build>
         <plugins>
-            <!-- Ensure Lombok annotation processing in IDE/CI builds -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -99,6 +97,29 @@
                 </configuration>
             </plugin>
 
+                <!-- Toolchains plugin: permite ao Maven usar um JDK específico configurado em ~/.m2/toolchains.xml -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-toolchains-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>toolchain</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <toolchains>
+                            <jdk>
+                                <version>17</version>
+                                <vendor>temurin</vendor>
+                            </jdk>
+                        </toolchains>
+                    </configuration>
+                </plugin>
+
+            <!-- Spring Boot plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

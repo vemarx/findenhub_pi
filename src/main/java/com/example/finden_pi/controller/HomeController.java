@@ -16,14 +16,9 @@ public class HomeController {
     private final ServiceService serviceService;
     private final UserService userService;
 
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("categories", categoryService.findAllActive());
-        model.addAttribute("featuredServices", serviceService.findAllAvailable().stream().limit(6).toList());
-        model.addAttribute("supplierCount", userService.countSuppliers());
-        model.addAttribute("serviceCount", serviceService.findAllAvailable().size());
-        return "index";
-    }
+    // ⚡ Index é servido automaticamente pelo Spring Boot
+    // porque está em src/main/resources/static/index.html
+    // → não precisa de @GetMapping("/")
 
     @GetMapping("/about")
     public String about() {
@@ -33,5 +28,15 @@ public class HomeController {
     @GetMapping("/contact")
     public String contact() {
         return "contact";
+    }
+
+    // Exemplo: se quiser uma rota interna que dependa de dados dinâmicos
+    // Alterado para /site/dashboard para não conflitar com o fluxo de login
+    @GetMapping("/site/dashboard")
+    public String dashboard(Model model) {
+        model.addAttribute("supplierCount", userService.countSuppliers());
+        model.addAttribute("serviceCount", serviceService.findAllAvailable().size());
+        model.addAttribute("categories", categoryService.findAllActive());
+        return "dashboard";
     }
 }

@@ -1,4 +1,5 @@
 package com.example.finden_pi.security;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,22 +25,40 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers("/organizer/**").hasAuthority("ORGANIZER")
-                .requestMatchers("/supplier/**").hasAuthority("SUPPLIER")
-                .anyRequest().authenticated()
-                )
+                        // 🔓 Páginas e recursos públicos
+                        .requestMatchers(
+                                "/", // ✅ raiz
+                                "/index.html", // ✅ arquivo direto
+                                "/register",
+                                "/login",
+                                "/css/**",
+                                "/js/**",
+                                "/img/**",
+                                "/fonts/**",
+                                "/assets/**")
+                        .permitAll()
+
+                        // 🔐 Áreas protegidas
+                        .requestMatchers("/organizer/**").hasAuthority("ORGANIZER")
+                        .requestMatchers("/supplier/**").hasAuthority("SUPPLIER")
+
+                        // 🔒 Tudo o resto exige login
+                        .anyRequest().authenticated())
+
+                // 🧭 Configuração de login
                 .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/dashboard", true)
-                .failureUrl("/login?error=true")
-                .permitAll()
-                )
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/dashboard", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll())
+
+                // 🚪 Configuração de logout
                 .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll()
-                )
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll())
+
+                // 🧩 Ignora CSRF só para APIs
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
 
         return http.build();
