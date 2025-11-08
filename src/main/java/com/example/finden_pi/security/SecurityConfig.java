@@ -31,6 +31,9 @@ public class SecurityConfig {
                                 "/index.html", // ✅ arquivo direto
                                 "/register",
                                 "/login",
+                                "/services",
+                                "/services/category/**",
+                                "/services/{id:[\\w-]+}",
                                 "/css/**",
                                 "/js/**",
                                 "/img/**",

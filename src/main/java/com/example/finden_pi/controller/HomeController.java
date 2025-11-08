@@ -16,9 +16,15 @@ public class HomeController {
     private final ServiceService serviceService;
     private final UserService userService;
 
-    // ⚡ Index é servido automaticamente pelo Spring Boot
-    // porque está em src/main/resources/static/index.html
-    // → não precisa de @GetMapping("/")
+    @GetMapping("/")
+    public String index(Model model) {
+        // Adiciona dados necessários para a página inicial
+        model.addAttribute("supplierCount", userService.countSuppliers());
+        model.addAttribute("serviceCount", serviceService.findAllAvailable().size());
+        model.addAttribute("categories", categoryService.findAllActive());
+        model.addAttribute("featuredServices", serviceService.findFeaturedServices());
+        return "index";
+    }
 
     @GetMapping("/about")
     public String about() {

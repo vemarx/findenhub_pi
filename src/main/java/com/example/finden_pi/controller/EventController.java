@@ -186,4 +186,73 @@ public class EventController {
 
         return "redirect:/events";
     }
+
+    // ADICIONAR estes métodos no EventController.java
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, Authentication authentication, Model model) {
+        User user = securityUtils.getCurrentUser(authentication.getName());
+        Event event = eventService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+        if (!event.getOrganizerId().equals(user.getId())) {
+            return "redirect:/events";
+        }
+
+        // Converter Event para Eventdto
+        Eventdto dto = new Eventdto();
+        dto.setId(event.getId());
+        dto.setTitle(event.getTitle());
+        dto.setDescription(event.getDescription());
+        dto.setEventDate(event.getEventDate());
+        dto.setVenue(event.getVenue());
+        dto.setCity(event.getCity());
+        dto.setState(event.getState());
+        dto.setExpectedGuests(event.getExpectedGuests());
+        dto.setBudget(event.getBudget());
+        dto.setEventType(event.getEventType());
+        dto.setCategoryNeeds(event.getCategoryNeeds());
+
+        model.addAttribute("eventDTO", dto);
+        model.addAttribute("event", event);
+        model.addAttribute("categories", categoryService.findAllActive());
+        model.addAttribute("eventTypes", Event.EventType.values());
+        model.addAttribute("eventStatuses", Event.EventStatus.values());
+
+        return "event-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateEvent(@PathVariable String id,
+            Authentication authentication,
+            @Valid @ModelAttribute Eventdto dto,
+            @RequestParam(required = false) Event.EventStatus status,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("categories", categoryService.findAllActive());
+            model.addAttribute("eventTypes", Event.EventType.values());
+            model.addAttribute("eventStatuses", Event.EventStatus.values());
+            return "event-edit";
+        }
+
+        User user = securityUtils.getCurrentUser(authentication.getName());
+
+        try {
+            eventService.updateEvent(id, dto, user.getId());
+
+            // Atualizar status se fornecido
+            if (status != null) {
+                eventService.updateStatus(id, status);
+            }
+
+            redirectAttributes.addFlashAttribute("success", "Evento atualizado com sucesso!");
+            return "redirect:/events";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/events/edit/" + id;
+        }
+    }
 }
