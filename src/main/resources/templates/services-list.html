@@ -13,32 +13,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
-    <style>
-      body {
-        background: #f8f9fa;
-      }
-      .page-header {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 3rem 0;
-      }
-      .service-card {
-        border: none;
-        border-radius: 15px;
-        transition: transform 0.3s;
-        height: 100%;
-      }
-      .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      }
-      .filter-card {
-        border: none;
-        border-radius: 15px;
-        position: sticky;
-        top: 20px;
-      }
-    </style>
+    <!-- LINK PARA CSS-->
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/services.css}">
+
+    
   </head>
   <body>
     <!-- Navbar -->

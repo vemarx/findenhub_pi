@@ -1,0 +1,15 @@
+/* SERVICES.CSS */
+services-list.html
+service-detail.html
+service-form.html
+.service-card img {
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.service-price {
+  color: var(--cyan);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
