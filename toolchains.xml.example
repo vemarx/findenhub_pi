@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example ~/.m2/toolchains.xml to use with the `use-toolchains` profile in this project.
+  Update the <jdkHome> path to point to your local JDK 17 installation (Temurin/Adoptium or other).
+  Save as: %USERPROFILE%\.m2\toolchains.xml  (Windows) or ~/.m2/toolchains.xml (Unix)
+-->
+<toolchains>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>17</version>
+      <vendor>temurin</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>C:\path\to\jdk-17</jdkHome>
+    </configuration>
+  </toolchain>
+</toolchains>
