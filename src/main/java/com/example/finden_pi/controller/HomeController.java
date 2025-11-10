@@ -17,11 +17,12 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("categories", categoryService.findAllActive());
-        model.addAttribute("featuredServices", serviceService.findAllAvailable().stream().limit(6).toList());
+    public String index(Model model) {
+        // Adiciona dados necessários para a página inicial
         model.addAttribute("supplierCount", userService.countSuppliers());
         model.addAttribute("serviceCount", serviceService.findAllAvailable().size());
+        model.addAttribute("categories", categoryService.findAllActive());
+        model.addAttribute("featuredServices", serviceService.findFeaturedServices());
         return "index";
     }
 
@@ -33,5 +34,15 @@ public class HomeController {
     @GetMapping("/contact")
     public String contact() {
         return "contact";
+    }
+
+    // Exemplo: se quiser uma rota interna que dependa de dados dinâmicos
+    // Alterado para /site/dashboard para não conflitar com o fluxo de login
+    @GetMapping("/site/dashboard")
+    public String dashboard(Model model) {
+        model.addAttribute("supplierCount", userService.countSuppliers());
+        model.addAttribute("serviceCount", serviceService.findAllAvailable().size());
+        model.addAttribute("categories", categoryService.findAllActive());
+        return "dashboard";
     }
 }

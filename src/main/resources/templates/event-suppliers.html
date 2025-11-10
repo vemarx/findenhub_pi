@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fornecedores - FindenPI</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <style>
+      body {
+        background: #f8f9fa;
+      }
+      .event-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+      }
+      .category-section {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      .supplier-card {
+        border: none;
+        border-radius: 15px;
+        transition: all 0.3s;
+        height: 100%;
+        background: white;
+      }
+      .supplier-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+      .contact-btn {
+        margin: 0.25rem;
+      }
+      .rating-stars {
+        color: #ffc107;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
+          <i class="bi bi-calendar-event"></i> FindenPI
+        </a>
+        <div>
+          <a th:href="@{/events}" class="btn btn-outline-secondary me-2">
+            <i class="bi bi-list"></i> Meus Eventos
+          </a>
+          <a th:href="@{/organizer/dashboard}" class="btn btn-outline-primary">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Event Header -->
+    <div class="event-header">
+      <div class="container">
+        <h1><i class="bi bi-people"></i> Fornecedores para seu Evento</h1>
+        <h3 class="mb-3" th:text="${event.title}">Título do Evento</h3>
+        <p class="mb-0">
+          <i class="bi bi-calendar3"></i>
+          <span
+            th:text="${#temporals.format(event.eventDate, 'dd/MM/yyyy HH:mm')}"
+            >Data</span
+          >
+          |
+          <i class="bi bi-people"></i>
+          <span th:text="${event.expectedGuests}">0</span> convidados |
+          <i class="bi bi-geo-alt"></i>
+          <span th:text="${event.city + ', ' + event.state}">Local</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container pb-5">
+      <!-- Success Message -->
+      <div
+        th:if="${success}"
+        class="alert alert-success alert-dismissible fade show"
+      >
+        <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+
+      <!-- Instruções -->
+      <div class="alert alert-info mb-4">
+        <h5><i class="bi bi-info-circle"></i> Como funciona:</h5>
+        <ol class="mb-0">
+          <li>
+            Abaixo você encontra fornecedores organizados pelas categorias que
+            você selecionou
+          </li>
+          <li>Clique em "Ver Perfil" para ver mais detalhes do fornecedor</li>
+          <li>Entre em contato via Mensagem, Email ou WhatsApp</li>
+          <li>Solicite orçamentos e escolha os melhores fornecedores</li>
+        </ol>
+      </div>
+
+      <!-- Fornecedores por Categoria -->
+      <div th:if="${!suppliersByCategory.isEmpty()}">
+        <div th:each="entry : ${suppliersByCategory}" class="category-section">
+          <div class="d-flex align-items-center mb-4">
+            <div
+              class="me-3"
+              style="font-size: 3rem"
+              th:text="${entry.key.icon}"
+            >
+              🎨
+            </div>
+            <div>
+              <h2 class="mb-0" th:text="${entry.key.name}">Categoria</h2>
+              <p class="text-muted mb-0" th:text="${entry.key.description}">
+                Descrição
+              </p>
+            </div>
+          </div>
+
+          <!-- Lista de Fornecedores -->
+          <div class="row g-4">
+            <div class="col-md-6" th:each="supplierData : ${entry.value}">
+              <div class="card supplier-card shadow-sm">
+                <div class="card-body p-4">
+                  <!-- Header do Fornecedor -->
+                  <div class="d-flex align-items-start mb-3">
+                    <div class="me-3">
+                      <i
+                        class="bi bi-person-circle text-primary"
+                        style="font-size: 4rem"
+                      ></i>
+                    </div>
+                    <div class="flex-grow-1">
+                      <h4 class="mb-1" th:text="${supplierData.supplier.name}">
+                        Nome do Fornecedor
+                      </h4>
+                      <p
+                        class="text-muted small mb-1"
+                        th:if="${supplierData.supplier.companyName}"
+                        th:text="${supplierData.supplier.companyName}"
+                      >
+                        Empresa
+                      </p>
+                      <div class="rating-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        <span
+                          class="text-dark ms-2"
+                          th:text="${#numbers.formatDecimal(supplierData.supplier.rating, 1, 1)}"
+                          >4.5</span
+                        >
+                        <span class="text-muted small">
+                          (<span th:text="${supplierData.supplier.totalReviews}"
+                            >0</span
+                          >
+                          avaliações)
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Descrição -->
+                  <p
+                    class="card-text text-muted mb-3"
+                    th:if="${supplierData.supplier.description}"
+                    th:text="${#strings.abbreviate(supplierData.supplier.description, 150)}"
+                  >
+                    Descrição do fornecedor...
+                  </p>
+
+                  <!-- Informações -->
+                  <div class="mb-3">
+                    <div
+                      class="d-flex align-items-center mb-2"
+                      th:if="${supplierData.supplier.city}"
+                    >
+                      <i class="bi bi-geo-alt text-primary me-2"></i>
+                      <span
+                        th:text="${supplierData.supplier.city + ', ' + supplierData.supplier.state}"
+                        >Localização</span
+                      >
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                      <i class="bi bi-briefcase text-primary me-2"></i>
+                      <span
+                        th:text="${supplierData.serviceCount + ' serviço(s) disponível(is)'}"
+                        >Serviços</span
+                      >
+                    </div>
+                    <div
+                      class="d-flex align-items-center"
+                      th:if="${supplierData.supplier.phone}"
+                    >
+                      <i class="bi bi-telephone text-primary me-2"></i>
+                      <span th:text="${supplierData.supplier.phone}"
+                        >Telefone</span
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Serviços do Fornecedor -->
+                  <div class="mb-3">
+                    <h6 class="text-muted small mb-2">SERVIÇOS OFERECIDOS:</h6>
+                    <div
+                      th:each="service : ${supplierData.services}"
+                      class="mb-2"
+                    >
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <span class="small" th:text="${service.title}"
+                          >Serviço</span
+                        >
+                        <span class="badge bg-success">
+                          R$
+                          <span
+                            th:text="${#numbers.formatDecimal(service.price, 1, 2)}"
+                            >0,00</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <!-- Botões de Contato -->
+                  <div class="d-flex flex-wrap gap-2">
+                    <a
+                      th:href="@{'/supplier/profile/' + ${supplierData.supplier.id}}"
+                      class="btn btn-primary flex-grow-1"
+                    >
+                      <i class="bi bi-eye"></i> Ver Perfil Completo
+                    </a>
+
+                    <button
+                      class="btn btn-outline-primary contact-btn"
+                      th:onclick="'openMessageModal(\'' + ${supplierData.supplier.id} + '\', \'' + ${supplierData.supplier.name} + '\')'"
+                    >
+                      <i class="bi bi-envelope"></i> Mensagem
+                    </button>
+
+                    <a
+                      th:href="'mailto:' + ${supplierData.supplier.email}"
+                      class="btn btn-outline-info contact-btn"
+                    >
+                      <i class="bi bi-envelope-at"></i> Email
+                    </a>
+
+                    <a
+                      th:if="${supplierData.supplier.phone}"
+                      th:href="'https://wa.me/55' + ${#strings.replace(#strings.replace(supplierData.supplier.phone, '(', ''), ')', '').replace(' ', '').replace('-', '')} + '?text=Olá! Vi seu perfil no FindenPI e gostaria de solicitar um orçamento para meu evento: ' + ${event.title}"
+                      target="_blank"
+                      class="btn btn-outline-success contact-btn"
+                    >
+                      <i class="bi bi-whatsapp"></i> WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nenhum fornecedor encontrado -->
+      <div
+        th:if="${suppliersByCategory.isEmpty()}"
+        class="alert alert-warning text-center"
+      >
+        <i class="bi bi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4 class="mt-3">Nenhum fornecedor encontrado</h4>
+        <p>
+          Ainda não temos fornecedores cadastrados nas categorias selecionadas
+          para seu evento.
+        </p>
+        <a th:href="@{/organizer/dashboard}" class="btn btn-primary mt-2">
+          Voltar ao Dashboard
+        </a>
+      </div>
+    </div>
+
+    <!-- Modal de Mensagem -->
+    <div class="modal fade" id="messageModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Enviar Mensagem</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="messageForm" method="post" th:action="@{/messages/send}">
+              <input type="hidden" id="receiverId" name="receiverId" />
+              <input type="hidden" name="eventId" th:value="${event.id}" />
+
+              <div class="mb-3">
+                <label class="form-label">Para:</label>
+                <input
+                  type="text"
+                  id="receiverName"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Assunto:</label>
+                <input
+                  type="text"
+                  name="subject"
+                  class="form-control"
+                  th:value="'Orçamento para: ' + ${event.title}"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Mensagem:</label>
+                <textarea
+                  name="content"
+                  class="form-control"
+                  rows="5"
+                  placeholder="Digite sua mensagem..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-send"></i> Enviar Mensagem
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function openMessageModal(supplierId, supplierName) {
+        document.getElementById("receiverId").value = supplierId;
+        document.getElementById("receiverName").value = supplierName;
+        new bootstrap.Modal(document.getElementById("messageModal")).show();
+      }
+    </script>
+  </body>
+</html>

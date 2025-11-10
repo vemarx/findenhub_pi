@@ -68,7 +68,7 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="container">
-        <h1>Conecte | Personalize | Celebre</p>
+        <h1>Conecte | Personalize | Celebre</h1>
         <div class="d-flex justify-content-center gap-3">
           <a th:href="@{/register}" class="btn btn-light btn-lg">
             <i class="bi bi-person-plus"></i> Começar Agora
@@ -98,7 +98,7 @@
           </div>
           <div class="col-md-4">
             <div class="stats text-center">
-              <div class="stat-number">12</div>
+              <div class="stat-number" th:text="${#lists.size(categories)}">0</div>
               <p class="text-muted mb-0">Categorias</p>
             </div>
           </div>

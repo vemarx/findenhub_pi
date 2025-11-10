@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meus Eventos - FindenPI</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <style>
+      body {
+        background: #f8f9fa;
+      }
+      .page-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+      }
+      .event-card {
+        border: none;
+        border-radius: 15px;
+        transition: all 0.3s;
+        overflow: hidden;
+        height: 100%;
+      }
+      .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      }
+      .event-header {
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #667eea20, #764ba220);
+        border-bottom: 3px solid;
+      }
+      .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .stat-box {
+        text-align: center;
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
+      }
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      .budget-badge {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        display: inline-block;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+      .filter-btn {
+        margin: 0.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
+          <i class="bi bi-calendar-event"></i> FindenPI
+        </a>
+        <div>
+          <a th:href="@{/events/new}" class="btn btn-primary me-2">
+            <i class="bi bi-plus-circle"></i> Novo Evento
+          </a>
+          <a th:href="@{/organizer/dashboard}" class="btn btn-outline-primary">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h1><i class="bi bi-calendar-check"></i> Meus Eventos</h1>
+            <p class="lead mb-0">
+              Gerencie todos os seus eventos em um só lugar
+            </p>
+          </div>
+          <div class="col-md-4 text-end">
+            <div class="stat-box bg-white text-dark">
+              <div class="stat-number" th:text="${events.size()}">0</div>
+              <small>Total de Eventos</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="container">
+      <div
+        th:if="${success}"
+        class="alert alert-success alert-dismissible fade show"
+      >
+        <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+
+      <div
+        th:if="${error}"
+        class="alert alert-danger alert-dismissible fade show"
+      >
+        <i class="bi bi-exclamation-triangle"></i>
+        <span th:text="${error}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container pb-5">
+      <!-- Filtros -->
+      <div
+        class="card mb-4 shadow-sm"
+        style="border: none; border-radius: 15px"
+      >
+        <div class="card-body">
+          <h5 class="card-title mb-3">
+            <i class="bi bi-funnel"></i> Filtrar por Status
+          </h5>
+          <div class="btn-group flex-wrap" role="group">
+            <input
+              type="radio"
+              class="btn-check"
+              name="statusFilter"
+              id="all"
+              checked
+            />
+            <label class="btn btn-outline-primary filter-btn" for="all">
+              <i class="bi bi-grid"></i> Todos
+            </label>
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="statusFilter"
+              id="planning"
+            />
+            <label class="btn btn-outline-warning filter-btn" for="planning">
+              <i class="bi bi-hourglass-split"></i> Planejamento
+            </label>
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="statusFilter"
+              id="confirmed"
+            />
+            <label class="btn btn-outline-success filter-btn" for="confirmed">
+              <i class="bi bi-check-circle"></i> Confirmado
+            </label>
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="statusFilter"
+              id="completed"
+            />
+            <label class="btn btn-outline-info filter-btn" for="completed">
+              <i class="bi bi-flag"></i> Concluído
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de Eventos -->
+      <div th:if="${!events.isEmpty()}" class="row g-4">
+        <div class="col-lg-6" th:each="event : ${events}">
+          <div class="card event-card shadow">
+            <!-- Header do Card -->
+            <div
+              class="event-header"
+              th:style="'border-color: ' + 
+                                   ${event.status.name() == 'PLANNING' ? '#fbbf24' : 
+                                     event.status.name() == 'CONFIRMED' ? '#10b981' : 
+                                     event.status.name() == 'COMPLETED' ? '#3b82f6' : 
+                                     event.status.name() == 'CANCELLED' ? '#ef4444' : '#6b7280'}"
+            >
+              <div
+                class="d-flex justify-content-between align-items-start mb-2"
+              >
+                <h4 class="mb-0" th:text="${event.title}">Título do Evento</h4>
+                <span
+                  class="status-badge"
+                  th:classappend="${event.status.name() == 'PLANNING' ? 'bg-warning' : 
+                                                 event.status.name() == 'CONFIRMED' ? 'bg-success' : 
+                                                 event.status.name() == 'COMPLETED' ? 'bg-info' : 
+                                                 event.status.name() == 'CANCELLED' ? 'bg-danger' : 'bg-secondary'}"
+                  th:text="${event.status.displayName}"
+                >
+                  Status
+                </span>
+              </div>
+
+              <div class="d-flex gap-3 text-muted small">
+                <span>
+                  <i class="bi bi-tag"></i>
+                  <span th:text="${event.eventType.displayName}">Tipo</span>
+                </span>
+                <span>
+                  <i class="bi bi-calendar3"></i>
+                  <span
+                    th:text="${#temporals.format(event.eventDate, 'dd/MM/yyyy')}"
+                    >Data</span
+                  >
+                </span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Descrição -->
+              <p
+                class="card-text text-muted mb-3"
+                th:text="${#strings.abbreviate(event.description, 120)}"
+              >
+                Descrição do evento...
+              </p>
+
+              <!-- Informações -->
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="small">
+                    <i class="bi bi-geo-alt text-primary"></i>
+                    <span th:text="${event.city + ', ' + event.state}"
+                      >Local</span
+                    >
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="small">
+                    <i class="bi bi-people text-primary"></i>
+                    <span th:text="${event.expectedGuests + ' convidados'}"
+                      >Convidados</span
+                    >
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="small">
+                    <i class="bi bi-building text-primary"></i>
+                    <span th:text="${event.venue}">Local do Evento</span>
+                  </div>
+                </div>
+                <div class="col-6" th:if="${event.budget != null}">
+                  <div class="small">
+                    <i class="bi bi-currency-dollar text-success"></i>
+                    R$
+                    <span
+                      th:text="${#numbers.formatDecimal(event.budget, 1, 2)}"
+                      >0,00</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Estatísticas do Evento -->
+              <div class="row g-2 mb-3">
+                <div class="col-4">
+                  <div class="stat-box bg-light">
+                    <i class="bi bi-inbox text-primary fs-3"></i>
+                    <div class="stat-number text-primary">0</div>
+                    <small class="text-muted">Orçamentos</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="stat-box bg-light">
+                    <i class="bi bi-people text-success fs-3"></i>
+                    <div
+                      class="stat-number text-success"
+                      th:text="${event.serviceIds.size()}"
+                    >
+                      0
+                    </div>
+                    <small class="text-muted">Contratados</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="stat-box bg-light">
+                    <i class="bi bi-grid text-info fs-3"></i>
+                    <div
+                      class="stat-number text-info"
+                      th:text="${event.categoryNeeds.size()}"
+                    >
+                      0
+                    </div>
+                    <small class="text-muted">Categorias</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ações -->
+              <!-- Ações -->
+<hr class="my-3">
+
+<!-- Botão Principal -->
+<div class="d-grid mb-2">
+    <a th:href="@{'/events/' + ${event.id} + '/suppliers'}" 
+       class="btn btn-primary btn-lg">
+        <i class="bi bi-people"></i> Buscar Fornecedores e Pedir Orçamentos
+    </a>
+</div>
+
+<!-- Botões Secundários -->
+<div class="row g-2">
+    <div class="col-4">
+        <a th:href="@{'/events/edit/' + ${event.id}}" 
+           class="btn btn-outline-primary w-100">
+            <i class="bi bi-pencil"></i><br>
+            <small>Editar</small>
+        </a>
+    </div>
+    
+    <div class="col-4">
+        <button type="button" class="btn btn-outline-info w-100" 
+                th:onclick="'showEventDetails(\'' + ${event.id} + '\')'">
+            <i class="bi bi-info-circle"></i><br>
+            <small>Detalhes</small>
+        </button>
+    </div>
+    
+    <div class="col-4">
+        <button type="button" class="btn btn-outline-danger w-100" 
+                th:onclick="'confirmDelete(\'' + ${event.id} + '\', \'' + ${event.title} + '\')'">
+            <i class="bi bi-trash"></i><br>
+            <small>Excluir</small>
+        </button>
+    </div>
+</div>
+
+      <!-- Estado Vazio -->
+      <div th:if="${events.isEmpty()}" class="empty-state">
+        <i class="bi bi-calendar-x text-muted" style="font-size: 5rem"></i>
+        <h3 class="mt-4">Nenhum evento criado ainda</h3>
+        <p class="text-muted mb-4">
+          Comece criando seu primeiro evento e encontre os melhores
+          fornecedores!
+        </p>
+        <a th:href="@{/events/new}" class="btn btn-primary btn-lg">
+          <i class="bi bi-plus-circle"></i> Criar Primeiro Evento
+        </a>
+      </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-exclamation-triangle"></i> Confirmar Exclusão
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Tem certeza que deseja excluir o evento:</p>
+            <h5 class="text-danger" id="eventNameToDelete"></h5>
+            <p class="text-muted mb-0">
+              <i class="bi bi-info-circle"></i> Esta ação não pode ser desfeita!
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x"></i> Cancelar
+            </button>
+            <form id="deleteForm" method="post" style="display: inline">
+              <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Sim, Excluir
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Detalhes do Evento -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="bi bi-info-circle"></i> Detalhes do Evento
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="eventDetailsContent">
+            <!-- Será preenchido via JavaScript -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:inline="javascript">
+      // Dados dos eventos
+      const eventsData = /*[[${events}]]*/ [];
+
+      // Confirmar exclusão
+      function confirmDelete(eventId, eventName) {
+        document.getElementById("eventNameToDelete").textContent = eventName;
+        document.getElementById("deleteForm").action =
+          "/events/delete/" + eventId;
+        new bootstrap.Modal(document.getElementById("deleteModal")).show();
+      }
+
+      // Mostrar detalhes do evento
+      function showEventDetails(eventId) {
+        const event = eventsData.find((e) => e.id === eventId);
+        if (!event) return;
+
+        const content = `
+                <h4>${event.title}</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <strong>Tipo:</strong> ${event.eventType.displayName}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Status:</strong> ${event.status.displayName}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Data:</strong> ${new Date(
+                          event.eventDate
+                        ).toLocaleDateString("pt-BR")}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Convidados:</strong> ${event.expectedGuests}
+                    </div>
+                    <div class="col-12 mb-3">
+                        <strong>Local:</strong> ${event.venue}
+                    </div>
+                    <div class="col-12 mb-3">
+                        <strong>Cidade:</strong> ${event.city}, ${event.state}
+                    </div>
+                    ${
+                      event.budget
+                        ? `<div class="col-12 mb-3"><strong>Orçamento:</strong> R$ ${event.budget.toFixed(
+                            2
+                          )}</div>`
+                        : ""
+                    }
+                    <div class="col-12">
+                        <strong>Descrição:</strong>
+                        <p class="mt-2">${event.description}</p>
+                    </div>
+                </div>
+            `;
+
+        document.getElementById("eventDetailsContent").innerHTML = content;
+        new bootstrap.Modal(document.getElementById("detailsModal")).show();
+      }
+
+      // Filtro por status
+      document
+        .querySelectorAll('input[name="statusFilter"]')
+        .forEach((radio) => {
+          radio.addEventListener("change", function () {
+            const cards = document.querySelectorAll(".event-card");
+            cards.forEach((card) => {
+              const parentCol = card.closest(".col-lg-6");
+              if (this.id === "all") {
+                parentCol.style.display = "block";
+              } else {
+                // Implementar filtro baseado no status
+                parentCol.style.display = "block";
+              }
+            });
+          });
+        });
+    </script>
+  </body>
+</html>

@@ -158,4 +158,12 @@ public class ServiceService {
     public long countBySupplier(String supplierId) {
         return serviceRepository.countBySupplierId(supplierId);
     }
+
+    public List<Service> findFeaturedServices() {
+        // Retorna os 6 serviços mais visualizados que estão disponíveis
+        return serviceRepository.findByAvailableTrue().stream()
+            .sorted((s1, s2) -> Integer.compare(s2.getViews(), s1.getViews()))
+            .limit(6)
+            .collect(Collectors.toList());
+    }
 }
