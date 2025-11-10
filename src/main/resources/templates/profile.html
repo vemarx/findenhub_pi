@@ -31,267 +31,245 @@
         </a>
       </div>
     </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Perfil - FindenHub</title>
 
-    <!-- Header -->
-    <div class="profile-header">
-      <div class="container text-center">
-        <div class="profile-avatar">
-          <i class="bi bi-person-circle"></i>
-        </div>
-        <h2 th:text="${user.name}">Nome do Usuário</h2>
-        <p class="mb-0">
-          <span class="badge bg-light text-primary fs-6">
-            <i
-              th:class="${user.userType.name() == 'ORGANIZER' ? 'bi bi-person-check' : 'bi bi-briefcase'}"
-            ></i>
-            <span
-              th:text="${user.userType.name() == 'ORGANIZER' ? 'Organizador' : 'Fornecedor'}"
-            ></span>
-          </span>
-        </p>
-      </div>
-    </div>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
 
-    <!-- Alerts -->
-    <div class="container">
-      <div
-        th:if="${success}"
-        class="alert alert-success alert-dismissible fade show"
-      >
-        <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-        ></button>
-      </div>
-    </div>
+  <style>
+    body { background: #f8f9fa; }
+    .profile-header {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+    }
+    .profile-avatar {
+      width: 150px;
+      height: 150px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 4rem;
+      color: #667eea;
+    }
+    .profile-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
 
-    <!-- Content -->
-    <div class="container pb-5">
-      <div class="row">
-        <!-- Informações Pessoais -->
-        <div class="col-lg-8">
-          <div class="card profile-card mb-4">
-            <div class="card-body p-4">
-              <h4 class="card-title mb-4">
-                <i class="bi bi-person-lines-fill"></i> Informações Pessoais
-              </h4>
+<body>
 
-              <form
-                th:action="@{/profile/update}"
-                th:object="${user}"
-                method="post"
-              >
-                <!-- Nome -->
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Nome Completo</label>
-                  <input
-                    type="text"
-                    th:field="*{name}"
-                    class="form-control"
-                    required
-                  />
-                </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
+      <i class="bi bi-calendar-event"></i> FindenHub
+    </a>
+    <a th:href="@{/dashboard}" class="btn btn-outline-primary">
+      <i class="bi bi-arrow-left"></i> Dashboard
+    </a>
+  </div>
+</nav>
 
-                <!-- Email (readonly) -->
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Email</label>
-                  <input
-                    type="email"
-                    th:field="*{email}"
-                    class="form-control"
-                    readonly
-                  />
-                  <small class="text-muted"
-                    >O email não pode ser alterado</small
-                  >
-                </div>
+<!-- Cabeçalho do perfil -->
+<div class="profile-header">
+  <div class="container text-center">
+    <div class="profile-avatar"><i class="bi bi-person-circle"></i></div>
+    <h2 th:text="${user.name}">Nome do Usuário</h2>
+    <p class="mb-0">
+      <span class="badge bg-light text-primary fs-6">
+        <i th:class="${user.userType.name() == 'ORGANIZER' ? 'bi bi-person-check' : 'bi bi-briefcase'}"></i>
+        <span th:text="${user.userType.name() == 'ORGANIZER' ? 'Organizador' : 'Fornecedor'}"></span>
+      </span>
+    </p>
+  </div>
+</div>
 
-                <!-- Telefone -->
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Telefone</label>
-                  <input
-                    type="tel"
-                    th:field="*{phone}"
-                    class="form-control"
-                    placeholder="(00) 00000-0000"
-                  />
-                </div>
+<!-- Mensagem de sucesso -->
+<div class="container">
+  <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
+    <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+</div>
 
-                <!-- Descrição -->
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Sobre</label>
-                  <textarea
-                    th:field="*{description}"
-                    class="form-control"
-                    rows="4"
-                    placeholder="Conte um pouco sobre você..."
-                  ></textarea>
-                </div>
+<!-- Conteúdo -->
+<div class="container pb-5">
+  <div class="row">
 
-                <!-- Endereço -->
-                <div class="mb-3">
-                  <label class="form-label fw-bold">Endereço</label>
-                  <input
-                    type="text"
-                    th:field="*{address}"
-                    class="form-control"
-                    placeholder="Rua, número, bairro"
-                  />
-                </div>
+    <!-- Coluna esquerda: edição -->
+    <div class="col-lg-8">
+      <div class="card profile-card mb-4">
+        <div class="card-body p-4">
+          <h4 class="card-title mb-4"><i class="bi bi-person-lines-fill"></i> Informações Pessoais</h4>
 
-                <!-- Cidade e Estado -->
-                <div class="row">
-                  <div class="col-md-8 mb-3">
-                    <label class="form-label fw-bold">Cidade</label>
-                    <input
-                      type="text"
-                      th:field="*{city}"
-                      class="form-control"
-                    />
-                  </div>
+          <form th:action="@{/profile/update}" th:object="${user}" method="post">
 
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label fw-bold">Estado</label>
-                    <input
-                      type="text"
-                      th:field="*{state}"
-                      class="form-control"
-                      maxlength="2"
-                      placeholder="SP"
-                    />
-                  </div>
-                </div>
-
-                <!-- Campos específicos para Fornecedores -->
-                <div th:if="${user.userType.name() == 'SUPPLIER'}">
-                  <hr />
-                  <h5 class="mb-3">Informações da Empresa</h5>
-
-                  <div class="mb-3">
-                    <label class="form-label fw-bold">Nome da Empresa</label>
-                    <input
-                      type="text"
-                      th:field="*{companyName}"
-                      class="form-control"
-                    />
-                  </div>
-
-                  <div class="mb-3">
-                    <label class="form-label fw-bold">Website</label>
-                    <input
-                      type="url"
-                      th:field="*{website}"
-                      class="form-control"
-                      placeholder="https://exemplo.com"
-                    />
-                  </div>
-                </div>
-
-                <!-- Botões -->
-                <div class="d-flex justify-content-between pt-3">
-                  <a th:href="@{/dashboard}" class="btn btn-outline-secondary">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                  </a>
-                  <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-check-circle"></i> Salvar Alterações
-                  </button>
-                </div>
-              </form>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nome Completo</label>
+              <input type="text" th:field="*{name}" class="form-control" required />
             </div>
-          </div>
-        </div>
 
-        <!-- Estatísticas e Info -->
-        <div class="col-lg-4">
-          <!-- Info da Conta -->
-          <div class="card profile-card mb-4">
-            <div class="card-body p-4">
-              <h5 class="card-title mb-3">
-                <i class="bi bi-info-circle"></i> Informações da Conta
-              </h5>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Email</label>
+              <input type="email" th:field="*{email}" class="form-control" readonly />
+              <small class="text-muted">O email não pode ser alterado</small>
+            </div>
 
-              <div class="mb-3">
-                <small class="text-muted">Tipo de Conta</small>
-                <p class="mb-0 fw-bold">
-                  <span
-                    th:text="${user.userType.name() == 'ORGANIZER' ? 'Organizador de Eventos' : 'Fornecedor de Serviços'}"
-                  ></span>
-                </p>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Telefone</label>
+              <input type="tel" th:field="*{phone}" class="form-control" placeholder="(00) 00000-0000" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Sobre</label>
+              <textarea th:field="*{description}" class="form-control" rows="4"
+                placeholder="Conte um pouco sobre você..."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Endereço</label>
+              <input type="text" th:field="*{address}" class="form-control" placeholder="Rua, número, bairro" />
+            </div>
+
+            <div class="row">
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">Cidade</label>
+                <input type="text" th:field="*{city}" class="form-control" />
               </div>
 
-              <div class="mb-3">
-                <small class="text-muted">Membro desde</small>
-                <p
-                  class="mb-0"
-                  th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy')}"
-                >
-                  01/01/2024
-                </p>
-              </div>
-
-              <div class="mb-3">
-                <small class="text-muted">Status</small>
-                <p class="mb-0">
-                  <span
-                    class="badge"
-                    th:classappend="${user.active ? 'bg-success' : 'bg-secondary'}"
-                    th:text="${user.active ? 'Ativa' : 'Inativa'}"
-                  >
-                    Status
-                  </span>
-                </p>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">Estado</label>
+                <input type="text" th:field="*{state}" class="form-control" maxlength="2" placeholder="SP" />
               </div>
             </div>
-          </div>
 
-          <!-- Estatísticas (apenas para Fornecedores) -->
-          <div
-            th:if="${user.userType.name() == 'SUPPLIER'}"
-            class="card profile-card"
-          >
-            <div class="card-body p-4">
-              <h5 class="card-title mb-3">
-                <i class="bi bi-graph-up"></i> Estatísticas
-              </h5>
-
-              <div class="mb-3 text-center">
-                <div class="display-6 text-warning">
-                  <i class="bi bi-star-fill"></i>
-                  <span th:text="${#numbers.formatDecimal(user.rating, 1, 1)}"
-                    >0.0</span
-                  >
-                </div>
-                <small class="text-muted">
-                  Avaliação Média (<span th:text="${user.totalReviews}">0</span>
-                  avaliações)
-                </small>
-              </div>
-
+            <div th:if="${user.userType.name() == 'SUPPLIER'}">
               <hr />
+              <h5 class="mb-3">Informações da Empresa</h5>
 
-              <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">Serviços Cadastrados</span>
-                <span class="fw-bold">
-                  <i class="bi bi-briefcase"></i>
-                  <!-- Este número seria buscado do ServiceService -->
-                  0
-                </span>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Nome da Empresa</label>
+                <input type="text" th:field="*{companyName}" class="form-control" />
               </div>
 
-              <div class="d-flex justify-content-between">
-                <span class="text-muted">Perfil Completo</span>
-                <span class="fw-bold text-success">
-                  <i class="bi bi-check-circle"></i> 85%
-                </span>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Website</label>
+                <input type="url" th:field="*{website}" class="form-control" placeholder="https://exemplo.com" />
               </div>
             </div>
-          </div>
+
+            <div class="d-flex justify-content-between pt-3">
+              <a th:href="@{/dashboard}" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle"></i> Cancelar
+              </a>
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Salvar Alterações
+              </button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <!-- Coluna direita: info + botão excluir -->
+    <div class="col-lg-4">
+
+      <!-- Info Conta -->
+      <div class="card profile-card mb-4">
+        <div class="card-body p-4">
+          <h5 class="card-title mb-3"><i class="bi bi-info-circle"></i> Informações da Conta</h5>
+
+          <div class="mb-3">
+            <small class="text-muted">Tipo de Conta</small>
+            <p class="mb-0 fw-bold">
+              <span th:text="${user.userType.name() == 'ORGANIZER' ? 'Organizador de Eventos' : 'Fornecedor de Serviços'}"></span>
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <small class="text-muted">Membro desde</small>
+            <p class="mb-0" th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy')}">01/01/2024</p>
+          </div>
+
+          <div class="mb-3">
+            <small class="text-muted">Status</small>
+            <p class="mb-0">
+              <span class="badge"
+                th:classappend="${user.active ? 'bg-success' : 'bg-secondary'}"
+                th:text="${user.active ? 'Ativa' : 'Inativa'}"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estatísticas fornecedor -->
+      <div th:if="${user.userType.name() == 'SUPPLIER'}" class="card profile-card mb-4">
+        <div class="card-body p-4">
+          <h5 class="card-title mb-3"><i class="bi bi-graph-up"></i> Estatísticas</h5>
+          <div class="text-center mb-3">
+            <i class="bi bi-star-fill text-warning display-6"></i>
+            <span th:text="${#numbers.formatDecimal(user.rating,1,1)}">0.0</span>
+            <br>
+            <small class="text-muted">Avaliações: <span th:text="${user.totalReviews}">0</span></small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botão excluir conta -->
+      <div class="card profile-card">
+        <div class="card-body text-center p-4">
+          <button class="btn btn-danger w-100"
+            data-bs-toggle="modal"
+            data-bs-target="#confirmDeleteModal">
+            <i class="bi bi-trash"></i> Excluir minha conta
+          </button>
+          <small class="text-muted d-block mt-2">Esta ação não pode ser desfeita.</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        Tem certeza que deseja excluir sua conta?<br>
+        <strong>Esta ação é permanente e não poderá ser desfeita.</strong>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+        <form th:action="@{/profile/delete}" method="post">
+          <button type="submit" class="btn btn-danger">Sim, excluir conta</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
