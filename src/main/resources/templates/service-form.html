@@ -1,180 +1,423 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${isEdit ? 'Editar Serviço' : 'Novo Serviço'}">Serviço</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title
+      th:text="${isEdit != null and isEdit} ? 'Editar Serviço' : 'Cadastrar Novo Serviço'"
+    >
+      Serviço
+    </title>
 
-    <!-- LINK PARA CSS-->
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/services.css}">
-    
-    
-</head>
-<body>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/services.css}" />
+  </head>
+
+  <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
-                <i class="bi bi-calendar-event"></i> FindenHub
-            </a>
-            <a th:href="@{/supplier/dashboard}" class="btn btn-outline-primary">
-                <i class="bi bi-arrow-left"></i> Voltar
-            </a>
-        </div>
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
+          <i class="bi bi-calendar-event"></i> FindenHub
+        </a>
+        <a th:href="@{/supplier/dashboard}" class="btn btn-outline-primary">
+          <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+      </div>
     </nav>
-    
+
     <!-- Header -->
-    <div class="form-header">
-        <div class="container">
-            <h1>
-                <i th:class="${isEdit ? 'bi bi-pencil-square' : 'bi bi-plus-circle'}"></i>
-                <span th:text="${isEdit ? 'Editar Serviço' : 'Cadastrar Novo Serviço'}"></span>
-            </h1>
-        </div>
+    <div class="form-header py-4 bg-light mb-4 border-bottom">
+      <div class="container">
+        <h1 class="fw-bold text-primary">
+          <i
+            th:class="${isEdit != null and isEdit} ? 'bi bi-pencil-square' : 'bi bi-plus-circle'"
+          ></i>
+          <span
+            th:text="${isEdit != null and isEdit} ? 'Editar Serviço' : 'Cadastrar Novo Serviço'"
+          ></span>
+        </h1>
+      </div>
     </div>
-    
-    <!-- Form -->
+
+    <!-- Mensagens (success / error) -->
+    <div class="container">
+      <div
+        th:if="${success}"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${success}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div
+        th:if="${error}"
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+      >
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span th:text="${error}"></span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Formulário -->
     <div class="container pb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card form-card">
-                    <div class="card-body p-4">
-                        <form th:action="${isEdit ? '/services/edit/' + serviceDTO.id : '/services/new'}" 
-                              th:object="${serviceDTO}" 
-                              method="post">
-                            
-                            <!-- Título -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Título do Serviço *</label>
-                                <input type="text" th:field="*{title}" class="form-control" 
-                                       placeholder="Ex: Buffet Completo para 100 Pessoas" required>
-                                <div class="text-danger small" th:errors="*{title}"></div>
-                            </div>
-                            
-                            <!-- Categoria -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Categoria *</label>
-                                <select th:field="*{categoryId}" class="form-select" required>
-                                    <option value="">Selecione uma categoria</option>
-                                    <option th:each="category : ${categories}" 
-                                            th:value="${category.id}" 
-                                            th:text="${category.icon + ' ' + category.name}">
-                                        Categoria
-                                    </option>
-                                </select>
-                                <div class="text-danger small" th:errors="*{categoryId}"></div>
-                            </div>
-                            
-                            <!-- Descrição -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Descrição *</label>
-                                <textarea th:field="*{description}" class="form-control" rows="5" 
-                                          placeholder="Descreva em detalhes o serviço oferecido..." required></textarea>
-                                <div class="text-danger small" th:errors="*{description}"></div>
-                                <small class="text-muted">Mínimo 20 caracteres</small>
-                            </div>
-                            
-                            <!-- Preço e Duração -->
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Preço (R$) *</label>
-                                    <input type="number" th:field="*{price}" class="form-control" 
-                                           step="0.01" min="0" placeholder="0.00" required>
-                                    <div class="text-danger small" th:errors="*{price}"></div>
-                                </div>
-                                
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Duração</label>
-                                    <input type="text" th:field="*{duration}" class="form-control" 
-                                           placeholder="Ex: 4 horas">
-                                    <small class="text-muted">Opcional</small>
-                                </div>
-                            </div>
-                            
-                            <!-- Localização e Capacidade -->
-                            <div class="row">
-                                <div class="col-md-8 mb-3">
-                                    <label class="form-label fw-bold">Localização</label>
-                                    <input type="text" th:field="*{location}" class="form-control" 
-                                           placeholder="Ex: São Paulo - SP">
-                                    <small class="text-muted">Opcional</small>
-                                </div>
-                                
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold">Capacidade</label>
-                                    <input type="number" th:field="*{capacity}" class="form-control" 
-                                           placeholder="Ex: 100">
-                                    <small class="text-muted">Nº de pessoas</small>
-                                </div>
-                            </div>
-                            
-                            <!-- URL da Imagem -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">URL da Imagem</label>
-                                <input type="url" th:field="*{imageUrl}" class="form-control" 
-                                       placeholder="https://exemplo.com/imagem.jpg">
-                                <small class="text-muted">Opcional - Cole o link de uma imagem do serviço</small>
-                            </div>
-                            
-                            <!-- Características -->
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Características</label>
-                                <div id="featuresContainer">
-                                    <div class="input-group mb-2" th:each="feature, stat : ${serviceDTO.features}">
-                                        <input type="text" th:field="*{features[__${stat.index}__]}" 
-                                               class="form-control" placeholder="Ex: Inclui garçons">
-                                        <button type="button" class="btn btn-outline-danger" 
-                                                onclick="this.parentElement.remove()">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-outline-primary btn-sm" id="addFeatureBtn">
-                                    <i class="bi bi-plus"></i> Adicionar Característica
-                                </button>
-                            </div>
-                            
-                            <!-- Botões -->
-                            <div class="d-flex justify-content-between">
-                                <a th:href="@{/supplier/dashboard}" class="btn btn-outline-secondary">
-                                    <i class="bi bi-x-circle"></i> Cancelar
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i th:class="${isEdit ? 'bi bi-check-circle' : 'bi bi-plus-circle'}"></i>
-                                    <span th:text="${isEdit ? 'Salvar Alterações' : 'Cadastrar Serviço'}"></span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card form-card shadow-sm border-0">
+            <div class="card-body p-4">
+              <form
+                th:action="${isEdit != null and isEdit} ? @{'/services/edit/' + ${serviceDTO.id}} : @{/services/new}"
+                th:object="${serviceDTO}"
+                method="post"
+              >
+                <!-- Título -->
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Título do Serviço *</label>
+                  <input
+                    type="text"
+                    th:field="*{title}"
+                    class="form-control"
+                    placeholder="Ex: Buffet Completo para 100 Pessoas"
+                    required
+                  />
+                  <div class="text-danger small" th:errors="*{title}"></div>
                 </div>
+
+                <!-- Categoria -->
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Categoria *</label>
+                  <select
+                    id="categorySelect"
+                    th:field="*{categoryId}"
+                    class="form-select"
+                    required
+                  >
+                    <option value="">Selecione uma categoria</option>
+                    <option
+                      th:each="category : ${categories}"
+                      th:value="${category.id}"
+                      th:text="|${category.icon} ${category.name}|"
+                      th:data-name="${category.name}"
+                    ></option>
+                  </select>
+                  <div
+                    class="text-danger small"
+                    th:errors="*{categoryId}"
+                  ></div>
+
+                  <!-- Campo oculto para armazenar o nome da categoria -->
+                  <input
+                    type="hidden"
+                    id="categoryNameInput"
+                    th:field="*{categoryName}"
+                  />
+                </div>
+
+                <!-- Descrição -->
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Descrição *</label>
+                  <textarea
+                    th:field="*{description}"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Descreva em detalhes o serviço oferecido..."
+                    required
+                  ></textarea>
+                  <div
+                    class="text-danger small"
+                    th:errors="*{description}"
+                  ></div>
+                  <small class="text-muted">Mínimo 20 caracteres</small>
+                </div>
+
+                <!-- Preço e Duração -->
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Preço (R$) *</label>
+                    <input
+                      type="number"
+                      th:field="*{price}"
+                      class="form-control"
+                      step="0.01"
+                      min="0"
+                      placeholder="0.00"
+                      required
+                    />
+                    <div class="text-danger small" th:errors="*{price}"></div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Duração</label>
+                    <input
+                      type="text"
+                      th:field="*{duration}"
+                      class="form-control"
+                      placeholder="Ex: 4 horas"
+                    />
+                    <small class="text-muted">Opcional</small>
+                  </div>
+                </div>
+
+                <!-- Localização e Capacidade -->
+                <div class="row">
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label fw-bold">Localização</label>
+                    <input
+                      type="text"
+                      th:field="*{location}"
+                      class="form-control"
+                      placeholder="Ex: São Paulo - SP"
+                    />
+                    <small class="text-muted">Opcional</small>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Capacidade</label>
+                    <input
+                      type="number"
+                      th:field="*{capacity}"
+                      class="form-control"
+                      placeholder="Ex: 100"
+                    />
+                    <small class="text-muted">Nº de pessoas</small>
+                  </div>
+                </div>
+
+                <!-- URL principal da imagem -->
+                <div class="mb-3">
+                  <label class="form-label fw-bold"
+                    >URL da Imagem Principal</label
+                  >
+                  <input
+                    type="url"
+                    th:field="*{imageUrl}"
+                    class="form-control"
+                    placeholder="https://exemplo.com/imagem.jpg"
+                  />
+                  <small class="text-muted">Opcional</small>
+                </div>
+
+                <!-- Imagens do serviço (múltiplas via URLs) -->
+                <div class="mb-4">
+                  <label class="form-label fw-bold">Imagens do Serviço</label>
+                  <div id="imagesContainer">
+                    <div
+                      class="input-group mb-2"
+                      th:each="img, stat : ${serviceDTO.serviceImages}"
+                    >
+                      <input
+                        type="url"
+                        th:field="*{serviceImages[__${stat.index}__]}"
+                        class="form-control"
+                        placeholder="https://exemplo.com/imagem1.jpg"
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        onclick="this.parentElement.remove()"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    id="addImageBtn"
+                  >
+                    <i class="bi bi-plus"></i> Adicionar Imagem
+                  </button>
+                </div>
+
+                <!-- Vídeos do serviço (URLs) -->
+                <div class="mb-4">
+                  <label class="form-label fw-bold">Vídeos do Serviço</label>
+                  <div id="videosContainer">
+                    <div
+                      class="input-group mb-2"
+                      th:each="vid, stat : ${serviceDTO.serviceVideos}"
+                    >
+                      <input
+                        type="url"
+                        th:field="*{serviceVideos[__${stat.index}__]}"
+                        class="form-control"
+                        placeholder="https://youtube.com/watch?v=..."
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        onclick="this.parentElement.remove()"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    id="addVideoBtn"
+                  >
+                    <i class="bi bi-plus"></i> Adicionar Vídeo
+                  </button>
+                </div>
+
+                <!-- Características -->
+                <div class="mb-4">
+                  <label class="form-label fw-bold">Características</label>
+                  <div id="featuresContainer">
+                    <div
+                      class="input-group mb-2"
+                      th:each="feature, stat : ${serviceDTO.features}"
+                    >
+                      <input
+                        type="text"
+                        th:field="*{features[__${stat.index}__]}"
+                        class="form-control"
+                        placeholder="Ex: Inclui garçons"
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        onclick="this.parentElement.remove()"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    id="addFeatureBtn"
+                  >
+                    <i class="bi bi-plus"></i> Adicionar Característica
+                  </button>
+                </div>
+
+                <!-- Botões -->
+                <div class="d-flex justify-content-between">
+                  <a
+                    th:href="@{/supplier/dashboard}"
+                    class="btn btn-outline-secondary"
+                  >
+                    <i class="bi bi-x-circle"></i> Cancelar
+                  </a>
+                  <button type="submit" class="btn btn-primary">
+                    <i
+                      th:class="${isEdit != null and isEdit} ? 'bi bi-check-circle' : 'bi bi-plus-circle'"
+                    ></i>
+                    <span
+                      th:text="${isEdit != null and isEdit} ? 'Salvar Alterações' : 'Cadastrar Serviço'"
+                    ></span>
+                  </button>
+                </div>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    
+
+    <!-- Scripts -->
     <script>
-        // Adicionar novas características dinamicamente
-        let featureIndex = document.querySelectorAll('#featuresContainer .input-group').length;
-        
-        document.getElementById('addFeatureBtn').addEventListener('click', function() {
-            const container = document.getElementById('featuresContainer');
-            const newFeature = document.createElement('div');
-            newFeature.className = 'input-group mb-2';
-            newFeature.innerHTML = `
-                <input type="text" name="features[${featureIndex}]" 
-                       class="form-control" placeholder="Ex: Inclui garçons">
-                <button type="button" class="btn btn-outline-danger" 
-                        onclick="this.parentElement.remove()">
-                    <i class="bi bi-trash"></i>
-                </button>
-            `;
-            container.appendChild(newFeature);
-            featureIndex++;
+      // Adicionar características dinamicamente
+      let featureIndex = document.querySelectorAll(
+        "#featuresContainer .input-group"
+      ).length;
+      document
+        .getElementById("addFeatureBtn")
+        .addEventListener("click", function () {
+          const container = document.getElementById("featuresContainer");
+          const newFeature = document.createElement("div");
+          newFeature.className = "input-group mb-2";
+          newFeature.innerHTML = `
+          <input type="text" name="features[${featureIndex}]" class="form-control" placeholder="Ex: Inclui garçons">
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>
+        `;
+          container.appendChild(newFeature);
+          featureIndex++;
         });
+
+      // Adicionar imagens dinamicamente
+      let imageIndex = document.querySelectorAll(
+        "#imagesContainer .input-group"
+      ).length;
+      document
+        .getElementById("addImageBtn")
+        .addEventListener("click", function () {
+          const container = document.getElementById("imagesContainer");
+          const newInput = document.createElement("div");
+          newInput.className = "input-group mb-2";
+          newInput.innerHTML = `
+          <input type="url" name="serviceImages[${imageIndex}]" class="form-control" placeholder="https://exemplo.com/imagem.jpg">
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>
+        `;
+          container.appendChild(newInput);
+          imageIndex++;
+        });
+
+      // Adicionar vídeos dinamicamente
+      let videoIndex = document.querySelectorAll(
+        "#videosContainer .input-group"
+      ).length;
+      document
+        .getElementById("addVideoBtn")
+        .addEventListener("click", function () {
+          const container = document.getElementById("videosContainer");
+          const newInput = document.createElement("div");
+          newInput.className = "input-group mb-2";
+          newInput.innerHTML = `
+          <input type="url" name="serviceVideos[${videoIndex}]" class="form-control" placeholder="https://youtube.com/watch?v=...">
+          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>
+        `;
+          container.appendChild(newInput);
+          videoIndex++;
+        });
+
+      // Preenche automaticamente o nome da categoria selecionada
+      const categorySelect = document.getElementById("categorySelect");
+      if (categorySelect) {
+        categorySelect.addEventListener("change", function () {
+          const selectedOption = this.options[this.selectedIndex];
+          const categoryName = selectedOption.getAttribute("data-name");
+          const input = document.getElementById("categoryNameInput");
+          if (input) input.value = categoryName || "";
+        });
+
+        // Se já houver uma categoria selecionada (edição), dispara para preencher o hidden
+        if (categorySelect.selectedIndex > 0) {
+          const initialOption =
+            categorySelect.options[categorySelect.selectedIndex];
+          const name = initialOption.getAttribute("data-name");
+          const input = document.getElementById("categoryNameInput");
+          if (input) input.value = name || "";
+        }
+      }
     </script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
