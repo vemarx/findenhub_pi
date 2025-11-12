@@ -29,9 +29,15 @@ public class Servicedto {
     @NotBlank(message = "Categoria é obrigatória")
     private String categoryId;
 
+    private String categoryName; // Nome da categoria
+
     private String location;
-    private String imageUrl;
+    private String imageUrl; // Imagem principal
     private List<String> features = new ArrayList<>();
     private Integer capacity;
     private String duration;
+
+    // Portfolio - Imagens e Vídeos
+    private List<String> serviceImages = new ArrayList<>();
+    private List<String> serviceVideos = new ArrayList<>();
 }

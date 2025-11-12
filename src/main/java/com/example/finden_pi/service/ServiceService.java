@@ -1,7 +1,7 @@
 package com.example.finden_pi.service;
 
-import com.example.finden_pi.dto.Searchfilterdto;
 import com.example.finden_pi.dto.Servicedto;
+import com.example.finden_pi.dto.Searchfilterdto;
 import com.example.finden_pi.model.Service;
 import com.example.finden_pi.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @org.springframework.stereotype.Service
+@RequiredArgsConstructor
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
@@ -31,6 +31,11 @@ public class ServiceService {
         service.setFeatures(dto.getFeatures());
         service.setCapacity(dto.getCapacity());
         service.setDuration(dto.getDuration());
+
+        // Portfolio
+        service.setServiceImages(dto.getServiceImages());
+        service.setServiceVideos(dto.getServiceVideos());
+
         service.setAvailable(true);
         service.setViews(0);
         service.setContacts(0);
@@ -38,19 +43,24 @@ public class ServiceService {
         service.setUpdatedAt(LocalDateTime.now());
 
         Service savedService = serviceRepository.save(service);
+
+        // Incrementar contador da categoria
         categoryService.incrementServiceCount(dto.getCategoryId());
+
         return savedService;
     }
 
     @Transactional
     public Service updateService(String serviceId, Servicedto dto, String supplierId) {
         Service service = serviceRepository.findById(serviceId)
-            .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
 
+        // Verificar se o serviço pertence ao fornecedor
         if (!service.getSupplierId().equals(supplierId)) {
             throw new RuntimeException("Sem permissão para editar este serviço");
         }
 
+        // Se mudou a categoria, atualizar contadores
         if (!service.getCategoryId().equals(dto.getCategoryId())) {
             categoryService.decrementServiceCount(service.getCategoryId());
             categoryService.incrementServiceCount(dto.getCategoryId());
@@ -65,6 +75,11 @@ public class ServiceService {
         service.setFeatures(dto.getFeatures());
         service.setCapacity(dto.getCapacity());
         service.setDuration(dto.getDuration());
+
+        // Portfolio
+        service.setServiceImages(dto.getServiceImages());
+        service.setServiceVideos(dto.getServiceVideos());
+
         service.setUpdatedAt(LocalDateTime.now());
 
         return serviceRepository.save(service);
@@ -73,13 +88,16 @@ public class ServiceService {
     @Transactional
     public void deleteService(String serviceId, String supplierId) {
         Service service = serviceRepository.findById(serviceId)
-            .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
 
+        // Verificar se o serviço pertence ao fornecedor
         if (!service.getSupplierId().equals(supplierId)) {
             throw new RuntimeException("Sem permissão para deletar este serviço");
         }
 
+        // Decrementar contador da categoria
         categoryService.decrementServiceCount(service.getCategoryId());
+
         serviceRepository.delete(service);
     }
 
@@ -102,38 +120,42 @@ public class ServiceService {
     public List<Service> searchServices(Searchfilterdto filter) {
         List<Service> results = serviceRepository.findByAvailableTrue();
 
+        // Filtrar por palavra-chave
         if (filter.getKeyword() != null && !filter.getKeyword().isEmpty()) {
             String keyword = filter.getKeyword().toLowerCase();
             results = results.stream()
-                .filter(s -> s.getTitle().toLowerCase().contains(keyword) ||
-                           s.getDescription().toLowerCase().contains(keyword))
-                .collect(Collectors.toList());
+                    .filter(s -> s.getTitle().toLowerCase().contains(keyword) ||
+                            s.getDescription().toLowerCase().contains(keyword))
+                    .collect(Collectors.toList());
         }
 
+        // Filtrar por categoria
         if (filter.getCategory() != null && !filter.getCategory().isEmpty()) {
             results = results.stream()
-                .filter(s -> s.getCategoryId() != null && s.getCategoryId().equals(filter.getCategory()))
-                .collect(Collectors.toList());
+                    .filter(s -> s.getCategoryId() != null && s.getCategoryId().equals(filter.getCategory()))
+                    .collect(Collectors.toList());
         }
 
+        // Filtrar por faixa de preço
         if (filter.getMinPrice() != null) {
             results = results.stream()
-                .filter(s -> s.getPrice() >= filter.getMinPrice())
-                .collect(Collectors.toList());
+                    .filter(s -> s.getPrice() >= filter.getMinPrice())
+                    .collect(Collectors.toList());
         }
 
         if (filter.getMaxPrice() != null) {
             results = results.stream()
-                .filter(s -> s.getPrice() <= filter.getMaxPrice())
-                .collect(Collectors.toList());
+                    .filter(s -> s.getPrice() <= filter.getMaxPrice())
+                    .collect(Collectors.toList());
         }
 
+        // Filtrar por localização
         if (filter.getCity() != null && !filter.getCity().isEmpty()) {
             String city = filter.getCity().toLowerCase();
             results = results.stream()
-                .filter(s -> s.getLocation() != null &&
-                           s.getLocation().toLowerCase().contains(city))
-                .collect(Collectors.toList());
+                    .filter(s -> s.getLocation() != null &&
+                            s.getLocation().toLowerCase().contains(city))
+                    .collect(Collectors.toList());
         }
 
         return results;
@@ -142,7 +164,7 @@ public class ServiceService {
     @Transactional
     public void incrementViews(String serviceId) {
         Service service = serviceRepository.findById(serviceId)
-            .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
         service.setViews(service.getViews() + 1);
         serviceRepository.save(service);
     }
@@ -150,7 +172,7 @@ public class ServiceService {
     @Transactional
     public void incrementContacts(String serviceId) {
         Service service = serviceRepository.findById(serviceId)
-            .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
         service.setContacts(service.getContacts() + 1);
         serviceRepository.save(service);
     }
@@ -160,10 +182,11 @@ public class ServiceService {
     }
 
     public List<Service> findFeaturedServices() {
-        // Retorna os 6 serviços mais visualizados que estão disponíveis
         return serviceRepository.findByAvailableTrue().stream()
-            .sorted((s1, s2) -> Integer.compare(s2.getViews(), s1.getViews()))
-            .limit(6)
-            .collect(Collectors.toList());
+                .sorted((s1, s2) -> Integer.compare(
+                        s2.getViews() == null ? 0 : s2.getViews(),
+                        s1.getViews() == null ? 0 : s1.getViews()))
+                .limit(6)
+                .collect(Collectors.toList());
     }
 }

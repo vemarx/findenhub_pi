@@ -1,14 +1,11 @@
 package com.example.finden_pi.controller;
 
-// removed unused import Eventdto
 import com.example.finden_pi.dto.Searchfilterdto;
 import com.example.finden_pi.dto.Servicedto;
-// removed unused import Event
 import com.example.finden_pi.model.Service;
 import com.example.finden_pi.model.User;
 import com.example.finden_pi.security.SecurityUtils;
 import com.example.finden_pi.service.CategoryService;
-// removed unused import EventService
 import com.example.finden_pi.service.ServiceService;
 import com.example.finden_pi.service.UserService;
 import jakarta.validation.Valid;
@@ -58,7 +55,6 @@ public class ServiceController {
         Service service = serviceService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
 
-        // Incrementar visualizações
         serviceService.incrementViews(id);
 
         User supplier = userService.findById(service.getSupplierId())
@@ -81,6 +77,7 @@ public class ServiceController {
 
         model.addAttribute("serviceDTO", new Servicedto());
         model.addAttribute("categories", categoryService.findAllActive());
+        model.addAttribute("isEdit", false);
         return "service-form";
     }
 
@@ -93,6 +90,7 @@ public class ServiceController {
 
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.findAllActive());
+            model.addAttribute("isEdit", false);
             return "service-form";
         }
 
@@ -100,7 +98,8 @@ public class ServiceController {
 
         try {
             serviceService.createService(dto, user.getId());
-            redirectAttributes.addFlashAttribute("success", "Serviço criado com sucesso!");
+            redirectAttributes.addFlashAttribute("success",
+                    "✅ Serviço cadastrado com sucesso! Agora ele está visível em seu perfil público para todos os organizadores.");
             return "redirect:/supplier/dashboard";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -129,6 +128,10 @@ public class ServiceController {
         dto.setFeatures(service.getFeatures());
         dto.setCapacity(service.getCapacity());
         dto.setDuration(service.getDuration());
+
+        // Portfolio
+        dto.setServiceImages(service.getServiceImages());
+        dto.setServiceVideos(service.getServiceVideos());
 
         model.addAttribute("serviceDTO", dto);
         model.addAttribute("categories", categoryService.findAllActive());

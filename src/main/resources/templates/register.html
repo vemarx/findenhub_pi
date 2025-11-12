@@ -13,7 +13,49 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
-    
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 50px 0;
+      }
+      .register-card {
+        max-width: 600px;
+        margin: 0 auto;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.5s ease;
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .logo {
+        font-size: 3rem;
+        color: #667eea;
+      }
+      .user-type-card {
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .user-type-card:hover {
+        border-color: #667eea;
+        transform: translateY(-5px);
+      }
+      .user-type-card.active {
+        border-color: #667eea;
+        background: #f0f4ff;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -21,8 +63,14 @@
         <div class="card-body p-5">
           <div class="text-center mb-4">
             <i class="bi bi-calendar-event logo"></i>
-            <h2 class="fw-bold mt-3">FindenHub</h2>
+            <h2 class="fw-bold mt-3">FindenPI</h2>
             <p class="text-muted">Crie sua conta gratuitamente</p>
+          </div>
+
+          <!-- Alerts -->
+          <div th:if="${error}" class="alert alert-danger">
+            <i class="bi bi-exclamation-circle"></i>
+            <span th:text="${error}"></span>
           </div>
 
           <form
@@ -137,27 +185,37 @@
               />
             </div>
 
-            <!-- Localização -->
+            <!-- Localização COM API -->
             <div class="row">
-              <div class="col-md-8 mb-3">
-                <label class="form-label">Cidade</label>
-                <input type="text" th:field="*{city}" class="form-control" />
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Estado (UF)</label>
+                <select
+                  id="stateSelect"
+                  th:field="*{state}"
+                  class="form-select"
+                >
+                  <option value="">Carregando...</option>
+                </select>
               </div>
 
-              <div class="col-md-4 mb-3">
-                <label class="form-label">Estado</label>
-                <input
-                  type="text"
-                  th:field="*{state}"
-                  class="form-control"
-                  maxlength="2"
-                  placeholder="SP"
-                />
+              <div class="col-md-8 mb-3">
+                <label class="form-label">Cidade</label>
+                <select
+                  id="citySelect"
+                  th:field="*{city}"
+                  class="form-select"
+                  disabled
+                >
+                  <option value="">Primeiro selecione um estado</option>
+                </select>
               </div>
             </div>
 
             <!-- Campos específicos para Fornecedores -->
             <div id="supplierFields" style="display: none">
+              <hr />
+              <h6 class="text-primary mb-3">Informações da Empresa</h6>
+
               <div class="mb-3">
                 <label class="form-label">Nome da Empresa</label>
                 <input
@@ -173,6 +231,7 @@
                   th:field="*{description}"
                   class="form-control"
                   rows="3"
+                  placeholder="Conte sobre seus serviços..."
                 ></textarea>
               </div>
             </div>
@@ -193,6 +252,11 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Location Picker API -->
+    <script src="/js/location-picker.js"></script>
+
     <script>
       // Mostrar/esconder campos específicos para fornecedores
       document.querySelectorAll('input[name="userType"]').forEach((radio) => {
@@ -212,7 +276,5 @@
         });
       });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

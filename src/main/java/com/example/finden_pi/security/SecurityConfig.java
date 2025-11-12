@@ -44,6 +44,13 @@ public class SecurityConfig {
                         // 🔐 Áreas protegidas
                         .requestMatchers("/organizer/**").hasAuthority("ORGANIZER")
                         .requestMatchers("/supplier/**").hasAuthority("SUPPLIER")
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
+                                "/api/locations/**")
+                        .permitAll()
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
+                                "/api/locations/**")
+                        .permitAll()
+                        .requestMatchers("/api/upload/**").authenticated()
 
                         // 🔒 Tudo o resto exige login
                         .anyRequest().authenticated())
