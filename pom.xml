@@ -15,7 +15,7 @@
     <artifactId>finden_pi</artifactId>
     <version>1.0.0</version>
     <name>FindenPI</name>
-    <description>Marketplace de eventos conectando clientes e fornecedores</description>
+    <description>Gestão completa para o seu evento!</description>
 
     <properties>
         <java.version>17</java.version>
@@ -101,6 +101,12 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+                <!-- Note: if you build with a newer system JDK (for example Java 24) you may
+                     encounter Lombok incompatibilities with the system javac. The recommended
+                     approach is to build using JDK 17 (set JAVA_HOME to a JDK 17) or activate
+                     the `use-toolchains` profile (see project root toolchains.xml.example).
+                     A toolchains-based build is provided in the `use-toolchains` profile below
+                     — activate with `-Puse-toolchains` after creating ~/.m2/toolchains.xml. -->
             </plugin>
 
             <!-- Toolchains plugin: permite ao Maven usar um JDK específico configurado em
@@ -141,4 +147,38 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- Optional profile to enable Maven Toolchains plugin when you want Maven to
+         select a specific JDK (e.g. Temurin 17) defined in your ~/.m2/toolchains.xml.
+         Activate with: mvn -Puse-toolchains <goal>
+         Example toolchains file is provided as toolchains.xml.example in the project root. -->
+    <profiles>
+        <profile>
+            <id>use-toolchains</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-toolchains-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>toolchain</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <toolchains>
+                                <jdk>
+                                    <version>17</version>
+                                    <vendor>temurin</vendor>
+                                </jdk>
+                            </toolchains>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
