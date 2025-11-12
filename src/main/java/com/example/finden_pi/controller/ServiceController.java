@@ -27,9 +27,6 @@ public class ServiceController {
     private final UserService userService;
     private final SecurityUtils securityUtils;
 
-    // ============================
-    // LISTAR TODOS OS SERVIÇOS
-    // ============================
     @GetMapping
     public String listServices(Model model) {
         model.addAttribute("services", serviceService.findAllAvailable());
@@ -37,9 +34,6 @@ public class ServiceController {
         return "services-list";
     }
 
-    // ============================
-    // BUSCAR SERVIÇOS (FILTRO)
-    // ============================
     @GetMapping("/search")
     public String searchServices(@ModelAttribute Searchfilterdto filter, Model model) {
         model.addAttribute("services", serviceService.searchServices(filter));
@@ -48,9 +42,6 @@ public class ServiceController {
         return "services-list";
     }
 
-    // ============================
-    // FILTRAR POR CATEGORIA
-    // ============================
     @GetMapping("/category/{categoryId}")
     public String servicesByCategory(@PathVariable String categoryId, Model model) {
         model.addAttribute("services", serviceService.findByCategory(categoryId));
@@ -59,15 +50,11 @@ public class ServiceController {
         return "services-list";
     }
 
-    // ============================
-    // DETALHAR UM SERVIÇO
-    // ============================
     @GetMapping("/{id}")
     public String viewService(@PathVariable String id, Model model) {
         Service service = serviceService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
 
-        // Incrementa visualizações
         serviceService.incrementViews(id);
 
         User supplier = userService.findById(service.getSupplierId())
@@ -80,9 +67,6 @@ public class ServiceController {
         return "service-detail";
     }
 
-    // ============================
-    // FORMULÁRIO DE NOVO SERVIÇO
-    // ============================
     @GetMapping("/new")
     public String showCreateForm(Authentication authentication, Model model) {
         User user = securityUtils.getCurrentUser(authentication.getName());
@@ -93,45 +77,36 @@ public class ServiceController {
 
         model.addAttribute("serviceDTO", new Servicedto());
         model.addAttribute("categories", categoryService.findAllActive());
-        model.addAttribute("isEdit", false); // 🔥 ESSENCIAL!
+        model.addAttribute("isEdit", false);
         return "service-form";
     }
 
-    // ============================
-    // CRIAR NOVO SERVIÇO
-    // ============================
     @PostMapping("/new")
     public String createService(Authentication authentication,
-            @Valid @ModelAttribute("serviceDTO") Servicedto dto,
+            @Valid @ModelAttribute Servicedto dto,
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.findAllActive());
+            model.addAttribute("isEdit", false);
             return "service-form";
         }
 
         User user = securityUtils.getCurrentUser(authentication.getName());
 
         try {
-            // ✅ Buscar o nome da categoria e preencher no DTO
-            categoryService.findById(dto.getCategoryId())
-                    .ifPresent(cat -> dto.setCategoryName(cat.getName()));
-
             serviceService.createService(dto, user.getId());
-            redirectAttributes.addFlashAttribute("success", "Serviço criado com sucesso!");
+            redirectAttributes.addFlashAttribute("success",
+                    "✅ Serviço cadastrado com sucesso! Agora ele está visível em seu perfil público para todos os organizadores.");
             return "redirect:/supplier/dashboard";
-
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Erro ao criar serviço: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/services/new";
         }
     }
 
-    // ============================
-    // FORMULÁRIO DE EDIÇÃO
-    // ============================
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable String id, Authentication authentication, Model model) {
         User user = securityUtils.getCurrentUser(authentication.getName());
@@ -148,12 +123,15 @@ public class ServiceController {
         dto.setDescription(service.getDescription());
         dto.setPrice(service.getPrice());
         dto.setCategoryId(service.getCategoryId());
-        dto.setCategoryName(service.getCategoryName());
         dto.setLocation(service.getLocation());
         dto.setImageUrl(service.getImageUrl());
         dto.setFeatures(service.getFeatures());
         dto.setCapacity(service.getCapacity());
         dto.setDuration(service.getDuration());
+
+        // Portfolio
+        dto.setServiceImages(service.getServiceImages());
+        dto.setServiceVideos(service.getServiceVideos());
 
         model.addAttribute("serviceDTO", dto);
         model.addAttribute("categories", categoryService.findAllActive());
@@ -162,13 +140,10 @@ public class ServiceController {
         return "service-form";
     }
 
-    // ============================
-    // ATUALIZAR SERVIÇO
-    // ============================
     @PostMapping("/edit/{id}")
     public String updateService(@PathVariable String id,
             Authentication authentication,
-            @Valid @ModelAttribute("serviceDTO") Servicedto dto,
+            @Valid @ModelAttribute Servicedto dto,
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes) {
@@ -182,23 +157,15 @@ public class ServiceController {
         User user = securityUtils.getCurrentUser(authentication.getName());
 
         try {
-            // ✅ Atualiza o nome da categoria (caso o fornecedor tenha alterado)
-            categoryService.findById(dto.getCategoryId())
-                    .ifPresent(cat -> dto.setCategoryName(cat.getName()));
-
             serviceService.updateService(id, dto, user.getId());
             redirectAttributes.addFlashAttribute("success", "Serviço atualizado com sucesso!");
             return "redirect:/supplier/dashboard";
-
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Erro ao atualizar serviço: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/services/edit/" + id;
         }
     }
 
-    // ============================
-    // EXCLUIR SERVIÇO
-    // ============================
     @PostMapping("/delete/{id}")
     public String deleteService(@PathVariable String id,
             Authentication authentication,
@@ -210,7 +177,7 @@ public class ServiceController {
             serviceService.deleteService(id, user.getId());
             redirectAttributes.addFlashAttribute("success", "Serviço deletado com sucesso!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Erro ao deletar serviço: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/supplier/dashboard";

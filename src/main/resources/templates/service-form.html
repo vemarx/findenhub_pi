@@ -8,8 +8,6 @@
     >
       Serviço
     </title>
-
-    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -19,17 +17,29 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
-    <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/css/global.css}" />
-    <link rel="stylesheet" th:href="@{/css/services.css}" />
+    <style>
+      body {
+        background: #f8f9fa;
+      }
+      .form-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+      }
+      .form-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
   </head>
-
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
         <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
-          <i class="bi bi-calendar-event"></i> FindenHub
+          <i class="bi bi-calendar-event"></i> FindenPI
         </a>
         <a th:href="@{/supplier/dashboard}" class="btn btn-outline-primary">
           <i class="bi bi-arrow-left"></i> Voltar
@@ -38,9 +48,9 @@
     </nav>
 
     <!-- Header -->
-    <div class="form-header py-4 bg-light mb-4 border-bottom">
+    <div class="form-header">
       <div class="container">
-        <h1 class="fw-bold text-primary">
+        <h1>
           <i
             th:class="${isEdit != null and isEdit} ? 'bi bi-pencil-square' : 'bi bi-plus-circle'"
           ></i>
@@ -51,12 +61,39 @@
       </div>
     </div>
 
-    <!-- Mensagens (success / error) -->
+    <!-- Alert Informativo -->
+    <div class="container mb-4">
+      <div class="alert alert-info border-0 shadow-sm">
+        <h5 class="alert-heading">
+          <i class="bi bi-lightbulb-fill"></i> 💡 Como funciona o portfólio?
+        </h5>
+        <hr />
+        <ul class="mb-0">
+          <li>
+            <strong>Imagem Principal:</strong> Aparece no card do serviço na
+            listagem
+          </li>
+          <li>
+            <strong>Galeria de Imagens:</strong> Mostre fotos de trabalhos
+            realizados (portfólio)
+          </li>
+          <li>
+            <strong>Vídeos:</strong> Links do YouTube, Vimeo ou outros para
+            demonstrar seu trabalho
+          </li>
+          <li>
+            <strong>📢 Seu serviço ficará visível</strong> para todos os
+            organizadores no seu perfil público!
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Mensagens -->
     <div class="container">
       <div
         th:if="${success}"
         class="alert alert-success alert-dismissible fade show"
-        role="alert"
       >
         <i class="bi bi-check-circle-fill"></i>
         <span th:text="${success}"></span>
@@ -64,13 +101,12 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="alert"
-          aria-label="Close"
         ></button>
       </div>
+
       <div
         th:if="${error}"
         class="alert alert-danger alert-dismissible fade show"
-        role="alert"
       >
         <i class="bi bi-exclamation-triangle-fill"></i>
         <span th:text="${error}"></span>
@@ -78,7 +114,6 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="alert"
-          aria-label="Close"
         ></button>
       </div>
     </div>
@@ -87,7 +122,7 @@
     <div class="container pb-5">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <div class="card form-card shadow-sm border-0">
+          <div class="card form-card">
             <div class="card-body p-4">
               <form
                 th:action="${isEdit != null and isEdit} ? @{'/services/edit/' + ${serviceDTO.id}} : @{/services/new}"
@@ -120,21 +155,16 @@
                     <option
                       th:each="category : ${categories}"
                       th:value="${category.id}"
-                      th:text="|${category.icon} ${category.name}|"
+                      th:text="${category.icon + ' ' + category.name}"
                       th:data-name="${category.name}"
-                    ></option>
+                    >
+                      Categoria
+                    </option>
                   </select>
                   <div
                     class="text-danger small"
                     th:errors="*{categoryId}"
                   ></div>
-
-                  <!-- Campo oculto para armazenar o nome da categoria -->
-                  <input
-                    type="hidden"
-                    id="categoryNameInput"
-                    th:field="*{categoryName}"
-                  />
                 </div>
 
                 <!-- Descrição -->
@@ -207,23 +237,32 @@
                   </div>
                 </div>
 
+                <hr class="my-4" />
+
+                <!-- PORTFÓLIO -->
+                <h5 class="mb-3">
+                  <i class="bi bi-images"></i> Portfólio (Imagens e Vídeos)
+                </h5>
+
                 <!-- URL principal da imagem -->
                 <div class="mb-3">
-                  <label class="form-label fw-bold"
-                    >URL da Imagem Principal</label
-                  >
+                  <label class="form-label fw-bold">Imagem Principal *</label>
                   <input
                     type="url"
                     th:field="*{imageUrl}"
                     class="form-control"
-                    placeholder="https://exemplo.com/imagem.jpg"
+                    placeholder="https://exemplo.com/imagem-principal.jpg"
                   />
-                  <small class="text-muted">Opcional</small>
+                  <small class="text-muted"
+                    >Esta imagem aparece no card do serviço</small
+                  >
                 </div>
 
-                <!-- Imagens do serviço (múltiplas via URLs) -->
+                <!-- Imagens do serviço -->
                 <div class="mb-4">
-                  <label class="form-label fw-bold">Imagens do Serviço</label>
+                  <label class="form-label fw-bold"
+                    >Galeria de Imagens (Portfólio)</label
+                  >
                   <div id="imagesContainer">
                     <div
                       class="input-group mb-2"
@@ -233,7 +272,7 @@
                         type="url"
                         th:field="*{serviceImages[__${stat.index}__]}"
                         class="form-control"
-                        placeholder="https://exemplo.com/imagem1.jpg"
+                        placeholder="https://exemplo.com/portfolio1.jpg"
                       />
                       <button
                         type="button"
@@ -249,13 +288,15 @@
                     class="btn btn-outline-primary btn-sm"
                     id="addImageBtn"
                   >
-                    <i class="bi bi-plus"></i> Adicionar Imagem
+                    <i class="bi bi-plus"></i> Adicionar Imagem ao Portfólio
                   </button>
                 </div>
 
-                <!-- Vídeos do serviço (URLs) -->
+                <!-- Vídeos do serviço -->
                 <div class="mb-4">
-                  <label class="form-label fw-bold">Vídeos do Serviço</label>
+                  <label class="form-label fw-bold"
+                    >Vídeos (YouTube, Vimeo, etc)</label
+                  >
                   <div id="videosContainer">
                     <div
                       class="input-group mb-2"
@@ -285,9 +326,13 @@
                   </button>
                 </div>
 
+                <hr class="my-4" />
+
                 <!-- Características -->
                 <div class="mb-4">
-                  <label class="form-label fw-bold">Características</label>
+                  <label class="form-label fw-bold"
+                    >Características do Serviço</label
+                  >
                   <div id="featuresContainer">
                     <div
                       class="input-group mb-2"
@@ -318,14 +363,14 @@
                 </div>
 
                 <!-- Botões -->
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between pt-3">
                   <a
                     th:href="@{/supplier/dashboard}"
                     class="btn btn-outline-secondary"
                   >
                     <i class="bi bi-x-circle"></i> Cancelar
                   </a>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary btn-lg">
                     <i
                       th:class="${isEdit != null and isEdit} ? 'bi bi-check-circle' : 'bi bi-plus-circle'"
                     ></i>
@@ -341,9 +386,9 @@
       </div>
     </div>
 
-    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Adicionar características dinamicamente
+      // Adicionar características
       let featureIndex = document.querySelectorAll(
         "#featuresContainer .input-group"
       ).length;
@@ -354,14 +399,16 @@
           const newFeature = document.createElement("div");
           newFeature.className = "input-group mb-2";
           newFeature.innerHTML = `
-          <input type="text" name="features[${featureIndex}]" class="form-control" placeholder="Ex: Inclui garçons">
-          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>
-        `;
+                <input type="text" name="features[${featureIndex}]" class="form-control" placeholder="Ex: Inclui garçons">
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `;
           container.appendChild(newFeature);
           featureIndex++;
         });
 
-      // Adicionar imagens dinamicamente
+      // Adicionar imagens
       let imageIndex = document.querySelectorAll(
         "#imagesContainer .input-group"
       ).length;
@@ -372,14 +419,19 @@
           const newInput = document.createElement("div");
           newInput.className = "input-group mb-2";
           newInput.innerHTML = `
-          <input type="url" name="serviceImages[${imageIndex}]" class="form-control" placeholder="https://exemplo.com/imagem.jpg">
-          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>
-        `;
+                <input type="url" name="serviceImages[${imageIndex}]" class="form-control" 
+                       placeholder="https://exemplo.com/portfolio${
+                         imageIndex + 1
+                       }.jpg">
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `;
           container.appendChild(newInput);
           imageIndex++;
         });
 
-      // Adicionar vídeos dinamicamente
+      // Adicionar vídeos
       let videoIndex = document.querySelectorAll(
         "#videosContainer .input-group"
       ).length;
@@ -390,34 +442,15 @@
           const newInput = document.createElement("div");
           newInput.className = "input-group mb-2";
           newInput.innerHTML = `
-          <input type="url" name="serviceVideos[${videoIndex}]" class="form-control" placeholder="https://youtube.com/watch?v=...">
-          <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>
-        `;
+                <input type="url" name="serviceVideos[${videoIndex}]" class="form-control" 
+                       placeholder="https://youtube.com/watch?v=...">
+                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `;
           container.appendChild(newInput);
           videoIndex++;
         });
-
-      // Preenche automaticamente o nome da categoria selecionada
-      const categorySelect = document.getElementById("categorySelect");
-      if (categorySelect) {
-        categorySelect.addEventListener("change", function () {
-          const selectedOption = this.options[this.selectedIndex];
-          const categoryName = selectedOption.getAttribute("data-name");
-          const input = document.getElementById("categoryNameInput");
-          if (input) input.value = categoryName || "";
-        });
-
-        // Se já houver uma categoria selecionada (edição), dispara para preencher o hidden
-        if (categorySelect.selectedIndex > 0) {
-          const initialOption =
-            categorySelect.options[categorySelect.selectedIndex];
-          const name = initialOption.getAttribute("data-name");
-          const input = document.getElementById("categoryNameInput");
-          if (input) input.value = name || "";
-        }
-      }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
