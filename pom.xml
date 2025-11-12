@@ -77,6 +77,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Cloudinary para upload de imagens -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.36.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -97,27 +103,28 @@
                 </configuration>
             </plugin>
 
-                <!-- Toolchains plugin: permite ao Maven usar um JDK específico configurado em ~/.m2/toolchains.xml -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-toolchains-plugin</artifactId>
-                    <version>3.1.0</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>toolchain</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <toolchains>
-                            <jdk>
-                                <version>17</version>
-                                <vendor>temurin</vendor>
-                            </jdk>
-                        </toolchains>
-                    </configuration>
-                </plugin>
+            <!-- Toolchains plugin: permite ao Maven usar um JDK específico configurado em
+            ~/.m2/toolchains.xml -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>toolchain</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <toolchains>
+                        <jdk>
+                            <version>17</version>
+                            <vendor>temurin</vendor>
+                        </jdk>
+                    </toolchains>
+                </configuration>
+            </plugin>
 
             <!-- Spring Boot plugin -->
             <plugin>

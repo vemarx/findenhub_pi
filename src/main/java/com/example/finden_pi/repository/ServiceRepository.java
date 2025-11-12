@@ -62,10 +62,4 @@ public interface ServiceRepository extends MongoRepository<Service, String> {
      * Busca serviços por nome da categoria (ex: "Buffet", "Fotografia").
      * Esse método é opcional, mas útil para buscas diretas por nome no futuro.
      */
-    List<Service> findByCategoryNameIgnoreCase(String categoryName);
-
-    /**
-     * Busca serviços disponíveis de uma categoria pelo nome.
-     */
-    List<Service> findByCategoryNameIgnoreCaseAndAvailableTrue(String categoryName);
 }
