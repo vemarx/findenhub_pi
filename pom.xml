@@ -76,7 +76,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
- 
         <!-- Cloudinary para upload de imagens -->
         <dependency>
             <groupId>com.cloudinary</groupId>
@@ -102,7 +101,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
- 
             <!-- Toolchains plugin: permite ao Maven usar um JDK específico configurado em
             ~/.m2/toolchains.xml -->
             <plugin>
@@ -125,7 +123,6 @@
                     </toolchains>
                 </configuration>
             </plugin>
- 
             <!-- Spring Boot plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -17,6 +17,9 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    // ============================
+    // MÉTODOS DE CONSULTA
+    // ============================
     public List<Category> findAllActive() {
         return categoryRepository.findByActiveTrue();
     }
@@ -29,6 +32,19 @@ public class CategoryService {
         return categoryRepository.findByName(name);
     }
 
+    /**
+     * Retorna o nome da categoria a partir do ID.
+     * Caso não encontre, devolve uma string amigável.
+     */
+    public String getCategoryNameById(String categoryId) {
+        return categoryRepository.findById(categoryId)
+                .map(Category::getName)
+                .orElse("Categoria não encontrada");
+    }
+
+    // ============================
+    // MÉTODOS DE MANUTENÇÃO
+    // ============================
     @Transactional
     public Category createCategory(Category category) {
         if (categoryRepository.existsByName(category.getName())) {
@@ -43,6 +59,9 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    // ============================
+    // CONTADOR DE SERVIÇOS POR CATEGORIA
+    // ============================
     @Transactional
     public void incrementServiceCount(String categoryId) {
         Category category = categoryRepository.findById(categoryId)
@@ -59,6 +78,9 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
+    // ============================
+    // CATEGORIAS PADRÃO (BOOTSTRAP)
+    // ============================
     @Transactional
     public void initializeDefaultCategories() {
         if (categoryRepository.count() > 0) {
@@ -77,8 +99,7 @@ public class CategoryService {
                 createCategoryData("Convites", "Design e impressão de convites", "✉️", "#FDCB6E"),
                 createCategoryData("Cerimonial", "Mestres de cerimônia e coordenação", "🎭", "#E17055"),
                 createCategoryData("Flores", "Arranjos florais e buquês", "🌸", "#FF7675"),
-                createCategoryData("Transporte", "Transporte de convidados e noivos", "🚗", "#74B9FF")
-        );
+                createCategoryData("Transporte", "Transporte de convidados e noivos", "🚗", "#74B9FF"));
 
         categoryRepository.saveAll(defaultCategories);
     }

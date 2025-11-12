@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
     <title>Meu Perfil - FindenHub</title>
+=======
+    <title>Meu Perfil - FindenPI</title>
+>>>>>>> 4fa27c22f556da7d76fc77e8beae24b12ed15ff7
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,6 +16,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
+<<<<<<< HEAD
 
     <!-- LINK PARA CSS-->
      <link rel="stylesheet" th:href="@{/css/global.css}">
@@ -35,6 +40,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meu Perfil - FindenHub</title>
+=======
+>>>>>>> 4fa27c22f556da7d76fc77e8beae24b12ed15ff7
 
     <style>
       body {
@@ -329,28 +336,29 @@
                   />
                 </div>
 
-                <!-- Cidade e Estado -->
+                <!-- Estado e Cidade COM API -->
                 <div class="row">
-                  <div class="col-md-8 mb-3">
-                    <label class="form-label fw-bold">Cidade</label>
-                    <input
-                      type="text"
-                      th:field="*{city}"
-                      class="form-control"
-                      placeholder="Ex: São Paulo"
-                    />
-                  </div>
-
                   <div class="col-md-4 mb-3">
                     <label class="form-label fw-bold">Estado (UF)</label>
-                    <input
-                      type="text"
+                    <select
+                      id="stateSelect"
                       th:field="*{state}"
-                      class="form-control"
-                      maxlength="2"
-                      placeholder="SP"
-                      style="text-transform: uppercase"
-                    />
+                      class="form-select"
+                    >
+                      <option value="">Carregando...</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label fw-bold">Cidade</label>
+                    <select
+                      id="citySelect"
+                      th:field="*{city}"
+                      class="form-select"
+                      disabled
+                    >
+                      <option value="">Primeiro selecione um estado</option>
+                    </select>
                   </div>
                 </div>
 
@@ -433,5 +441,33 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Location Picker API -->
+    <script src="/js/location-picker.js"></script>
+
+    <script>
+      // Se já tem estado/cidade preenchidos (edição), carrega as cidades
+      document.addEventListener("DOMContentLoaded", function () {
+        const stateSelect = document.getElementById("stateSelect");
+        const citySelect = document.getElementById("citySelect");
+
+        // Aguarda os estados carregarem
+        setTimeout(function () {
+          // Se tem estado selecionado
+          if (stateSelect.value) {
+            // Carrega as cidades desse estado
+            loadCities(stateSelect.value);
+
+            // Aguarda as cidades carregarem e seleciona a cidade atual
+            setTimeout(function () {
+              const currentCity = "[[${user.city}]]";
+              if (currentCity) {
+                citySelect.value = currentCity;
+              }
+            }, 500);
+          }
+        }, 500);
+      });
+    </script>
   </body>
 </html>

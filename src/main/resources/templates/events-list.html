@@ -323,43 +323,57 @@
               </div>
 
               <!-- Ações -->
-              <!-- Ações -->
-<hr class="my-3">
+              <hr class="my-3" />
 
-<!-- Botão Principal -->
-<div class="d-grid mb-2">
-    <a th:href="@{'/events/' + ${event.id} + '/suppliers'}" 
-       class="btn btn-primary btn-lg">
-        <i class="bi bi-people"></i> Buscar Fornecedores e Pedir Orçamentos
-    </a>
-</div>
+              <!-- Botão Principal -->
+              <div class="d-grid mb-2">
+                <a
+                  th:href="@{'/events/' + ${event.id} + '/suppliers'}"
+                  class="btn btn-primary btn-lg"
+                >
+                  <i class="bi bi-people"></i> Buscar Fornecedores e Pedir
+                  Orçamentos
+                </a>
+              </div>
 
-<!-- Botões Secundários -->
-<div class="row g-2">
-    <div class="col-4">
-        <a th:href="@{'/events/edit/' + ${event.id}}" 
-           class="btn btn-outline-primary w-100">
-            <i class="bi bi-pencil"></i><br>
-            <small>Editar</small>
-        </a>
-    </div>
-    
-    <div class="col-4">
-        <button type="button" class="btn btn-outline-info w-100" 
-                th:onclick="'showEventDetails(\'' + ${event.id} + '\')'">
-            <i class="bi bi-info-circle"></i><br>
-            <small>Detalhes</small>
-        </button>
-    </div>
-    
-    <div class="col-4">
-        <button type="button" class="btn btn-outline-danger w-100" 
-                th:onclick="'confirmDelete(\'' + ${event.id} + '\', \'' + ${event.title} + '\')'">
-            <i class="bi bi-trash"></i><br>
-            <small>Excluir</small>
-        </button>
-    </div>
-</div>
+              <!-- Botões Secundários -->
+              <div class="row g-2">
+                <div class="col-4">
+                  <a
+                    th:href="@{'/events/edit/' + ${event.id}}"
+                    class="btn btn-outline-primary w-100"
+                  >
+                    <i class="bi bi-pencil"></i><br />
+                    <small>Editar</small>
+                  </a>
+                </div>
+
+                <div class="col-4">
+                  <button
+                    type="button"
+                    class="btn btn-outline-info w-100"
+                    th:onclick="'showEventDetails(\'' + ${event.id} + '\')'"
+                  >
+                    <i class="bi bi-info-circle"></i><br />
+                    <small>Detalhes</small>
+                  </button>
+                </div>
+
+                <div class="col-4">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger w-100"
+                    th:onclick="'confirmDelete(\'' + ${event.id} + '\', \'' + ${event.title} + '\')'"
+                  >
+                    <i class="bi bi-trash"></i><br />
+                    <small>Excluir</small>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Estado Vazio -->
       <div th:if="${events.isEmpty()}" class="empty-state">
