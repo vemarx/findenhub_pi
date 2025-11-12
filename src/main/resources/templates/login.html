@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - FindenHub</title>
+
+    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,95 +15,76 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
-    <style>
-      body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .login-card {
-        max-width: 450px;
-        width: 100%;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        animation: slideUp 0.5s ease;
-      }
-
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .logo {
-        font-size: 3rem;
-        color: #667eea;
-      }
-    </style>
+    <!-- Estilo personalizado -->
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
   </head>
+
   <body>
-    <div class="login-card card">
-      <div class="card-body p-5">
+    <div class="login-container">
+      <div class="login-card shadow">
         <div class="text-center mb-4">
-          <i class="bi bi-calendar-event logo"></i>
-          <h2 class="fw-bold mt-3">FindenHub</h2>
-          <p class="text-muted">Entre na sua conta</p>
+          <img th:src="@{/img/logo.png}" alt="FindenHub" class="login-logo" />
+          <p class="subtitle">Bem-vindo(a) de volta!</p>
         </div>
 
-        <div th:if="${error}" class="alert alert-danger">
-          <i class="bi bi-exclamation-circle"></i>
+        <div
+          th:if="${error}"
+          class="alert alert-danger d-flex align-items-center"
+        >
+          <i class="bi bi-exclamation-circle me-2"></i>
           <span th:text="${error}"></span>
         </div>
 
-        <div th:if="${success}" class="alert alert-success">
-          <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
+        <div
+          th:if="${success}"
+          class="alert alert-success d-flex align-items-center"
+        >
+          <i class="bi bi-check-circle me-2"></i>
+          <span th:text="${success}"></span>
         </div>
 
         <form th:action="@{/login}" method="post">
-          <div class="mb-3">
-            <label class="form-label">Email</label>
+          <div class="mb-4">
+            <label class="form-label" for="username">Email</label>
             <input
               type="email"
+              id="username"
               name="username"
-              class="form-control"
+              class="form-control input-field"
               required
               autofocus
             />
           </div>
 
-          <div class="mb-3">
-            <label class="form-label">Senha</label>
+          <div class="mb-4">
+            <label class="form-label" for="password">Senha</label>
             <input
               type="password"
+              id="password"
               name="password"
-              class="form-control"
+              class="form-control input-field"
               required
             />
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
-            <i class="bi bi-box-arrow-in-right"></i> Entrar
+          <button type="submit" class="btn btn-login w-100 py-2 mb-3">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
           </button>
 
           <div class="text-center">
-            <p class="text-muted mb-0">
+            <p class="text-muted mb-1">
               Não tem uma conta?
-              <a th:href="@{/register}" class="text-primary fw-bold"
-                >Cadastre-se</a
-              >
+              <a th:href="@{/register}" class="link-register">Cadastre-se</a>
             </p>
-            <a th:href="@{/}" class="btn btn-link">Voltar para Início</a>
+            <a th:href="@{/}" class="link-back">← Voltar para Início</a>
           </div>
         </form>
       </div>
     </div>
+    <footer class="site-footer">
+  <p>© FindenHub 2025 – Todos os direitos reservados.</p>
+</footer>
+  </body>
+</html>
   </body>
 </html>

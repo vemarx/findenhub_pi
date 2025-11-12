@@ -1,0 +1,193 @@
+/* ================================
+   FINDENHUB - Login Page
+   ================================ */
+
+/* 🎨 Paleta Base */
+:root {
+  --azul-petroleo: #1e2a38;
+  --azul-inovador: #2c4a7a;
+  --azul-neve: #e6edf4;
+  --branco-gelo: #f4f6f8;
+  --cinza-claro: #aeb4bc;
+  --cinza-grafite: #5a5f66;
+  --verde-ciano: #00d1c1;
+  --roxo-neon: #9c4eff;
+  --amarelo-digital: #ffd401;
+}
+
+.login-logo {
+  width: 210px; /* tamanho ideal pro equilíbrio visual */
+  height: auto;
+  display: block;
+  margin: 0 auto 10px auto; /* centraliza e dá espaçamento embaixo */
+}
+
+@media (max-width: 480px) {
+  .login-logo {
+    width: 70px; /* reduz um pouquinho no mobile */
+  }
+}
+
+/* 🌐 Tipografia */
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--branco-gelo);
+  color: var(--cinza-grafite);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🧱 Container do Card */
+.login-container {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+}
+
+.login-card {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 40px 35px;
+  animation: fadeInUp 0.6s ease;
+}
+
+/* ✨ Animação suave */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🖋️ Títulos e subtítulos */
+.title {
+  color: var(--azul-petroleo);
+  font-family: "Manrope", sans-serif;
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--cinza-grafite);
+}
+
+/* 🧾 Inputs */
+.input-field {
+  border-radius: 10px;
+  border: 1px solid var(--cinza-claro);
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: var(--verde-ciano);
+  box-shadow: 0 0 0 0.2rem rgba(0, 209, 193, 0.2);
+}
+
+/* 🔘 Botão principal */
+.btn-login {
+background-color: var(--verde-ciano);
+color: #fff;
+font-family: "Manrope", sans-serif;
+font-weight: 600;
+border: none;
+border-radius: 10px;
+transition: all 0.2s ease;
+}
+
+.btn-login:hover {
+background-color: #00b9ab;
+transform: translateY(-1px);
+box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
+}
+
+/* 🔗 Links */
+.link-register {
+color: var(--verde-ciano);
+text-decoration: none;
+font-weight: 600;
+}
+
+.link-register:hover {
+text-decoration: underline;
+}
+
+.link-back {
+display: inline-block;
+margin-top: 8px;
+color: var(--azul-inovador);
+text-decoration: none;
+font-size: 14px;
+}
+
+.link-back:hover {
+text-decoration: underline;
+}
+
+/* 🧩 Responsividade */
+@media (max-width: 480px) {
+.login-card {
+    padding: 30px 25px;
+}
+
+.title {
+    font-size: 26px;
+}
+}
+
+.site-footer {
+text-align: center;
+padding: 25px 0 15px;
+color: var(--cinza-grafite);
+font-size: 13px;
+font-family: "Inter", sans-serif;
+background: transparent;
+opacity: 0.8;
+}
+
+/* Pequeno espaçamento extra pro conteúdo */
+body {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+
+.login-container {
+  flex: 1; /* empurra o footer pro fim */
+}
+
+/* Links principais */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.footer-links .link {
+  color: var(--azul-petroleo);
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.footer-links .link:hover {
+  color: var(--verde-ciano);
+  text-decoration: underline;
+}
+
+/* Copyright */
+.footer-copy {
+  font-size: 13px;
+  color: var(--cinza-grafite);
+  margin: 0;
+}
+

@@ -1,0 +1,189 @@
+/* ================================
+FINDENHUB - Register Page
+   ================================ */
+
+:root {
+--azul-petroleo: #1e2a38;
+--azul-inovador: #2c4a7a;
+--azul-neve: #e6edf4;
+--branco-gelo: #f4f6f8;
+--cinza-claro: #aeb4bc;
+--cinza-grafite: #5a5f66;
+--verde-ciano: #00d1c1;
+}
+
+body {
+font-family: "Inter", sans-serif;
+background-color: var(--branco-gelo);
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+padding: 40px 15px;
+}
+
+.register-container {
+width: 100%;
+max-width: 640px;
+}
+
+.register-card {
+background-color: #fff;
+border-radius: 20px;
+padding: 40px 35px;
+box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.register-logo {
+width: 200px;
+height: auto;
+margin-bottom: 10px;
+}
+
+.title {
+color: var(--azul-petroleo);
+font-family: "Manrope", sans-serif;
+font-size: 28px;
+margin-bottom: 4px;
+}
+
+.subtitle {
+color: var(--cinza-grafite);
+font-size: 16px;
+margin-bottom: 25px;
+}
+
+/* Campos */
+.input-field {
+border: 1px solid var(--cinza-claro);
+border-radius: 10px;
+transition: 0.2s ease;
+}
+
+.input-field:focus {
+border-color: var(--verde-ciano);
+box-shadow: 0 0 0 0.2rem rgba(0, 209, 193, 0.2);
+}
+
+/* Força os cards a terem largura fixa e centraliza o conjunto */
+.row.g-3 {
+display: flex !important;        /* garante comportamento flex */
+justify-content: center !important;
+align-items: flex-start;
+gap: 1.5rem;
+}
+
+/* Faz com que as colunas não usem 50% cada (evita col-6 se estiver aplicando) */
+.row.g-3 > .col-6 {
+flex: 0 0 auto;     /* impede ocupar 50% */
+width: auto;
+}
+
+/* Define um tamanho consistente para o card */
+.user-type-card {
+width: 220px; /* tamanho fixo que centraliza certinho */
+min-height: 120px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border: 2px solid var(--cinza-claro);
+border-radius: 20px; /* bordas mais arredondadas 💅 */
+background-color: #fff;
+padding: 1.5rem;
+box-sizing: border-box;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.user-type-card:hover {
+border-color: var(--verde-ciano);
+background-color: var(--azul-neve);
+transform: translateY(-3px);
+box-shadow: 0 4px 12px rgba(0, 209, 193, 0.15);
+}
+
+.user-type-card.active {
+border-color: var(--verde-ciano);
+background-color: var(--azul-neve);
+box-shadow: 0 0 0 3px rgba(0, 209, 193, 0.2);
+}
+
+/* Ícone dentro do card */
+.icon {
+color: var(--azul-inovador);
+font-size: 2rem;
+margin-bottom: 5px;
+}
+
+/* Botão principal */
+.btn-register {
+background-color: var(--verde-ciano);
+color: #fff;
+font-family: "Inter", sans-serif;
+font-weight: 600;
+border: none;
+border-radius: 10px;
+transition: all 0.2s ease;
+}
+
+.btn-register:hover {
+background-color: #00b9ab;
+box-shadow: 0 4px 10px rgba(0, 209, 193, 0.3);
+transform: translateY(-1px);
+}
+
+/* Título de seção */
+.section-title {
+color: var(--azul-inovador);
+font-family: "Inter", sans-serif;
+font-weight: 600;
+}
+
+/* Links */
+.link-register {
+color: var(--verde-ciano);
+text-decoration: none;
+font-weight: 600;
+}
+
+.link-register:hover {
+text-decoration: underline;
+}
+
+.link-back {
+color: var(--azul-inovador);
+text-decoration: none;
+font-size: 14px;
+}
+
+.link-back:hover {
+text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+.register-card {
+padding: 30px 20px;
+}
+
+.title {
+font-size: 24px;
+}
+
+.register-logo {
+width: 65px;
+}
+}
