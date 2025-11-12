@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+ 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.0</version>
         <relativePath />
     </parent>
-
+ 
     <groupId>com.example</groupId>
     <artifactId>finden_pi</artifactId>
     <version>1.0.0</version>
     <name>FindenPI</name>
-    <description>Gestão completa para o seu evento!</description>
-
+    <description>Marketplace de eventos conectando clientes e fornecedores</description>
+ 
     <properties>
         <java.version>17</java.version>
         <lombok.version>1.18.32</lombok.version>
     </properties>
-
+ 
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+ 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-
+ 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
+ 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
+ 
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
-
+ 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
+ 
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -61,7 +61,7 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-
+ 
         <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,16 +69,22 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
+ 
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+ 
+        <!-- Cloudinary para upload de imagens -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.36.0</version>
+        </dependency>
     </dependencies>
-
+ 
     <build>
         <plugins>
             <plugin>
@@ -95,17 +101,31 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-                <!-- Note: if you build with a newer system JDK (for example Java 24) you may
-                     encounter Lombok incompatibilities with the system javac. The recommended
-                     approach is to build using JDK 17 (set JAVA_HOME to a JDK 17) or activate
-                     the `use-toolchains` profile (see project root toolchains.xml.example).
-                     A toolchains-based build is provided in the `use-toolchains` profile below
-                     — activate with `-Puse-toolchains` after creating ~/.m2/toolchains.xml. -->
             </plugin>
-
-                <!-- Removed maven-toolchains-plugin to avoid requiring a local ~/.m2/toolchains.xml
-                     Use a system JDK or configure toolchains.xml if you need strict JDK selection. -->
-
+ 
+            <!-- Toolchains plugin: permite ao Maven usar um JDK específico configurado em
+            ~/.m2/toolchains.xml -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>toolchain</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <toolchains>
+                        <jdk>
+                            <version>17</version>
+                            <vendor>temurin</vendor>
+                        </jdk>
+                    </toolchains>
+                </configuration>
+            </plugin>
+ 
             <!-- Spring Boot plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -121,38 +141,4 @@
             </plugin>
         </plugins>
     </build>
-    
-    <!-- Optional profile to enable Maven Toolchains plugin when you want Maven to
-         select a specific JDK (e.g. Temurin 17) defined in your ~/.m2/toolchains.xml.
-         Activate with: mvn -Puse-toolchains <goal>
-         Example toolchains file is provided as toolchains.xml.example in the project root. -->
-    <profiles>
-        <profile>
-            <id>use-toolchains</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-toolchains-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>toolchain</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <toolchains>
-                                <jdk>
-                                    <version>17</version>
-                                    <vendor>temurin</vendor>
-                                </jdk>
-                            </toolchains>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
