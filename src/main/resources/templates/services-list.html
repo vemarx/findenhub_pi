@@ -14,18 +14,22 @@
     />
 
     <!-- LINK PARA CSS-->
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/services.css}">
-
-    
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/services.css}" />
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
-        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
-          <i class="bi bi-calendar-event"></i> FindenHub
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+          <img
+            th:src="@{/img/logo.png}"
+            alt="FindenHub Logo"
+            height="100"
+            class="me-1"
+          />
         </a>
+
         <a th:href="@{/dashboard}" class="btn btn-outline-primary">
           <i class="bi bi-speedometer2"></i> Dashboard
         </a>

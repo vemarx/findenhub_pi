@@ -34,9 +34,15 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
-        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
-          <i class="bi bi-calendar-event"></i> FindenPI
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+          <img
+            th:src="@{/img/logo.png}"
+            alt="FindenHub Logo"
+            height="120"
+            class="me-2"
+          />
         </a>
+
         <a th:href="@{/events}" class="btn btn-outline-primary">
           <i class="bi bi-arrow-left"></i> Voltar aos Eventos
         </a>
