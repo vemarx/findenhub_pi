@@ -79,13 +79,25 @@ body {
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
   transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.1rem;
 }
+
 
 /* ===== EFEITO HOVER ===== */
 .btn-primary:hover {
   background-color: #00b8a9; /* Um tom ligeiramente mais escuro do verde-ciano */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
+}
+
+/* Ajuste do botão nav-bar Registre-se*/
+.navbar .btn-primary {
+  font-size: 1.05rem; /* tamanho um pouco maior que o texto normal */
+  font-weight: 600;   /* mantém o destaque */
+  padding: 0.5rem 1.25rem; /* ajusta o espaço interno */
+  border-radius: 8px; /* mantém o padrão FindenHub */
 }
 
 
@@ -206,9 +218,6 @@ section {
     rgba(255, 255, 255, 0.08) 75%,
     transparent 100%
   );
-  animation: shimmerMove 10s linear infinite;
-  transform: translateX(-50%);
-  z-index: 0;
 }
 
 @keyframes shimmerMove {

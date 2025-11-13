@@ -1,4 +1,4 @@
-# 🎉 FindenHub - Marketplace de Eventos
+# 🎉 FindenHub - Gerenciamento Inteligente de Eventos
 
 **FindenHub** é um marketplace desenvolvido em Java com Spring Boot que conecta organizadores de eventos a fornecedores de serviços. Projeto acadêmico completo com autenticação, persistência em MongoDB e interface web moderna.
 
