@@ -1,5 +1,24 @@
 /* HOME.CSS - INDEX.CSS */
 
+/*NAV-BAR */
+.navbar .btn-primary {
+  margin-top: 4px; /* Ajuste fino para alinhar com os links */
+  margin-right: 5px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar .nav-link {
+  margin-right: 15px;
+  font-size: large;
+}
+
+  /* TENTATIVA DE AJUSTAR A LOGO :( */
+
+
+
 /* Hero */
 .hero-section {
   text-align: center;
@@ -180,6 +199,23 @@
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
 }
+
+/* ===== FOOTER ===== */
+.footer-link,
+.footer-icon {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--verde-ciano);
+}
+
+.footer-icon:hover {
+  transform: scale(1.2);
+}
+
 
 
 

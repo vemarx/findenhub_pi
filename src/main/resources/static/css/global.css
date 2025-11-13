@@ -47,10 +47,6 @@ body {
 /* =========
    NAVBAR
    ========= */
-.navbar {
-  background-color: #fff !important;
-  box-shadow: var(--shadow-soft);
-}
 
 .navbar-brand img {
   transition: transform 0.2s ease;
@@ -98,6 +94,7 @@ body {
   font-weight: 600;   /* mantém o destaque */
   padding: 0.5rem 1.25rem; /* ajusta o espaço interno */
   border-radius: 8px; /* mantém o padrão FindenHub */
+
 }
 
 
