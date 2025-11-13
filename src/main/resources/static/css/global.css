@@ -263,6 +263,11 @@ section {
   box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
 }
 
+/*Ícones */
+.icon-verde-ciano {
+  color: var(--verde-ciano);
+}
+
 /* =========
    FOOTER
    ========= */
