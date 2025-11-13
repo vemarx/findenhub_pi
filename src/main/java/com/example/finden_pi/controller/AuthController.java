@@ -20,31 +20,50 @@ public class AuthController {
     private final UserService userService;
     private final SecurityUtils securityUtils;
 
+    // ============================================
+    // TELA DE REGISTRO
+    // ============================================
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-            model.addAttribute("registrationDTO", new Registrationdto());
+        model.addAttribute("registrationDTO", new Registrationdto());
         return "register";
     }
 
+    // ============================================
+    // PROCESSAR REGISTRO
+    // ============================================
     @PostMapping("/register")
-        public String registerUser(@Valid @ModelAttribute Registrationdto dto,
+    public String registerUser(
+            @Valid @ModelAttribute("registrationDTO") Registrationdto dto,
             BindingResult result,
+            Model model,
             RedirectAttributes redirectAttributes) {
 
+        // ❌ Senha ≠ ConfirmPassword
+        if (!dto.isPasswordConfirmed()) {
+            result.rejectValue("confirmPassword", "password.mismatch", "As senhas não coincidem.");
+        }
+
+        // ❌ Algum erro do Bean Validation
         if (result.hasErrors()) {
             return "register";
         }
 
         try {
             userService.registerUser(dto);
-            redirectAttributes.addFlashAttribute("success", "Cadastro realizado com sucesso! Faça login para continuar.");
+            redirectAttributes.addFlashAttribute("success",
+                    "Cadastro realizado com sucesso! Faça login para continuar.");
             return "redirect:/login";
+
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/register";
+            model.addAttribute("error", e.getMessage());
+            return "register";
         }
     }
 
+    // ============================================
+    // LOGIN
+    // ============================================
     @GetMapping("/login")
     public String showLoginForm(@RequestParam(required = false) String error, Model model) {
         if (error != null) {
@@ -53,6 +72,9 @@ public class AuthController {
         return "login";
     }
 
+    // ============================================
+    // REDIRECIONAR DASHBOARD
+    // ============================================
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication) {
         String email = authentication.getName();

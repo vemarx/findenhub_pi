@@ -24,9 +24,15 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
-        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
-          <i class="bi bi-calendar-event"></i> FindenHub
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+          <img
+            th:src="@{/img/logo.png}"
+            alt="FindenHub Logo"
+            height="120"
+            class="me-2"
+          />
         </a>
+
         <div class="ms-auto">
           <a th:href="@{/profile}" class="btn btn-outline-primary me-2">
             <i class="bi bi-person"></i> Perfil
@@ -156,7 +162,7 @@
         <div
           class="col-md-6"
           th:each="service : ${services}"
-          th:data-category="${service.categoryName}"
+          th:data-category="${@categoryService.getCategoryNameById(service.categoryId)}"
         >
           <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
@@ -177,7 +183,10 @@
               <!-- Categoria -->
               <p class="text-muted small mb-2">
                 <i class="bi bi-tag"></i>
-                <span th:text="${service.categoryName}">Categoria</span>
+                <span
+                  th:text="${@categoryService.getCategoryNameById(service.categoryId)}"
+                  >Categoria</span
+                >
               </p>
 
               <!-- Descrição -->

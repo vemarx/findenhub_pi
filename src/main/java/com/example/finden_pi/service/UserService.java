@@ -19,29 +19,51 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // ============================================
+    // REGISTRO DE USUÁRIO
+    // ============================================
     @Transactional
     public User registerUser(Registrationdto dto) {
-        if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new RuntimeException("Email já cadastrado");
+
+        // --- Verifica email duplicado ---
+        if (userRepository.existsByEmail(dto.getEmail().toLowerCase())) {
+            throw new RuntimeException("Este email já está cadastrado.");
         }
 
+        // --- Verifica senha x confirmação ---
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-            throw new RuntimeException("Senhas não conferem");
+            throw new RuntimeException("As senhas não coincidem.");
         }
 
+        // --- Normaliza telefone ---
+        String normalizedPhone = normalizePhone(dto.getPhone());
+
+        // --- Valida telefone ---
+        if (normalizedPhone != null && !isValidBrazilianPhone(normalizedPhone)) {
+            throw new RuntimeException("Número de telefone inválido. Use um número brasileiro válido.");
+        }
+
+        // Criar usuário
         User user = new User();
         user.setName(dto.getName());
         user.setEmail(dto.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setUserType(dto.getUserType());
-        user.setPhone(dto.getPhone());
+        user.setPhone(normalizedPhone);
         user.setCity(dto.getCity());
         user.setState(dto.getState());
         user.setActive(true);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
 
+        // --- Campos exclusivos para Fornecedores ---
         if (dto.getUserType() == User.UserType.SUPPLIER) {
+
+            // empresa não pode ser vazia
+            if (dto.getCompanyName() == null || dto.getCompanyName().isBlank()) {
+                throw new RuntimeException("Fornecedores devem informar o nome da empresa.");
+            }
+
             user.setCompanyName(dto.getCompanyName());
             user.setDescription(dto.getDescription());
         }
@@ -49,6 +71,31 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    // ============================================
+    // NORMALIZAÇÃO DE TELEFONE
+    // ============================================
+    private String normalizePhone(String phone) {
+        if (phone == null)
+            return null;
+
+        // remove tudo que não é número
+        String cleaned = phone.replaceAll("\\D", "");
+
+        return cleaned.isEmpty() ? null : cleaned;
+    }
+
+    // ============================================
+    // VALIDAÇÃO DE TELEFONE BRASILEIRO
+    // ============================================
+    private boolean isValidBrazilianPhone(String phone) {
+        return phone.matches("^\\d{10,11}$");
+        // 10 dígitos = fixo
+        // 11 dígitos = celular (WhatsApp)
+    }
+
+    // ============================================
+    // BUSCAS
+    // ============================================
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email.toLowerCase());
     }
@@ -69,6 +116,9 @@ public class UserService {
         return userRepository.findByUserTypeAndCityContainingIgnoreCase(User.UserType.SUPPLIER, city);
     }
 
+    // ============================================
+    // ATUALIZAÇÕES
+    // ============================================
     @Transactional
     public User updateUser(User user) {
         user.setUpdatedAt(LocalDateTime.now());
@@ -101,6 +151,9 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // ============================================
+    // CONTADORES
+    // ============================================
     public long countUsers() {
         return userRepository.count();
     }

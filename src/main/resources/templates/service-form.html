@@ -240,22 +240,126 @@
                 <hr class="my-4" />
 
                 <!-- PORTFÓLIO -->
+                <hr class="my-4" />
+
                 <h5 class="mb-3">
                   <i class="bi bi-images"></i> Portfólio (Imagens e Vídeos)
                 </h5>
 
-                <!-- URL principal da imagem -->
-                <div class="mb-3">
+                <!-- IMAGEM PRINCIPAL -->
+                <div class="mb-4">
                   <label class="form-label fw-bold">Imagem Principal *</label>
+
+                  <!-- input file -->
                   <input
-                    type="url"
-                    th:field="*{imageUrl}"
-                    class="form-control"
-                    placeholder="https://exemplo.com/imagem-principal.jpg"
+                    type="file"
+                    accept="image/*"
+                    data-upload-type="image"
+                    data-upload-folder="services"
+                    data-preview-id="previewMainImg"
+                    data-url-input="imageUrlInput"
+                    class="form-control mb-2"
                   />
-                  <small class="text-muted"
-                    >Esta imagem aparece no card do serviço</small
+
+                  <!-- preview da imagem -->
+                  <img
+                    id="previewMainImg"
+                    th:src="*{imageUrl}"
+                    style="max-height: 180px; display: block"
+                    class="rounded mb-2"
+                  />
+
+                  <!-- campo hidden para salvar a URL gerada -->
+                  <input
+                    type="hidden"
+                    id="imageUrlInput"
+                    th:field="*{imageUrl}"
+                  />
+                </div>
+
+                <!-- GALERIA DE IMAGENS -->
+                <div class="mb-4">
+                  <label class="form-label fw-bold"
+                    >Galeria de Imagens (Portfólio)</label
                   >
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    data-upload-type="image"
+                    data-upload-folder="services"
+                    data-preview-id="galleryPreview"
+                    class="form-control mb-2"
+                    onchange="uploadMultipleImages(this.files, 'services','galleryPreviewContainer')"
+                  />
+
+                  <div id="galleryPreviewContainer" class="row mt-3">
+                    <div
+                      class="col-md-3 mb-3"
+                      th:each="img, stat : ${serviceDTO.serviceImages}"
+                    >
+                      <div class="position-relative">
+                        <img
+                          th:src="${img}"
+                          class="img-fluid rounded"
+                          style="height: 150px; object-fit: cover"
+                        />
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+                          onclick="this.closest('.col-md-3').remove()"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                        <input
+                          type="hidden"
+                          th:field="*{serviceImages[__${stat.index}__]}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VÍDEOS -->
+                <div class="mb-4">
+                  <label class="form-label fw-bold"
+                    >Vídeos (Upload de Arquivos)</label
+                  >
+
+                  <input
+                    type="file"
+                    accept="video/*"
+                    data-upload-type="video"
+                    data-upload-folder="services"
+                    multiple
+                    class="form-control mb-2"
+                    onchange="uploadMultipleVideos(this.files, 'services','videosPreviewContainer')"
+                  />
+
+                  <div id="videosPreviewContainer" class="row mt-3">
+                    <div
+                      class="col-md-4 mb-3"
+                      th:each="vid, stat : ${serviceDTO.serviceVideos}"
+                    >
+                      <div class="position-relative">
+                        <video controls style="width: 100%; max-height: 200px">
+                          <source th:src="${vid}" />
+                        </video>
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+                          onclick="this.closest('.col-md-4').remove()"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                        <input
+                          type="hidden"
+                          th:field="*{serviceVideos[__${stat.index}__]}"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Imagens do serviço -->
