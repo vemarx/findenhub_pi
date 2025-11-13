@@ -55,12 +55,10 @@ function showLocalPreview(file, previewId, type) {
   if (!preview) return;
 
   const reader = new FileReader();
-
   reader.onload = function (e) {
     preview.src = e.target.result;
     preview.style.display = "block";
   };
-
   reader.readAsDataURL(file);
 }
 
@@ -213,6 +211,48 @@ function addImageToGallery(url, container) {
         <i class="bi bi-trash"></i>
       </button>
       <input type="hidden" name="serviceImages[]" value="${url}">
+    </div>
+  `;
+  container.appendChild(div);
+}
+
+async function uploadMultipleVideos(files, folder, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  for (let file of files) {
+    if (!file.type.startsWith("video/")) continue;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("folder", folder);
+
+    try {
+      const response = await fetch("/api/upload/video", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        addVideoToGallery(data.url, container);
+      }
+    } catch (error) {}
+  }
+}
+
+function addVideoToGallery(url, container) {
+  const div = document.createElement("div");
+  div.className = "col-md-4 mb-3";
+  div.innerHTML = `
+    <div class="position-relative">
+      <video src="${url}" controls class="w-100 rounded" style="height: 180px; object-fit: cover;"></video>
+      <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+        onclick="this.closest('.col-md-4').remove()">
+        <i class="bi bi-trash"></i>
+      </button>
+      <input type="hidden" name="serviceVideos[]" value="${url}">
     </div>
   `;
   container.appendChild(div);
