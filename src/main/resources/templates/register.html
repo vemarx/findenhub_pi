@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro - FindenHub</title>
+
+    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,262 +15,204 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
-    <style>
-      body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 50px 0;
-      }
-      .register-card {
-        max-width: 600px;
-        margin: 0 auto;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        animation: slideUp 0.5s ease;
-      }
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .logo {
-        font-size: 3rem;
-        color: #667eea;
-      }
-      .user-type-card {
-        border: 2px solid #e5e7eb;
-        border-radius: 10px;
-        padding: 1.5rem;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
-      .user-type-card:hover {
-        border-color: #667eea;
-        transform: translateY(-5px);
-      }
-      .user-type-card.active {
-        border-color: #667eea;
-        background: #f0f4ff;
-      }
-    </style>
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
   </head>
+
   <body>
-    <div class="container">
-      <div class="register-card card">
-        <div class="card-body p-5">
-          <div class="text-center mb-4">
-            <i class="bi bi-calendar-event logo"></i>
-            <h2 class="fw-bold mt-3">FindenPI</h2>
-            <p class="text-muted">Crie sua conta gratuitamente</p>
-          </div>
+    <div class="register-container">
+      <div class="register-card shadow">
+        <div class="text-center mb-4">
+          <img
+            th:src="@{/img/logo.png}"
+            alt="FindenHub"
+            class="register-logo"
+          />
+          <p class="subtitle">Crie já a sua conta!</p>
+        </div>
 
-          <!-- Alerts -->
-          <div th:if="${error}" class="alert alert-danger">
-            <i class="bi bi-exclamation-circle"></i>
-            <span th:text="${error}"></span>
-          </div>
+        <div
+          th:if="${error}"
+          class="alert alert-danger d-flex align-items-center"
+        >
+          <i class="bi bi-exclamation-circle me-2"></i>
+          <span th:text="${error}"></span>
+        </div>
 
-          <form
-            th:action="@{/register}"
-            th:object="${registrationDTO}"
-            method="post"
-          >
-            <!-- Tipo de Usuário -->
-            <div class="mb-4">
-              <label class="form-label fw-bold">Tipo de Conta *</label>
-              <div class="row g-3">
-                <div class="col-6">
-                  <label class="user-type-card text-center">
-                    <input
-                      type="radio"
-                      th:field="*{userType}"
-                      value="ORGANIZER"
-                      class="d-none"
-                      required
-                    />
-                    <i
-                      class="bi bi-person-check-fill text-primary"
-                      style="font-size: 2rem"
-                    ></i>
-                    <h6 class="mt-2 mb-0">Organizador</h6>
-                    <p class="small text-muted mb-0">Busco serviços</p>
-                  </label>
-                </div>
-                <div class="col-6">
-                  <label class="user-type-card text-center">
-                    <input
-                      type="radio"
-                      th:field="*{userType}"
-                      value="SUPPLIER"
-                      class="d-none"
-                      required
-                    />
-                    <i
-                      class="bi bi-briefcase-fill text-primary"
-                      style="font-size: 2rem"
-                    ></i>
-                    <h6 class="mt-2 mb-0">Fornecedor</h6>
-                    <p class="small text-muted mb-0">Ofereço serviços</p>
-                  </label>
-                </div>
+        <form
+          th:action="@{/register}"
+          th:object="${registrationDTO}"
+          method="post"
+        >
+          <!-- Tipo de Conta -->
+          <div class="mb-4">
+            <label class="form-label fw-bold">Tipo de Conta *</label>
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="user-type-card text-center">
+                  <input
+                    type="radio"
+                    th:field="*{userType}"
+                    value="ORGANIZER"
+                    class="d-none"
+                    required
+                  />
+                  <i class="bi bi-person-check-fill icon"></i>
+                  <h6 class="mt-2 mb-0">Organizador</h6>
+                  <p class="small text-muted mb-0">Busco serviços</p>
+                </label>
               </div>
-              <div class="text-danger small" th:errors="*{userType}"></div>
+
+              <div class="col-6">
+                <label class="user-type-card text-center">
+                  <input
+                    type="radio"
+                    th:field="*{userType}"
+                    value="SUPPLIER"
+                    class="d-none"
+                    required
+                  />
+                  <i class="bi bi-briefcase-fill icon"></i>
+                  <h6 class="mt-2 mb-0">Fornecedor</h6>
+                  <p class="small text-muted mb-0">Ofereço serviços</p>
+                </label>
+              </div>
+            </div>
+            <div class="text-danger small" th:errors="*{userType}"></div>
+          </div>
+
+          <!-- Campos padrão -->
+          <div class="mb-3">
+            <label class="form-label">Nome Completo *</label>
+            <input
+              type="text"
+              th:field="*{name}"
+              class="form-control input-field"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email *</label>
+            <input
+              type="email"
+              th:field="*{email}"
+              class="form-control input-field"
+              required
+            />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Senha *</label>
+              <input
+                type="password"
+                th:field="*{password}"
+                class="form-control input-field"
+                minlength="6"
+                required
+              />
             </div>
 
-            <!-- Nome -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Confirmar Senha *</label>
+              <input
+                type="password"
+                th:field="*{confirmPassword}"
+                class="form-control input-field"
+                minlength="6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Telefone</label>
+            <input
+              type="tel"
+              th:field="*{phone}"
+              class="form-control input-field"
+              placeholder="(00) 00000-0000"
+            />
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Estado (UF)</label>
+              <select
+                id="stateSelect"
+                th:field="*{state}"
+                class="form-select input-field"
+              >
+                <option value="">Selecione o estado</option>
+              </select>
+            </div>
+
+            <div class="col-md-8 mb-3">
+              <label class="form-label">Cidade</label>
+              <select
+                id="citySelect"
+                th:field="*{city}"
+                class="form-select input-field"
+                disabled
+              >
+                <option value="">Primeiro selecione um estado</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Campos do fornecedor -->
+          <div id="supplierFields" style="display: none">
+            <hr />
+            <h6 class="section-title mb-3">Informações da Empresa</h6>
+
             <div class="mb-3">
-              <label class="form-label">Nome Completo *</label>
+              <label class="form-label">Nome da Empresa</label>
               <input
                 type="text"
-                th:field="*{name}"
-                class="form-control"
-                required
+                th:field="*{companyName}"
+                class="form-control input-field"
               />
-              <div class="text-danger small" th:errors="*{name}"></div>
             </div>
 
-            <!-- Email -->
             <div class="mb-3">
-              <label class="form-label">Email *</label>
-              <input
-                type="email"
-                th:field="*{email}"
-                class="form-control"
-                required
-              />
-              <div class="text-danger small" th:errors="*{email}"></div>
+              <label class="form-label">Descrição dos Serviços</label>
+              <textarea
+                th:field="*{description}"
+                class="form-control input-field"
+                rows="3"
+                placeholder="Conte sobre seus serviços..."
+              ></textarea>
             </div>
+          </div>
 
-            <!-- Senha -->
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Senha *</label>
-                <input
-                  type="password"
-                  th:field="*{password}"
-                  class="form-control"
-                  minlength="6"
-                  required
-                />
-                <div class="text-danger small" th:errors="*{password}"></div>
-              </div>
+          <button type="submit" class="btn btn-register w-100 py-2 mb-3">
+            <i class="bi bi-person-plus me-1"></i> Cadastrar
+          </button>
 
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Confirmar Senha *</label>
-                <input
-                  type="password"
-                  th:field="*{confirmPassword}"
-                  class="form-control"
-                  minlength="6"
-                  required
-                />
-                <div
-                  class="text-danger small"
-                  th:errors="*{confirmPassword}"
-                ></div>
-              </div>
-            </div>
-
-            <!-- Telefone -->
-            <div class="mb-3">
-              <label class="form-label">Telefone</label>
-              <input
-                type="tel"
-                th:field="*{phone}"
-                class="form-control"
-                placeholder="(00) 00000-0000"
-              />
-            </div>
-
-            <!-- Localização COM API -->
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label class="form-label">Estado (UF)</label>
-                <select
-                  id="stateSelect"
-                  th:field="*{state}"
-                  class="form-select"
-                >
-                  <option value="">Carregando...</option>
-                </select>
-              </div>
-
-              <div class="col-md-8 mb-3">
-                <label class="form-label">Cidade</label>
-                <select
-                  id="citySelect"
-                  th:field="*{city}"
-                  class="form-select"
-                  disabled
-                >
-                  <option value="">Primeiro selecione um estado</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Campos específicos para Fornecedores -->
-            <div id="supplierFields" style="display: none">
-              <hr />
-              <h6 class="text-primary mb-3">Informações da Empresa</h6>
-
-              <div class="mb-3">
-                <label class="form-label">Nome da Empresa</label>
-                <input
-                  type="text"
-                  th:field="*{companyName}"
-                  class="form-control"
-                />
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Descrição dos Serviços</label>
-                <textarea
-                  th:field="*{description}"
-                  class="form-control"
-                  rows="3"
-                  placeholder="Conte sobre seus serviços..."
-                ></textarea>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
-              <i class="bi bi-person-plus"></i> Cadastrar
-            </button>
-
-            <div class="text-center">
-              <p class="text-muted mb-0">
-                Já tem uma conta?
-                <a th:href="@{/login}" class="text-primary fw-bold">Entrar</a>
-              </p>
-              <a th:href="@{/}" class="btn btn-link">Voltar para Início</a>
-            </div>
-          </form>
-        </div>
+          <div class="text-center">
+            <p class="text-muted mb-1">
+              Já tem uma conta?
+              <a th:href="@{/login}" class="link-register">Entrar</a>
+            </p>
+            <a th:href="@{/}" class="link-back">← Voltar para Início</a>
+          </div>
+        </form>
       </div>
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Location Picker API -->
     <script src="/js/location-picker.js"></script>
 
     <script>
-      // Mostrar/esconder campos específicos para fornecedores
       document.querySelectorAll('input[name="userType"]').forEach((radio) => {
         radio.addEventListener("change", function () {
           const supplierFields = document.getElementById("supplierFields");
-          if (this.value === "SUPPLIER") {
-            supplierFields.style.display = "block";
-          } else {
-            supplierFields.style.display = "none";
-          }
-
-          // Adicionar classe active ao card selecionado
+          supplierFields.style.display =
+            this.value === "SUPPLIER" ? "block" : "none";
           document.querySelectorAll(".user-type-card").forEach((card) => {
             card.classList.remove("active");
           });
