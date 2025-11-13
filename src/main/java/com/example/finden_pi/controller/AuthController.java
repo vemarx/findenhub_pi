@@ -41,7 +41,7 @@ public class AuthController {
 
         // ❌ Senha ≠ ConfirmPassword
         if (!dto.isPasswordConfirmed()) {
-            result.rejectValue("confirmPassword", null, "As senhas não coincidem.");
+            result.rejectValue("confirmPassword", "password.mismatch", "As senhas não coincidem.");
         }
 
         // ❌ Algum erro do Bean Validation
