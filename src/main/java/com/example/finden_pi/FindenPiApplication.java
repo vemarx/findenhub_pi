@@ -4,11 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-
 @SpringBootApplication
 @EnableMongoRepositories
 public class FindenPiApplication {
-    
+
     public static void main(String[] args) {
         SpringApplication.run(FindenPiApplication.class, args);
         System.out.println("\n==============================================");
