@@ -22,8 +22,6 @@
      
      <!-- Bootstrap JS -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
     
   </head>
   <body>
@@ -34,7 +32,7 @@
     >
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-      <img th:src="@{img/logo.png}" alt="FindenHub Logo" height="100" class="me-2">
+      <img th:src="@{img/logo.png}" alt="FindenHub Logo" height="90" class="me-2">
       </a>
 
 
@@ -57,7 +55,7 @@
             </li>
             <li class="nav-item">
               <a class="btn-primary btn-sm ms-2" th:href="@{/register}"
-                >Registre-se</a
+                >Cadastre-se</a
               >
             </li>
           </ul>
@@ -80,7 +78,7 @@
       </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- Carrossel Section -->
     <section class="py-5 bg-light">
       <div class="container">
         <div class="row g-4">
@@ -106,43 +104,40 @@
       </div>
     </section>
 
-     <!-- Carrossel Section -->
-      <div id="carouselServicos" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img th:src="@{/img/magdallenas.png}" alt="Buffet" class="d-block w-100" />
-      </div>
+     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
 
-      <div class="carousel-item">
-        <img th:src="@{/img/espacoraiz.png}" alt="Decoração" class="d-block w-100" />
+    <!-- SLIDE 1 -->
+    <div class="carousel-item active">
+      <div class="d-flex justify-content-center">
+        <img th:src="@{/img/lumen.png}" class="d-block w-25 mx-2" alt="Iluminação" />
+        <img th:src="@{/img/axxiscerimonial.png}" class="d-block w-25 mx-2" alt="Espaços" />
+        <img th:src="@{/img/magdallenas.png}" class="d-block w-25 mx-2" alt="Buffet" />
       </div>
-
-      <div class="carousel-item">
-        <img th:src="@{/img/lumen.png}" alt="Iluminação" class="d-block w-100" />
-      </div>
-
-      <div class="carousel-item">
-        <img th:src="@{/img/aurorahall.png}" alt="Espaços" class="d-block w-100" />
-      </div>
-
-      <div class="carousel-item">
-        <img th:src="@{/img/nucleo.png}" alt="Cerimonial" class="d-block w-100" />
-      </div>
-
-      <!-- continuação carrossel -->
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselServicos" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselServicos" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Próximo</span>
-    </button>
+    <!-- SLIDE 2 -->
+    <div class="carousel-item active">
+      <div class="d-flex justify-content-center">
+        <img th:src="@{/img/elofoto.png}" class="d-block w-25 mx-2" alt="Fotografia" />
+        <img th:src="@{/img/safeguard.png}" class="d-block w-25 mx-2" alt="Segurança" />
+        <img th:src="@{/img/aurora.png}" class="d-block w-25 mx-2" alt="Cerimonial" />
+      </div>
+    </div>
+  
   </div>
 
+  <!-- CONTROLES -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Próximo</span>
+  </button>
+</div>
 
-    <!-- Categories Section -->
+<!-- Categories Section -->
     <section class="py-5">
       <div class="container">
         <h2 class="text-center mb-5 fw-bold">Categorias de Serviços</h2>
@@ -169,6 +164,7 @@
         </div>
       </div>
     </section>
+
 
     <!-- Featured Services -->
     <section class="py-5 bg-light">

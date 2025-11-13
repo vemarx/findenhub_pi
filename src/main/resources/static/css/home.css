@@ -63,6 +63,23 @@
   font-weight: bold;
 }
 
+/* CARROSSEL DE IMAGENS */
+.carousel-item img {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width: 100%;             
+  height: 400px; /* define uma altura fixa e igual pra todas */
+  object-fit: cover;  /* corta o excesso mantendo o foco central */
+  object-position: center; /* centraliza a parte visível da imagem */
+}
+/* Estiliza as setas do carrossel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%) brightness(200%); /* deixa as setas brancas e visíveis */
+}
+
+
+
 /* ===== CATEGORIAS DE SERVIÇOS ===== */
 .category-card {  
   background-color: var(--azul-neve-claro);
@@ -73,7 +90,7 @@
   color: var(--azul-petroleo);
   transition: all 0.3s ease;
   height: 100%;
-  box-shadow: 0 2px 6px rgba(30, 42, 56, 0.05);
+  box-shadow: 0 2px 8px rgba(30, 42, 56, 0.05);
 }
 
 /* Ícone da categoria */
@@ -88,6 +105,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   margin-bottom: 0.25rem;
+  
 }
 
 .category-card p {
@@ -103,7 +121,26 @@
   box-shadow: 0 6px 12px rgba(0, 209, 193, 0.15);
 }
 
-
+/* ===== How It Works ===== */
+.how-it-works .stemp-card {
+  background-color: var(--azul-neve-claro);
+  border: 1px solid var(--verde-ciano);
+  border-radius: 12px;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--azul-petroleo);
+  transition: all 0.3s ease;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(192, 20, 112, 0.05);
+  }
+  
+.how-it-works .step-icon {
+  background-color: #d01e29;
+  color: #d01e29; 
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  
+}
 
 /* ===== CTA FINAL ===== */
 .cta-section {
@@ -143,6 +180,9 @@
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
 }
+
+
+
 
 
 

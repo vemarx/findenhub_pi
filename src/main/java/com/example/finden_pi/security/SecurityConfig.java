@@ -25,44 +25,49 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                // 🔓 Páginas e recursos públicos
-                .requestMatchers(
-                        "/", // ✅ raiz
-                        "/index.html", // ✅ arquivo direto
-                        "/register",
-                        "/login",
-                        "/services",
-                        "/services/category/**",
-                        "/services/{id:[\\w-]+}",
-                        "/css/**",
-                        "/js/**",
-                        "/img/**",
-                        "/fonts/**",
-                        "/assets/**")
-                .permitAll()
-                // 🔐 Áreas protegidas
-                .requestMatchers("/organizer/**").hasAuthority("ORGANIZER")
-                .requestMatchers("/supplier/**").hasAuthority("SUPPLIER")
-                .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
-                        "/api/locations/**")
-                .permitAll()
-                .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
-                        "/api/locations/**")
-                .permitAll()
-                .requestMatchers("/api/upload/**").authenticated()
-                // 🔒 Tudo o resto exige login
-                .anyRequest().authenticated())
+                        // 🔓 Páginas e recursos públicos
+                        .requestMatchers(
+                                "/", // ✅ raiz
+                                "/index.html", // ✅ arquivo direto
+                                "/register",
+                                "/login",
+                                "/services",
+                                "/services/category/**",
+                                "/services/{id:[\\w-]+}",
+                                "/css/**",
+                                "/js/**",
+                                "/img/**",
+                                "/fonts/**",
+                                "/assets/**")
+                        .permitAll()
+
+                        // 🔐 Áreas protegidas
+                        .requestMatchers("/organizer/**").hasAuthority("ORGANIZER")
+                        .requestMatchers("/supplier/**").hasAuthority("SUPPLIER")
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
+                                "/api/locations/**")
+                        .permitAll()
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
+                                "/api/locations/**")
+                        .permitAll()
+                        .requestMatchers("/api/upload/**").authenticated()
+
+                        // 🔒 Tudo o resto exige login
+                        .anyRequest().authenticated())
+
                 // 🧭 Configuração de login
                 .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/dashboard", true)
-                .failureUrl("/login?error=true")
-                .permitAll())
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/dashboard", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll())
+
                 // 🚪 Configuração de logout
                 .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll())
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll())
+
                 // 🧩 Ignora CSRF só para APIs
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
 

@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("unused")
 public class Service {
     @Id
     private String id;
