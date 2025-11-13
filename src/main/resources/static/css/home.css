@@ -1,5 +1,32 @@
 /* HOME.CSS - INDEX.CSS */
 
+/* ===== NAVBAR AJUSTADA ===== */
+.navbar {
+  padding: 0.5rem 1rem !important; /* reduz drasticamente a altura */
+  background-color: #e6edf4;
+}
+
+/* diminui a logo */
+.navbar-brand img {
+  height: 90px;
+  width: auto;
+}
+
+/* espaçamento entre os itens */
+.navbar-nav .nav-link {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+/* botão “Cadastre-se” mais compacto */
+.navbar .btn {
+  padding: 6px 16px;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+
 /* Hero */
 .hero-section {
   text-align: center;
