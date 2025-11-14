@@ -26,59 +26,37 @@
   </head>
   <body>
 
-    <!-- Navbar -->
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top"
-    >
-      <div class="container">
-        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-      <img th:src="@{img/logo.png}" alt="FindenHub Logo" height="80" class="me-2">
-      </a>
+    <!--NAVBAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
 
+    <!-- Logo (à esquerda) -->
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="/img/logo.png" alt="Logo" width="90">
+    </a>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    <!-- Menu centralizado -->
+    <div class="mx-auto">
+      <ul class="navbar-nav gap-4">
+        <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Categorias</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Como funciona</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Depoimentos</a></li>
+      </ul>
+    </div>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+    <!-- Entrar / Cadastre-se (à direita) -->
+    <div class="d-flex gap-3">
+      <a class="nav-link d-flex align-items-center gap-1" th:href="@{/login}">
+        <i class="bi bi-box-arrow-in-right icon-login"></i>Entrar</a>
 
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/}">Início</a>
-            </li>
+    <!-- Botão Entrar / Cadastre-se (à direita) -->
+      <a class="btn-cadastro btn-sm ms-2" th:href="@{/register}">Cadastre-se</a>
+    </div>
 
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/services}">Categorias</a>
-            </li>
+  </div>
+</nav>
 
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/services}">Como funciona</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/services}">Depoimentos</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center" th:href="@{/login}">
-                <i class="fas fa-sign-in-alt me-1"></i> Entrar</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="btn-primary btn-sm ms-2" th:href="@{/register}"
-                >Cadastre-se</a
-              >
-            </li>
-          </li>
-
-        </div>
-      </div>
-    </nav>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -88,7 +66,7 @@
           <a th:href="@{/register}" class="btn btn-light btn-lg">
             <i class="bi bi-person-plus"></i> Começar Agora
           </a>
-          <a th:href="@{/services}" class="btn btn-outline-light btn-lg">
+          <a th:href="@{/services}" class="btn btn-light btn-lg">
             <i class="bi bi-search"></i> Explorar Serviços
           </a>
         </div>
@@ -124,7 +102,7 @@
      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
 
-    <!-- SLIDE 1 -->
+    <!-- Slide 1 -->
     <div class="carousel-item active">
       <div class="d-flex justify-content-center">
         <img th:src="@{/img/lumen.png}" class="d-block w-25 mx-2" alt="Iluminação" />
@@ -132,7 +110,7 @@
         <img th:src="@{/img/magdallenas.png}" class="d-block w-25 mx-2" alt="Buffet" />
       </div>
     </div>
-    <!-- SLIDE 2 -->
+    <!-- Slide 2 -->
     <div class="carousel-item active">
       <div class="d-flex justify-content-center">
         <img th:src="@{/img/elofoto.png}" class="d-block w-25 mx-2" alt="Fotografia" />
@@ -143,7 +121,7 @@
   
   </div>
 
-  <!-- CONTROLES -->
+  <!-- Controles Carrossel -->
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Anterior</span>
@@ -248,10 +226,8 @@
         <div class="row g-4">
           <div class="col-md-4 text-center">
             <div class="mb-3">
-              <i
-                class="bi bi-person-plus-fill text-primary"
-                style="font-size: 4rem"
-              ></i>
+              <i class="bi bi-person-plus-fill how-it-works"></i>
+            
             </div>
             <h4>1. Cadastre-se</h4>
             <p class="text-muted">
@@ -261,7 +237,7 @@
 
           <div class="col-md-4 text-center">
             <div class="mb-3">
-              <i class="bi bi-search text-primary" style="font-size: 4rem"></i>
+              <i class="bi bi-search how-it-works"></i>
             </div>
             <h4>2. Encontre Serviços</h4>
             <p class="text-muted">Busque por categorias ou palavras-chave</p>
@@ -270,8 +246,7 @@
           <div class="col-md-4 text-center">
             <div class="mb-3">
               <i
-                class="bi bi-check-circle-fill text-primary"
-                style="font-size: 4rem"
+                class="bi bi-check-circle-fill how-it-works"
               ></i>
             </div>
             <h4>3. Contrate</h4>
@@ -304,7 +279,8 @@
       Marketplace de Eventos — Conectando organizadores e fornecedores
     </p>
 
-    <!--Links úteis -->
+     <!-- Links úteis -->
+
     <div class="footer-links mb-3">
       <a href="/sobre" class="text-white me-3">Sobre</a>
       <a href="/contato" class="text-white me-3">Contato</a>
