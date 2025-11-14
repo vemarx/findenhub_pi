@@ -40,12 +40,12 @@
 /* Hero */
 .hero-section {
   text-align: center;
-  padding: 6rem 2rem;
+
 }
 
 /* ===== HERO SECTION PERSONALIZADA ===== */
 .hero h1 {
-  margin-bottom: 1rem; /* Aumenta o espaço abaixo do título */
+  margin-bottom: 3rem; /* Aumenta o espaço abaixo do título */
 }
 
 /* Padding entre os botões */

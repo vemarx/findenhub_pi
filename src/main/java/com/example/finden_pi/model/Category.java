@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 /**
- * Representa uma categoria de serviços dentro da plataforma.
- * Exemplo: Buffet, Fotografia, Decoração, etc.
+ * Representa uma categoria de serviços dentro da plataforma. Exemplo: Buffet,
+ * Fotografia, Decoração, etc.
  */
 @Document(collection = "categories")
 @Data
