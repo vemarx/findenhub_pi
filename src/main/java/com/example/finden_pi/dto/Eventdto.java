@@ -16,7 +16,7 @@ public class Eventdto {
 
     private String id;
 
-    @NotBlank(message = "Título do evento é obrigatório")
+    @NotNull(message = "Título do evento é obrigatório")
     @Size(min = 5, max = 150, message = "Título deve ter entre 5 e 150 caracteres")
     private String title;
 
@@ -27,10 +27,10 @@ public class Eventdto {
     @NotNull(message = "Data do evento é obrigatória")
     private LocalDateTime eventDate;
 
-    @NotBlank(message = "Local é obrigatório")
+    @NotNull(message = "Local é obrigatório")
     private String venue;
 
-    @NotBlank(message = "Cidade é obrigatória")
+    @NotNull(message = "Cidade é obrigatória")
     private String city;
 
     private String state;
