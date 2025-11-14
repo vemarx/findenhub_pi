@@ -4,59 +4,77 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FindenHub</title>
-  
+
     <!--Bootstrap Icons-->
-    <link rel="stylesheet"
+    <link
+      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
     <!--Fonte Awesome para ícones Footer -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
 
     <!-- LINK CSS-->
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/home.css}">
-  
-    <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-     
-     <!-- Bootstrap JS -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
 
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
-
     <!--NAVBAR-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-      <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top"
+    >
+      <div
+        class="container-fluid px-4 d-flex align-items-center"
+      >
+        <!-- Logo (à esquerda) -->
+        <a class="navbar-brand d-flex" href="#">
+          <img src="/img/logo_retangular.png" alt="Logo" width="130px"/>
+        </a>
 
-    <!-- Logo (à esquerda) -->
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="/img/logo.png" alt="Logo" width="90">
-    </a>
+        <!-- Menu centralizado -->
+        <div class="mx-auto align-items-center">
+          <ul class="navbar-nav gap-4">
+            <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Categorias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Como funciona</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Depoimentos</a>
+            </li>
+          </ul>
+        </div>
 
-    <!-- Menu centralizado -->
-    <div class="mx-auto">
-      <ul class="navbar-nav gap-4">
-        <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Categorias</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Como funciona</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Depoimentos</a></li>
-      </ul>
-    </div>
+        <!-- Entrar / Cadastre-se (à direita) -->
+        <div class="d-flex gap-3">
+          <a
+            class="nav-link d-flex align-items-center gap-1"
+            th:href="@{/login}"
+          >
+            <i class="bi bi-box-arrow-in-right icon-login"></i>Entrar</a
+          >
 
-    <!-- Entrar / Cadastre-se (à direita) -->
-    <div class="d-flex gap-3">
-      <a class="nav-link d-flex align-items-center gap-1" th:href="@{/login}">
-        <i class="bi bi-box-arrow-in-right icon-login"></i>Entrar</a>
-
-    <!-- Botão Entrar / Cadastre-se (à direita) -->
-      <a class="btn-cadastro btn-sm ms-2" th:href="@{/register}">Cadastre-se</a>
-    </div>
-
-  </div>
-</nav>
-
+          <!-- Botão Entrar / Cadastre-se (à direita) -->
+          <a class="btn-cadastro btn-sm ms-2" th:href="@{/register}"
+            >Cadastre-se</a
+          >
+        </div>
+      </div>
+    </nav>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -91,7 +109,9 @@
           </div>
           <div class="col-md-4">
             <div class="stats text-center">
-              <div class="stat-number" th:text="${#lists.size(categories)}">0</div>
+              <div class="stat-number" th:text="${#lists.size(categories)}">
+                0
+              </div>
               <p class="text-muted mb-0">Categorias</p>
             </div>
           </div>
@@ -99,40 +119,72 @@
       </div>
     </section>
 
-     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-
-    <!-- Slide 1 -->
-    <div class="carousel-item active">
-      <div class="d-flex justify-content-center">
-        <img th:src="@{/img/lumen.png}" class="d-block w-25 mx-2" alt="Iluminação" />
-        <img th:src="@{/img/axxiscerimonial.png}" class="d-block w-25 mx-2" alt="Espaços" />
-        <img th:src="@{/img/magdallenas.png}" class="d-block w-25 mx-2" alt="Buffet" />
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="d-flex justify-content-center">
+            <img
+              th:src="@{/img/lumen.png}"
+              class="d-block w-25 mx-2"
+              alt="Iluminação"
+            />
+            <img
+              th:src="@{/img/axxiscerimonial.png}"
+              class="d-block w-25 mx-2"
+              alt="Espaços"
+            />
+            <img
+              th:src="@{/img/magdallenas.png}"
+              class="d-block w-25 mx-2"
+              alt="Buffet"
+            />
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-item active">
+          <div class="d-flex justify-content-center">
+            <img
+              th:src="@{/img/elofoto.png}"
+              class="d-block w-25 mx-2"
+              alt="Fotografia"
+            />
+            <img
+              th:src="@{/img/safeguard.png}"
+              class="d-block w-25 mx-2"
+              alt="Segurança"
+            />
+            <img
+              th:src="@{/img/aurora.png}"
+              class="d-block w-25 mx-2"
+              alt="Cerimonial"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="carousel-item active">
-      <div class="d-flex justify-content-center">
-        <img th:src="@{/img/elofoto.png}" class="d-block w-25 mx-2" alt="Fotografia" />
-        <img th:src="@{/img/safeguard.png}" class="d-block w-25 mx-2" alt="Segurança" />
-        <img th:src="@{/img/aurora.png}" class="d-block w-25 mx-2" alt="Cerimonial" />
-      </div>
-    </div>
-  
-  </div>
 
-  <!-- Controles Carrossel -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Anterior</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Próximo</span>
-  </button>
-</div>
+      <!-- Controles Carrossel -->
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExample"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExample"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
+      </button>
+    </div>
 
-<!-- Categories Section -->
+    <!-- Categories Section -->
     <section class="py-5">
       <div class="container">
         <h2 class="text-center mb-5 fw-bold">Categorias de Serviços</h2>
@@ -143,8 +195,7 @@
               th:href="@{'/services/category/' + ${category.id}}"
               class="text-decoration-none"
             >
-              <div
-                class="card category-card">
+              <div class="card category-card">
                 <div class="category-icon" th:text="${category.icon}">🎨</div>
                 <h5 th:text="${category.name}" class="mb-2">Categoria</h5>
                 <p
@@ -159,7 +210,6 @@
         </div>
       </div>
     </section>
-
 
     <!-- Featured Services -->
     <section class="py-5 bg-light">
@@ -227,7 +277,6 @@
           <div class="col-md-4 text-center">
             <div class="mb-3">
               <i class="bi bi-person-plus-fill how-it-works"></i>
-            
             </div>
             <h4>1. Cadastre-se</h4>
             <p class="text-muted">
@@ -245,9 +294,7 @@
 
           <div class="col-md-4 text-center">
             <div class="mb-3">
-              <i
-                class="bi bi-check-circle-fill how-it-works"
-              ></i>
+              <i class="bi bi-check-circle-fill how-it-works"></i>
             </div>
             <h4>3. Contrate</h4>
             <p class="text-muted">Entre em contato e feche negócio</p>
@@ -258,7 +305,6 @@
 
     <!-- CTA Section -->
     <section class="cta-section py-5">
-
       <div class="container text-center text-white">
         <h2 class="mb-4">Pronto para Começar?</h2>
         <p class="lead mb-4">
@@ -272,42 +318,36 @@
     </section>
 
     <!-- Footer -->
-<footer class="footer text-white py-4" style="background-color: #343a40;">
-  <div class="container text-center">
-    <p class="mb-2">&copy; 2025 FindenHub. Todos os direitos reservados.</p>
-    <!--<p class="small mb-3">
+    <footer class="footer text-white py-4" style="background-color: #343a40">
+      <div class="container text-center">
+        <p class="mb-2">&copy; 2025 FindenHub. Todos os direitos reservados.</p>
+        <!--<p class="small mb-3">
       Marketplace de Eventos — Conectando organizadores e fornecedores
     </p>
 
      <!-- Links úteis -->
 
-    <div class="footer-links mb-3">
-      <a href="/sobre" class="text-white me-3">Sobre</a>
-      <a href="/contato" class="text-white me-3">Contato</a>
-      <a href="/termos" class="text-white me-3">Termos de Uso</a>
-      <a href="/privacidade" class="text-white">Privacidade</a>
-    </div>
+        <div class="footer-links mb-3">
+          <a href="/sobre" class="text-white me-3">Sobre</a>
+          <a href="/contato" class="text-white me-3">Contato</a>
+          <a href="/termos" class="text-white me-3">Termos de Uso</a>
+          <a href="/privacidade" class="text-white">Privacidade</a>
+        </div>
 
-    <!-- Redes sociais -->
-    <div class="social-icons">
-      <a href="https://facebook.com/findenhub" class="text-white me-3">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://instagram.com/findenhub" class="text-white me-3">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://linkedin.com/company/findenhub" class="text-white">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-    </div>
-  </div>
-</footer>
-
-
-
-
-
-
+        <!-- Redes sociais -->
+        <div class="social-icons">
+          <a href="https://facebook.com/findenhub" class="text-white me-3">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://instagram.com/findenhub" class="text-white me-3">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://linkedin.com/company/findenhub" class="text-white">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
