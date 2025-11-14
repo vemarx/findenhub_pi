@@ -17,6 +17,24 @@
 
   /* TENTATIVA DE AJUSTAR A LOGO :( */
 
+/* Botão Cadastre-se */
+
+.btn-cadastro {
+  background-color: var(--verde-ciano) !important;
+  color: #fff !important;
+  text-decoration: none;
+  padding: 0.6rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cadastro:hover {
+  background-color: #00ac98; /* um tom mais escuro para hover */
+  color: #fff !important;
+}
+
+
 
 
 /* Hero */
@@ -158,6 +176,11 @@
   color: #d01e29; 
   font-size: 3rem;
   margin-bottom: 1rem;  
+}
+
+.how-it-works {
+  color: var(--verde-ciano) !important; 
+  font-size: 4rem;
 }
 
 
