@@ -55,12 +55,18 @@ body {
 .navbar-brand img:hover {
   transform: scale(1.05);
 }
-
+/*Link Entrar*/
 .nav-link {
   color: var(--azul-petroleo) !important;
   font-weight: 500;
   transition: color 0.2s ease;
 }
+/*ícon Entrar*/
+.icon-login {
+  color: var(--azul-petroleo) !important;
+  font-size: 2rem;
+}
+
 
 .nav-link:hover {
   color: var(--verde-ciano) !important;
