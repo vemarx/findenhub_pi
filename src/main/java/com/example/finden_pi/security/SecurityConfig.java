@@ -1,6 +1,4 @@
 package com.example.finden_pi.security;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +14,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomUserDetailsService userDetailsService;
+        private final CustomUserDetailsService userDetailsService;
+
+        public SecurityConfig(CustomUserDetailsService userDetailsService) {
+                this.userDetailsService = userDetailsService;
+        }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,18 +39,13 @@ public class SecurityConfig {
                                 "/js/**",
                                 "/img/**",
                                 "/fonts/**",
-                                "/assets/**")
+                                "/assets/**",
+                                "/api/locations/**")
                         .permitAll()
 
                         // 🔐 Áreas protegidas
                         .requestMatchers("/organizer/**").hasAuthority("ORGANIZER")
                         .requestMatchers("/supplier/**").hasAuthority("SUPPLIER")
-                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
-                                "/api/locations/**")
-                        .permitAll()
-                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**",
-                                "/api/locations/**")
-                        .permitAll()
                         .requestMatchers("/api/upload/**").authenticated()
 
                         // 🔒 Tudo o resto exige login
