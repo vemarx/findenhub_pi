@@ -118,23 +118,38 @@
 
 
 /* ===== CATEGORIAS DE SERVIÇOS ===== */
-.category-card {  
-  background-color: var(--azul-neve-claro);
-  border: 1px solid var(--cinza-neutro-claro);
+.category-card {
   border-radius: 12px;
   text-align: center;
-  padding: 2rem 1rem;
-  color: var(--azul-petroleo);
+  padding: 1rem 1rem;
   transition: all 0.3s ease;
-  height: 100%;
-  box-shadow: 0 2px 8px rgba(30, 42, 56, 0.05);
+  max-width: 200px;   /* define largura máxima */
+  margin: 0 auto;     /* centraliza dentro da coluna */
 }
 
+
 /* Ícone da categoria */
-.category-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.75rem;
-  color: var(--verde-ciano);
+.svg-icon {
+  width: 70px;
+  height: 70px;
+  stroke: var(--verde-ciano); /*SVG inline com stroke */
+}
+.row{
+  max-width: 1500px;
+  padding-top: 10px;
+  padding-left: 25%;
+}
+.row-categories {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  justify-content: center; /* centraliza os cards */
+  gap: 20px; /* controla a distância entre os cards */
+    
+}
+.category-card {
+  max-width: 220px;
 }
 
 /* Nome e texto */
@@ -152,7 +167,6 @@
 
 /* Efeito ao passar o mouse */
 .category-card:hover {
-  background-color: var(#dce6ef);
   border-color: var(--verde-ciano);
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 209, 193, 0.15);
@@ -181,6 +195,29 @@
 .how-it-works {
   color: var(--verde-ciano) !important; 
   font-size: 4rem;
+}
+
+/* ===== DEPOIMENTOS ===== */
+.testimonial-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rating {
+  font-size: 1.2rem;
+  color: #FFD700; /* dourado */
+  margin-bottom: 0.5rem;
+}
+
+.experience {
+  font-style: italic;
+  color: #555;
 }
 
 
