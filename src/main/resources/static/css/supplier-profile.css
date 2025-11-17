@@ -1,5 +1,5 @@
 /* ====================================
-   SUPPLIER-PROFILE.CSS - Perfil Público do Fornecedor
+SUPPLIER-PROFILE.CSS - Perfil Público do Fornecedor
    ==================================== */
 
 /* Background geral */
@@ -9,8 +9,8 @@ body {
 
 /* Header do perfil */
 .profile-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
+  background: linear-gradient #1e2a38;
+  color: #1e2a38;
   padding: 3rem 0;
 }
 

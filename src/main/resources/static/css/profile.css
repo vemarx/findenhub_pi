@@ -1,5 +1,5 @@
 /* ====================================
-   PROFILE.CSS - Estilos do Perfil
+PROFILE.CSS - Estilos do Perfil
    ==================================== */
 
 /* Background geral */
@@ -46,7 +46,7 @@ body {
 }
 
 /* ====================================
-   ESTILOS DO PORTFÓLIO
+ESTILOS DO PORTFÓLIO
    ==================================== */
 
 /* Card individual do portfólio */
@@ -129,7 +129,7 @@ body {
 }
 
 /* ====================================
-   RESPONSIVIDADE
+RESPONSIVIDADE
    ==================================== */
 
 /* Tablets */
@@ -152,7 +152,6 @@ body {
     font-size: 2rem;
   }
 }
-
 /* Mobile */
 @media (max-width: 576px) {
   .profile-avatar {
