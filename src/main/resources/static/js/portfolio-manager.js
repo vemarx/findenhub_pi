@@ -186,10 +186,12 @@ async function deletePortfolioItem(itemId) {
 function updatePortfolioCount() {
   const grid = document.getElementById("portfolioGrid");
   const countElement = document.getElementById("portfolioCount");
+  const countBadge = document.getElementById("portfolioCountBadge");
 
-  if (grid && countElement) {
-    const count = grid.children.length;
-    countElement.textContent = count;
+  if (grid) {
+    const count = grid.querySelectorAll(".portfolio-item").length;
+    if (countElement) countElement.textContent = count;
+    if (countBadge) countBadge.textContent = count;
   }
 }
 

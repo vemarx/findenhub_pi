@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil do Fornecedor</title>
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,37 +14,12 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
 
-    <style>
-      body {
-        background: #e6edf4;
-      }
-      .profile-header {
-        background: linear-gradient (#2c4a7a);
-        color: #2c4a7a;
-        padding: 3rem 0;
-      }
-      .profile-card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      }
-      .service-card {
-        border: none;
-        border-radius: 15px;
-        transition: transform 0.3s;
-      }
-      .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      }
-      .rating-stars {
-        color: #ffc107;
-        font-size: 2rem;
-      }
-    </style>
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/supplier-profile.css}" />
   </head>
+
   <body>
-    <!-- Navbar -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
@@ -61,11 +37,12 @@
       </div>
     </nav>
 
-    <!-- Profile Header -->
+    <!-- HEADER -->
     <div class="profile-header">
       <div class="container text-center">
         <i class="bi bi-person-circle" style="font-size: 6rem"></i>
         <h1 class="mt-3" th:text="${supplier.name}">Nome do Fornecedor</h1>
+
         <p
           class="lead mb-0"
           th:if="${supplier.companyName}"
@@ -76,11 +53,12 @@
       </div>
     </div>
 
-    <!-- Content -->
+    <!-- CONTENT -->
     <div class="container py-5">
       <div class="row">
-        <!-- Sidebar -->
+        <!-- SIDEBAR -->
         <div class="col-lg-4">
+          <!-- PROFILE CARD -->
           <div class="card profile-card mb-4">
             <div class="card-body p-4">
               <h5 class="card-title mb-4">
@@ -96,12 +74,14 @@
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-half"></i>
                 </div>
+
                 <h3
                   class="mt-2"
                   th:text="${#numbers.formatDecimal(supplier.rating, 1, 1)}"
                 >
                   4.5
                 </h3>
+
                 <p class="text-muted">
                   <span th:text="${supplier.totalReviews}">0</span> avaliações
                 </p>
@@ -109,22 +89,19 @@
 
               <hr />
 
-              <!-- Contato -->
               <div class="mb-3" th:if="${supplier.phone}">
                 <i class="bi bi-telephone text-primary me-2"></i>
-                <span th:text="${supplier.phone}">Telefone</span>
+                <span th:text="${supplier.phone}"></span>
               </div>
 
               <div class="mb-3">
                 <i class="bi bi-envelope text-primary me-2"></i>
-                <span th:text="${supplier.email}">Email</span>
+                <span th:text="${supplier.email}"></span>
               </div>
 
               <div class="mb-3" th:if="${supplier.city}">
                 <i class="bi bi-geo-alt text-primary me-2"></i>
-                <span th:text="${supplier.city + ', ' + supplier.state}"
-                  >Localização</span
-                >
+                <span th:text="${supplier.city + ', ' + supplier.state}"></span>
               </div>
 
               <div class="mb-3" th:if="${supplier.website}">
@@ -134,23 +111,29 @@
 
               <hr />
 
-              <!-- Botões de Ação -->
+              <!-- ACTION BUTTONS -->
               <div class="d-grid gap-2">
+                <!-- WhatsApp -->
                 <a
-                  th:href="'https://wa.me/55' + ${#strings.replace(#strings.replace(supplier.phone, '(', ''), ')', '').replace(' ', '').replace('-', '')} + '?text=Olá! Vi seu perfil no FindenPI e gostaria de solicitar um orçamento.'"
-                  target="_blank"
+                  th:if="${supplier.phone}"
                   class="btn btn-success"
+                  target="_blank"
+                  th:href="'https://wa.me/55' 
+                           + ${#strings.replace(#strings.replace(#strings.replace(#strings.replace(supplier.phone, '(', ''), ')', ''), ' ', ''), '-', '')}
+                           + '?text=Olá! Vi seu perfil no FindenHub e gostaria de solicitar um orçamento.'"
                 >
                   <i class="bi bi-whatsapp"></i> WhatsApp
                 </a>
 
+                <!-- Email -->
                 <a
-                  th:href="'mailto:' + ${supplier.email}"
                   class="btn btn-primary"
+                  th:href="'mailto:' + ${supplier.email}"
                 >
                   <i class="bi bi-envelope"></i> Enviar Email
                 </a>
 
+                <!-- Modal MSG -->
                 <button
                   class="btn btn-outline-primary"
                   data-bs-toggle="modal"
@@ -162,46 +145,104 @@
             </div>
           </div>
 
-          <!-- Estatísticas -->
+          <!-- STATS -->
           <div class="card profile-card">
             <div class="card-body text-center">
               <p class="mb-2">
                 <i class="bi bi-briefcase"></i>
                 <strong th:text="${serviceCount}">0</strong> serviços
               </p>
+
+              <p class="mb-2" th:if="${portfolioItems != null}">
+                <i class="bi bi-images"></i>
+                <strong th:text="${portfolioItems.size()}">0</strong> itens no
+                portfólio
+              </p>
+
               <p class="mb-0">
                 <i class="bi bi-calendar"></i>
                 Membro desde
                 <span
                   th:text="${#temporals.format(supplier.createdAt, 'MM/yyyy')}"
-                  >01/2024</span
                 >
+                  01/2024
+                </span>
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Main Content -->
+        <!-- MAIN CONTENT -->
         <div class="col-lg-8">
-          <!-- Sobre -->
+          <!-- SOBRE -->
           <div class="card profile-card mb-4">
             <div class="card-body p-4">
               <h4 class="card-title mb-3">
                 <i class="bi bi-person-lines-fill"></i> Sobre
               </h4>
+
               <p
                 th:if="${supplier.description}"
                 th:text="${supplier.description}"
               >
-                Descrição do fornecedor...
+                Descrição aqui...
               </p>
+
               <p th:if="${supplier.description == null}" class="text-muted">
                 Nenhuma descrição disponível.
               </p>
             </div>
           </div>
 
-          <!-- Serviços -->
+          <!-- PORTFÓLIO -->
+          <div
+            th:if="${portfolioItems != null && !portfolioItems.isEmpty()}"
+            class="card profile-card mb-4"
+          >
+            <div class="card-body p-4">
+              <h4 class="card-title mb-4">
+                <i class="bi bi-images"></i> Portfólio
+                <span
+                  class="badge bg-primary ms-2"
+                  th:text="${portfolioItems.size()}"
+                  >0</span
+                >
+              </h4>
+
+              <div class="portfolio-gallery">
+                <div
+                  th:each="item : ${portfolioItems}"
+                  class="portfolio-item"
+                  th:attr="onclick=|openLightbox('${item.url}', '${item.mediaType.name()}', '${item.description ?: ''}')|"
+                >
+                  <!-- Vídeo -->
+                  <th:block th:if="${item.mediaType.name() == 'VIDEO'}">
+                    <video th:src="${item.url}" muted></video>
+                    <div class="video-badge">
+                      <i class="bi bi-play-circle-fill"></i>
+                    </div>
+                  </th:block>
+
+                  <!-- Imagem -->
+                  <img
+                    th:if="${item.mediaType.name() == 'IMAGE'}"
+                    th:src="${item.url}"
+                    alt="Portfolio"
+                  />
+
+                  <!-- Descrição -->
+                  <div
+                    th:if="${item.description != null && !item.description.isEmpty()}"
+                    class="portfolio-overlay"
+                  >
+                    <p class="mb-0 small" th:text="${item.description}"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SERVIÇOS -->
           <div class="card profile-card">
             <div class="card-body p-4">
               <h4 class="card-title mb-4">
@@ -215,6 +256,7 @@
                       <h5 class="card-title" th:text="${service.title}">
                         Serviço
                       </h5>
+
                       <p
                         class="card-text text-muted small"
                         th:text="${#strings.abbreviate(service.description, 100)}"
@@ -224,14 +266,12 @@
 
                       <div class="mb-2" th:if="${service.capacity}">
                         <i class="bi bi-people"></i>
-                        <span th:text="${service.capacity + ' pessoas'}"
-                          >Capacidade</span
-                        >
+                        <span th:text="${service.capacity + ' pessoas'}"></span>
                       </div>
 
                       <div class="mb-2" th:if="${service.duration}">
                         <i class="bi bi-clock"></i>
-                        <span th:text="${service.duration}">Duração</span>
+                        <span th:text="${service.duration}"></span>
                       </div>
 
                       <div
@@ -241,12 +281,12 @@
                           R$
                           <span
                             th:text="${#numbers.formatDecimal(service.price, 1, 2)}"
-                            >0,00</span
-                          >
+                          ></span>
                         </span>
+
                         <a
-                          th:href="@{'/services/' + ${service.id}}"
                           class="btn btn-primary btn-sm"
+                          th:href="@{'/services/' + ${service.id}}"
                         >
                           Ver Detalhes
                         </a>
@@ -257,8 +297,8 @@
 
                 <div th:if="${services.isEmpty()}" class="col-12">
                   <div class="alert alert-info text-center">
-                    <i class="bi bi-info-circle"></i> Nenhum serviço disponível
-                    no momento.
+                    <i class="bi bi-info-circle"></i>
+                    Nenhum serviço disponível no momento.
                   </div>
                 </div>
               </div>
@@ -268,7 +308,7 @@
       </div>
     </div>
 
-    <!-- Modal de Mensagem -->
+    <!-- MODAL mensagem -->
     <div class="modal fade" id="messageModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -280,6 +320,7 @@
               data-bs-dismiss="modal"
             ></button>
           </div>
+
           <div class="modal-body">
             <form method="post" th:action="@{/messages/send}">
               <input
@@ -321,6 +362,63 @@
       </div>
     </div>
 
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox-backdrop" onclick="closeLightbox()">
+      <div class="lightbox-content" onclick="event.stopPropagation()">
+        <button class="lightbox-close" onclick="closeLightbox()">
+          <i class="bi bi-x"></i>
+        </button>
+
+        <div id="lightboxMedia"></div>
+        <div
+          id="lightboxDescription"
+          class="lightbox-description"
+          style="display: none"
+        ></div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function openLightbox(url, type, description) {
+        const lightbox = document.getElementById("lightbox");
+        const media = document.getElementById("lightboxMedia");
+        const desc = document.getElementById("lightboxDescription");
+
+        media.innerHTML = "";
+        desc.innerHTML = "";
+        desc.style.display = "none";
+
+        if (type === "VIDEO") {
+          media.innerHTML = `<video src="${url}" controls autoplay class="w-100"></video>`;
+        } else {
+          media.innerHTML = `<img src="${url}" class="img-fluid" alt="Portfolio"/>`;
+        }
+
+        if (description && description.trim() !== "") {
+          desc.innerHTML = `<p class="mb-0">${description}</p>`;
+          desc.style.display = "block";
+        }
+
+        lightbox.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        const lightbox = document.getElementById("lightbox");
+        const media = document.getElementById("lightlightboxMedia");
+
+        const video = media?.querySelector("video");
+        if (video) video.pause();
+
+        lightbox.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeLightbox();
+      });
+    </script>
   </body>
 </html>
