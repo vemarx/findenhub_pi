@@ -1,0 +1,39 @@
+body {
+  background: #f8f9fa;
+}
+
+.profile-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 3rem 0;
+}
+
+.profile-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-card {
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.3s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-box {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  background: white;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+}
