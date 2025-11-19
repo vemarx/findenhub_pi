@@ -219,8 +219,9 @@
   stroke: var(--verde-ciano); /*SVG inline com stroke */
 }
 .row{
-  max-width: 1500px;
+  max-width: auto;
   padding-top: 10px;
+  margin: 30px;
 
 }
 .row-categories {
