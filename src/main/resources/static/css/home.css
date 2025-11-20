@@ -1,24 +1,82 @@
 /* HOME.CSS - INDEX.CSS */
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 /*NAV-BAR */
+.menu {
+  width: 100%;
+  padding: 15px 40px;
+  background-color: var(--azul-neve-claro);
+  color: var(--cinza-grafite);
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-logo {
+  container: fluid;
+  px: -4px;
+  display: flex;
+  align-items: center;
+}
+.nav-logo img{
+  width: 130px;
+}
+.nav-menu {
+  navbar: expand-lg;
+  navbar: light;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav-menu a {
+  color: var(--cinza-grafite);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+/*
 .navbar .btn-primary {
-  margin-top: 4px; /* Ajuste fino para alinhar com os links */
+  margin-top: 4px; 
   margin-right: 5px;
   padding-top: 6px;
   padding-bottom: 6px;
   display: flex;
   align-items: center;
 }
+*/
 
-.navbar .nav-link {
+.nav-link {
   margin-right: 15px;
   font-size: large;
 }
 
-  /* TENTATIVA DE AJUSTAR A LOGO :( */
 
 /* Botão Cadastre-se */
+.nav-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 3px;
+}
 
+.btn-entrar {
+  background-color: transparent !important;
+  color: var(--cinza-grafite) !important;
+  text-decoration: none;
+  padding-top: 12px;
+  font-weight: 600;
+  align-items: center;
+  gap: 1px;
+  margin-left: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
 .btn-cadastro {
   background-color: var(--verde-ciano) !important;
   color: #fff !important;
@@ -35,18 +93,35 @@
 }
 
 
-
-
+/*================ CORPO DA PÁGINA ================*/
+.corpo-pagina {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  grid-template-rows: 9fr;
+  
+}
 /* Hero */
 .hero-section {
   text-align: center;
 
 }
-
-/* ===== HERO SECTION PERSONALIZADA ===== */
-.hero h1 {
-  margin-bottom: 3rem; /* Aumenta o espaço abaixo do título */
+/* =========
+   HERO SECTION
+   ========= */
+.hero {
+  background: linear-gradient(135deg, var(--azul-inovador) 0%, var(--verde-ciano) 100%);
+  color: #fff;
+  text-align: center;
+  padding: 5rem 2rem;
 }
+
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
 
 /* Padding entre os botões */
 .hero .btn {
@@ -60,7 +135,16 @@
   background-color: transparent;
 }
 
+/* ===== ESTATÍSTICAS ===== */
+
+
 /* ===== BOTÕES DE CATEGORIA ===== */
+
+.customizado{
+  text-align: center;
+  padding-left: 10%;
+  padding-right: 10%;
+}
 .btn-categoria {
   background-color: var(--branco-gelo); /* Fundo neutro */
   color: var(--azul-petroleo); /* Texto em azul petróleo para contraste */
@@ -118,23 +202,39 @@
 
 
 /* ===== CATEGORIAS DE SERVIÇOS ===== */
-.category-card {  
-  background-color: var(--azul-neve-claro);
-  border: 1px solid var(--cinza-neutro-claro);
+.category-card {
   border-radius: 12px;
   text-align: center;
-  padding: 2rem 1rem;
-  color: var(--azul-petroleo);
+  padding: 1rem 1rem;
   transition: all 0.3s ease;
-  height: 100%;
-  box-shadow: 0 2px 8px rgba(30, 42, 56, 0.05);
+  max-width: 200px;   /* define largura máxima */
+  margin: 0 auto;     /* centraliza dentro da coluna */
 }
 
+
 /* Ícone da categoria */
-.category-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.75rem;
-  color: var(--verde-ciano);
+.svg-icon {
+  width: 70px;
+  height: 70px;
+  stroke: var(--verde-ciano); /*SVG inline com stroke */
+}
+.row{
+  max-width: auto;
+  padding-top: 10px;
+  margin: 30px;
+
+}
+.row-categories {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  justify-content: center; /* centraliza os cards */
+  gap: 5px; /* controla a distância entre os cards */
+    
+}
+.category-card {
+  max-width: 220px;
 }
 
 /* Nome e texto */
@@ -152,7 +252,6 @@
 
 /* Efeito ao passar o mouse */
 .category-card:hover {
-  background-color: var(#dce6ef);
   border-color: var(--verde-ciano);
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 209, 193, 0.15);
@@ -183,6 +282,35 @@
   font-size: 4rem;
 }
 
+/* ===== DEPOIMENTOS ===== */
+.testimonials {
+  text-align: center;
+  padding: 4rem 1rem;
+  background-color: var(--azul-neve-claro);
+
+}
+.testimonial-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rating {
+  font-size: 1.2rem;
+  color: #FFD700; /* dourado */
+  margin-bottom: 0.5rem;
+}
+
+.experience {
+  font-style: italic;
+  color: #555;
+}
+
 
  
 
@@ -191,6 +319,7 @@
 .cta-section {
   background: linear-gradient(135deg, var(--azul-inovador) 0%, var(--verde-ciano) 100%);
   color: #fff;
+  margin-bottom: 70px;
   text-align: center;
   padding: 6rem 1rem;
 }
@@ -241,6 +370,18 @@
 .footer-icon:hover {
   transform: scale(1.2);
 }
+
+.link {
+  text-decoration: none;
+  color: #F4F6F8;
+  margin: 15px;
+  font-size: 1rem;
+}
+
+.copy {
+  font-size: 1.1rem;
+}
+
 
 
 

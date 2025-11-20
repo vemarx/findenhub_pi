@@ -31,324 +31,559 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
-    <!--NAVBAR-->
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top"
-    >
-      <div
-        class="container-fluid px-4 d-flex align-items-center"
-      >
-        <!-- Logo (à esquerda) -->
+    <header class="menu">
+      <!--NAVBAR-->
+      <!---->
+      <!-- Logo (à esquerda) -->
+      <div class="nav-logo">
         <a class="navbar-brand d-flex" href="#">
-          <img src="/img/logo_retangular.png" alt="Logo" width="130px"/>
+          <img src="/img/logo_retangular.png" alt="Logo" />
         </a>
-
-        <!-- Menu centralizado -->
-        <div class="mx-auto align-items-center">
-          <ul class="navbar-nav gap-4">
-            <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Categorias</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Como funciona</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Depoimentos</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Entrar / Cadastre-se (à direita) -->
-        <div class="d-flex gap-3">
-          <a
-            class="nav-link d-flex align-items-center gap-1"
-            th:href="@{/login}"
-          >
-            <i class="bi bi-box-arrow-in-right icon-login"></i>Entrar</a
-          >
-
-          <!-- Botão Entrar / Cadastre-se (à direita) -->
-          <a class="btn-cadastro btn-sm ms-2" th:href="@{/register}"
-            >Cadastre-se</a
-          >
-        </div>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="container">
-        <h1>Conecte | Personalize | Celebre</h1>
-        <div class="d-flex justify-content-center gap-3">
-          <a th:href="@{/register}" class="btn btn-light btn-lg">
-            <i class="bi bi-person-plus"></i> Começar Agora
-          </a>
-          <a th:href="@{/services}" class="btn btn-light btn-lg">
-            <i class="bi bi-search"></i> Explorar Serviços
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Carrossel Section -->
-    <section class="py-5 bg-light">
-      <div class="container">
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="stats text-center">
-              <div class="stat-number" th:text="${serviceCount}">0</div>
-              <p class="text-muted mb-0">Serviços Disponíveis</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="stats text-center">
-              <div class="stat-number" th:text="${supplierCount}">0</div>
-              <p class="text-muted mb-0">Fornecedores Cadastrados</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="stats text-center">
-              <div class="stat-number" th:text="${#lists.size(categories)}">
-                0
-              </div>
-              <p class="text-muted mb-0">Categorias</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <!-- Slide 1 -->
-        <div class="carousel-item active">
-          <div class="d-flex justify-content-center">
-            <img
-              th:src="@{/img/lumen.png}"
-              class="d-block w-25 mx-2"
-              alt="Iluminação"
-            />
-            <img
-              th:src="@{/img/axxiscerimonial.png}"
-              class="d-block w-25 mx-2"
-              alt="Espaços"
-            />
-            <img
-              th:src="@{/img/magdallenas.png}"
-              class="d-block w-25 mx-2"
-              alt="Buffet"
-            />
-          </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="carousel-item active">
-          <div class="d-flex justify-content-center">
-            <img
-              th:src="@{/img/elofoto.png}"
-              class="d-block w-25 mx-2"
-              alt="Fotografia"
-            />
-            <img
-              th:src="@{/img/safeguard.png}"
-              class="d-block w-25 mx-2"
-              alt="Segurança"
-            />
-            <img
-              th:src="@{/img/aurora.png}"
-              class="d-block w-25 mx-2"
-              alt="Cerimonial"
-            />
-          </div>
-        </div>
       </div>
 
-      <!-- Controles Carrossel -->
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExample"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExample"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Próximo</span>
-      </button>
-    </div>
+      <!-- Menu centralizado -->
+      <div class="nav-center">
+        <nav class="nav-menu">
+          <a class="nav-link" href="#hero">Início</a>
+          <a class="nav-link" href="#service-categories">Categorias</a>
+          <a class="nav-link" href="#">Como funciona</a>
+          <a class="nav-link" href="#">Depoimentos</a>
+        </nav>
+      </div>
 
-    <!-- Categories Section -->
-    <section class="py-5">
-      <div class="container">
-        <h2 class="text-center mb-5 fw-bold">Categorias de Serviços</h2>
+      <!-- Entrar / Cadastre-se (à direita) -->
+      <div class="nav-actions">
+        <!--Botão entrar-->
+        <i class="bi bi-box-arrow-in-right icon-login"></i>
+        <a class="btn-entrar" th:href="@{/login}">Entrar</a>
+        <!-- Botão Cadastre-se (à direita) -->
+        <a class="btn-cadastro btn-sm ms-2" th:href="@{/register}"
+          >Cadastre-se</a
+        >
+      </div>
+      <!---->
+    </header>
 
-        <div class="row g-4">
-          <div class="col-md-3 col-sm-6" th:each="category : ${categories}">
-            <a
-              th:href="@{'/services/category/' + ${category.id}}"
-              class="text-decoration-none"
-            >
-              <div class="card category-card">
-                <div class="category-icon" th:text="${category.icon}">🎨</div>
-                <h5 th:text="${category.name}" class="mb-2">Categoria</h5>
-                <p
-                  class="text-muted small mb-0"
-                  th:text="${category.serviceCount + ' serviços'}"
-                >
-                  0 serviços
-                </p>
-              </div>
+    <main class="corpo-pagina">
+      <!-- Hero Section -->
+      <div class="margin left"></div>
+
+      <section class="hero">
+        <div class="container">
+          <h1>Conecte | Personalize | Celebre</h1>
+          <div class="d-flex justify-content-center gap-3">
+            <a th:href="@{/register}" class="btn btn-light btn-lg">
+              <i class="bi bi-person-plus"></i> Começar Agora
+            </a>
+            <a th:href="@{/services}" class="btn btn-light btn-lg">
+              <i class="bi bi-search"></i> Explorar Serviços
             </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Featured Services -->
-    <section class="py-5 bg-light">
-      <div class="container">
-        <h2 class="text-center mb-5 fw-bold">Serviços em Destaque</h2>
+      <div class="margin right"></div>
 
-        <div class="row g-4">
-          <div class="col-md-4" th:each="service : ${featuredServices}">
-            <div class="card service-card">
-              <div
-                class="service-img"
-                th:if="${service.imageUrl == null}"
-              ></div>
-              <img
-                th:if="${service.imageUrl != null}"
-                th:src="${service.imageUrl}"
-                class="card-img-top"
-                alt="Serviço"
-              />
+      <!-- Estatísticas Section -->
+      <div class="margin left"></div>
 
-              <div class="card-body">
-                <h5 class="card-title" th:text="${service.title}">
-                  Título do Serviço
-                </h5>
-                <p
-                  class="card-text text-muted small"
-                  th:text="${#strings.abbreviate(service.description, 100)}"
-                >
-                  Descrição do serviço...
-                </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="text-primary fw-bold fs-5">
-                    R$
-                    <span
-                      th:text="${#numbers.formatDecimal(service.price, 1, 2)}"
-                      >0,00</span
-                    >
-                  </span>
-                  <a
-                    th:href="@{'/services/' + ${service.id}}"
-                    class="btn btn-primary btn-sm"
+      <section class="estatistica py-5 bg-light">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="stats text-center">
+                <div class="stat-number" th:text="${serviceCount}">0</div>
+                <p class="text-muted mb-0">Serviços Disponíveis</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stats text-center">
+                <div class="stat-number" th:text="${supplierCount}">0</div>
+                <p class="text-muted mb-0">Fornecedores Cadastrados</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stats text-center">
+                <div class="stat-number" th:text="${#lists.size(categories)}">
+                  0
+                </div>
+                <p class="text-muted mb-0">Categorias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="margin right"></div>
+
+      <!--Carrossel-->
+      <div class="margin left"></div>
+
+      <section class="carrossel">
+        <div
+          id="carouselExample"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="d-flex justify-content-center">
+                <img
+                  th:src="@{/img/lumen.png}"
+                  class="d-block w-25 mx-2"
+                  alt="Iluminação"
+                />
+                <img
+                  th:src="@{/img/axxiscerimonial.png}"
+                  class="d-block w-25 mx-2"
+                  alt="Espaços"
+                />
+                <img
+                  th:src="@{/img/magdallenas.png}"
+                  class="d-block w-25 mx-2"
+                  alt="Buffet"
+                />
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item active">
+              <div class="d-flex justify-content-center">
+                <img
+                  th:src="@{/img/elofoto.png}"
+                  class="d-block w-25 mx-2"
+                  alt="Fotografia"
+                />
+                <img
+                  th:src="@{/img/safeguard.png}"
+                  class="d-block w-25 mx-2"
+                  alt="Segurança"
+                />
+                <img
+                  th:src="@{/img/aurora.png}"
+                  class="d-block w-25 mx-2"
+                  alt="Cerimonial"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Controles Carrossel -->
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+          </button>
+        </div>
+      </section>
+      <div class="margin right"></div>
+
+      <!-- Categories Section -->
+      <div class="margin left"></div>
+      <section class="categories customizado">
+        <!--VER ISSSOOOOO-->
+        <h2 class="text-center mb-4">Categorias de Serviços</h2>
+        <div class="row">
+          <!-- Buffet -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img src="/img/buffet.svg" alt="Buffet" class="svg-icon" />
+              </div>
+              <h5>Buffet</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Cerimonial -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img
+                  src="/img/cerimonial.svg"
+                  alt="Cerimonial"
+                  class="svg-icon"
+                />
+              </div>
+              <h5>Cerimonial</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Locação -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img src="/img/espaco.svg" alt="Locação" class="svg-icon" />
+              </div>
+              <h5>Locação</h5>
+              <p class="text-muted small">1 serviço</p>
+            </div>
+          </div>
+
+          <!-- Fotografia -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img src="/img/foto.svg" alt="Fotografia" class="svg-icon" />
+              </div>
+              <h5>Fotografia</h5>
+              <p class="text-muted small">3 serviços</p>
+            </div>
+          </div>
+
+          <!-- Som e Iluminação -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img
+                  src="/img/som.svg"
+                  alt="Som e iluminação"
+                  class="svg-icon"
+                />
+              </div>
+              <h5>Som e Iluminação</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Dj e Banda -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img src="/img/dj.svg" alt="Dj e Banda" class="svg-icon" />
+              </div>
+              <h5>Dj e Banda</h5>
+              <p class="text-muted small">1 serviço</p>
+            </div>
+          </div>
+
+          <!-- Segurança -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img
+                  src="/img/seguranca.svg"
+                  alt="Segurança"
+                  class="svg-icon"
+                />
+              </div>
+              <h5>Segurança</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Transporte -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img
+                  src="/img/transporte.svg"
+                  alt="Transporte"
+                  class="svg-icon"
+                />
+              </div>
+              <h5>Transporte</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Decoração -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img src="/img/decor.svg" alt="Decoração" class="svg-icon" />
+              </div>
+              <h5>Decoração</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Convites -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img src="/img/convite.svg" alt="Convites" class="svg-icon" />
+              </div>
+              <h5>Convites</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+
+          <!-- Brindes -->
+          <div class="col-md-3 mb-4 text-center">
+            <div class="card category-card">
+              <div class="category-icon">
+                <img
+                  src="/img/brindes.svg"
+                  alt="Brindes e lembranças"
+                  class="svg-icon"
+                />
+              </div>
+              <h5>Brindes</h5>
+              <p class="text-muted small">0 serviços</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="margin right"></div>
+
+      <!-- Featured Services -->
+      <div class="margin left"></div>
+      <section class="services py-5 bg-light">
+        <div class="container">
+          <h2 class="text-center mb-5 fw-bold">Serviços em Destaque</h2>
+
+          <div class="row g-4">
+            <div class="col-md-4" th:each="service : ${featuredServices}">
+              <div class="card service-card">
+                <div
+                  class="service-img"
+                  th:if="${service.imageUrl == null}"
+                ></div>
+                <img
+                  th:if="${service.imageUrl != null}"
+                  th:src="${service.imageUrl}"
+                  class="card-img-top"
+                  alt="Serviço"
+                />
+
+                <div class="card-body">
+                  <h5 class="card-title" th:text="${service.title}">
+                    Título do Serviço
+                  </h5>
+                  <p
+                    class="card-text text-muted small"
+                    th:text="${#strings.abbreviate(service.description, 100)}"
                   >
-                    Ver Detalhes
-                  </a>
+                    Descrição do serviço...
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span class="text-primary fw-bold fs-5">
+                      R$
+                      <span
+                        th:text="${#numbers.formatDecimal(service.price, 1, 2)}"
+                        >0,00</span
+                      >
+                    </span>
+                    <a
+                      th:href="@{'/services/' + ${service.id}}"
+                      class="btn btn-primary btn-sm"
+                    >
+                      Ver Detalhes
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="text-center mt-4">
-          <a th:href="@{/services}" class="btn-primary">
-            Ver Todos os Serviços <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="py-5">
-      <div class="container">
-        <h2 class="text-center mb-5 fw-bold">Como Funciona</h2>
-
-        <div class="row g-4">
-          <div class="col-md-4 text-center">
-            <div class="mb-3">
-              <i class="bi bi-person-plus-fill how-it-works"></i>
-            </div>
-            <h4>1. Cadastre-se</h4>
-            <p class="text-muted">
-              Crie sua conta como organizador ou fornecedor
-            </p>
-          </div>
-
-          <div class="col-md-4 text-center">
-            <div class="mb-3">
-              <i class="bi bi-search how-it-works"></i>
-            </div>
-            <h4>2. Encontre Serviços</h4>
-            <p class="text-muted">Busque por categorias ou palavras-chave</p>
-          </div>
-
-          <div class="col-md-4 text-center">
-            <div class="mb-3">
-              <i class="bi bi-check-circle-fill how-it-works"></i>
-            </div>
-            <h4>3. Contrate</h4>
-            <p class="text-muted">Entre em contato e feche negócio</p>
+          <div class="text-center mt-4">
+            <a th:href="@{/services}" class="btn-primary">
+              Ver Todos os Serviços <i class="bi bi-arrow-right"></i>
+            </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <div class="margin right"></div>
 
-    <!-- CTA Section -->
-    <section class="cta-section py-5">
-      <div class="container text-center text-white">
-        <h2 class="mb-4">Pronto para Começar?</h2>
-        <p class="lead mb-4">
-          Cadastre-se gratuitamente e comece a encontrar os melhores
-          fornecedores!
-        </p>
-        <a th:href="@{/register}" class="btn btn-light btn-lg">
-          <i class="bi bi-rocket-takeoff"></i> Criar Conta Grátis
-        </a>
-      </div>
-    </section>
+      <!-- How It Works -->
+      <div class="margin left"></div>
+      <section class="como-funciona py-5">
+        <div class="container">
+          <h2 class="text-center mb-5 fw-bold">Como Funciona</h2>
 
-    <!-- Footer -->
-    <footer class="footer text-white py-4" style="background-color: #343a40">
-      <div class="container text-center">
-        <p class="mb-2">&copy; 2025 FindenHub. Todos os direitos reservados.</p>
-        <!--<p class="small mb-3">
-      Marketplace de Eventos — Conectando organizadores e fornecedores
-    </p>
+          <div class="row g-4">
+            <div class="col-md-4 text-center">
+              <div class="mb-3">
+                <i class="bi bi-person-plus-fill how-it-works"></i>
+              </div>
+              <h4>1. Cadastre-se</h4>
+              <p class="text-muted">
+                Crie sua conta como organizador ou fornecedor
+              </p>
+            </div>
 
-     <!-- Links úteis -->
+            <div class="col-md-4 text-center">
+              <div class="mb-3">
+                <i class="bi bi-search how-it-works"></i>
+              </div>
+              <h4>2. Encontre Serviços</h4>
+              <p class="text-muted">Busque por categorias ou palavras-chave</p>
+            </div>
 
-        <div class="footer-links mb-3">
-          <a href="/sobre" class="text-white me-3">Sobre</a>
-          <a href="/contato" class="text-white me-3">Contato</a>
-          <a href="/termos" class="text-white me-3">Termos de Uso</a>
-          <a href="/privacidade" class="text-white">Privacidade</a>
+            <div class="col-md-4 text-center">
+              <div class="mb-3">
+                <i class="bi bi-check-circle-fill how-it-works"></i>
+              </div>
+              <h4>3. Contrate</h4>
+              <p class="text-muted">Entre em contato e feche negócio</p>
+            </div>
+          </div>
         </div>
+      </section>
+      <div class="margin right"></div>
 
-        <!-- Redes sociais -->
-        <div class="social-icons">
-          <a href="https://facebook.com/findenhub" class="text-white me-3">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://instagram.com/findenhub" class="text-white me-3">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://linkedin.com/company/findenhub" class="text-white">
-            <i class="fab fa-linkedin-in"></i>
+      <!--DEPOIMENTOS-->
+
+      <div class="margin right"></div>
+
+      <section class="testimonials">
+        <h2 class="text-center mb-4">Depoimentos de Clientes</h2>
+        <div class="row justify-content-center g-4">
+          <!-- Depoimento 1 -->
+          <div class="col-md-4">
+            <div class="card testimonial-card">
+              <div class="card-body">
+                <h5 class="card-title">Maria Silva</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Eventos Silva</h6>
+                <p><strong>Serviço:</strong> DJ & Banda</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="experience">
+                  "A banda foi incrível, animou a festa do início ao fim."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Depoimento 2 -->
+          <div class="col-md-4">
+            <div class="card testimonial-card">
+              <div class="card-body">
+                <h5 class="card-title">João Pereira</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Buffet Gourmet</h6>
+                <p><strong>Serviço:</strong> Buffet</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="experience">
+                  "Comida deliciosa e atendimento impecável."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Depoimento 3 -->
+          <div class="col-md-4">
+            <div class="card testimonial-card">
+              <div class="card-body">
+                <h5 class="card-title">Ana Costa</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
+                <p><strong>Serviço:</strong> Decoração</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="experience">
+                  "A decoração deixou o ambiente mágico e inesquecível."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Depoimento 4 -->
+          <div class="col-md-4">
+            <div class="card testimonial-card">
+              <div class="card-body">
+                <h5 class="card-title">Ana Costa</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
+                <p><strong>Serviço:</strong> Decoração</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="experience">
+                  "A decoração deixou o ambiente mágico e inesquecível."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Depoimento 5 -->
+          <div class="col-md-4">
+            <div class="card testimonial-card">
+              <div class="card-body">
+                <h5 class="card-title">Ana Costa</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
+                <p><strong>Serviço:</strong> Decoração</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="experience">
+                  "A decoração deixou o ambiente mágico e inesquecível."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Depoimento 6 -->
+          <div class="col-md-4">
+            <div class="card testimonial-card">
+              <div class="card-body">
+                <h5 class="card-title">Ana Costa</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
+                <p><strong>Serviço:</strong> Decoração</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p class="experience">
+                  "A decoração deixou o ambiente mágico e inesquecível."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="margin right"></div>
+
+      <!-- CTA Section -->
+      <div class="margin left"></div>
+
+      <section class="cta-section py-5">
+        <div class="container text-center text-white">
+          <h2 class="mb-4">Pronto para Começar?</h2>
+          <p class="lead mb-4">
+            Cadastre-se gratuitamente e comece a encontrar os melhores
+            fornecedores!
+          </p>
+          <a th:href="@{/register}" class="btn btn-light btn-lg">
+            <i class="bi bi-rocket-takeoff"></i> Criar Conta Grátis
           </a>
         </div>
-      </div>
-    </footer>
+      </section>
+      <div class="margin right"></div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
+
+  <!--Footer-->
+  <footer class="footer">
+    <!-- Redes sociais à direita -->
+    <div class="redes mb-2">
+      <a href="https://facebook.com/findenhub" class="text-white me-3">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://instagram.com/findenhub" class="text-white me-3">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://linkedin.com/company/findenhub" class="text-white">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+
+    <!-- Links à esquerda -->
+    <div class="links mb-2">
+      <a href="/sobre" class="link">Sobre</a>
+      <a href="/contato" class="link">Contato</a>
+      <a href="/termos" class="link">Termos de Uso</a>
+      <a href="/privacidade" class="link">Privacidade</a>
+    </div>
+
+    <div class="copy text-center">
+      <small>&copy; 2025 FindenHub. Todos os direitos reservados.</small>
+    </div>
+  </footer>
 </html>

@@ -63,7 +63,7 @@ body {
 }
 /*ícon Entrar*/
 .icon-login {
-  color: var(--azul-petroleo) !important;
+  color: var(--azul-petroleo);
   font-size: 2rem;
 }
 
@@ -128,22 +128,7 @@ section {
   padding-bottom: 4rem;
 }
 
-/* =========
-   HERO SECTION
-   ========= */
-.hero {
-  background: linear-gradient(135deg, var(--azul-inovador) 0%, var(--verde-ciano) 100%);
-  color: #fff;
-  text-align: center;
-  padding: 5rem 2rem;
-}
 
-
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-}
 
 
 /* =========
