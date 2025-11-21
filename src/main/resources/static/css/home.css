@@ -96,7 +96,7 @@
 /*================ CORPO DA PÁGINA ================*/
 .corpo-pagina {
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
+  /*grid-template-columns: 1fr 5fr 1fr;*/
   grid-template-rows: 9fr;
   
 }
