@@ -41,8 +41,7 @@ opacity: 0;
 transform: translateY(20px);
 }
 to {
-opacity: 1;
-transform: translateY(0);
+opacity: 1;transform: translateY(0);
 }
 }
 
@@ -79,7 +78,7 @@ box-shadow: 0 0 0 0.2rem rgba(0, 209, 193, 0.2);
 
 /* Força os cards a terem largura fixa e centraliza o conjunto */
 .row.g-3 {
-display: flex !important;        /* garante comportamento flex */
+display: flex !important; /* garante comportamento flex */
 justify-content: center !important;
 align-items: flex-start;
 gap: 1.5rem;
@@ -87,7 +86,7 @@ gap: 1.5rem;
 
 /* Faz com que as colunas não usem 50% cada (evita col-6 se estiver aplicando) */
 .row.g-3 > .col-6 {
-flex: 0 0 auto;     /* impede ocupar 50% */
+flex: 0 0 auto; /* impede ocupar 50% */
 width: auto;
 }
 

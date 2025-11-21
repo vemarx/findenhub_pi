@@ -186,10 +186,12 @@ async function deletePortfolioItem(itemId) {
 function updatePortfolioCount() {
   const grid = document.getElementById("portfolioGrid");
   const countElement = document.getElementById("portfolioCount");
+  const countBadge = document.getElementById("portfolioCountBadge");
 
-  if (grid && countElement) {
-    const count = grid.children.length;
-    countElement.textContent = count;
+  if (grid) {
+    const count = grid.querySelectorAll(".portfolio-item").length;
+    if (countElement) countElement.textContent = count;
+    if (countBadge) countBadge.textContent = count;
   }
 }
 
@@ -244,15 +246,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Visualizar mídia em modal
-function viewPortfolioMedia(url, type) {
+function viewPortfolioMedia(url, type, description) {
   const modal = document.getElementById("mediaViewModal");
-  const modalBody = modal.querySelector(".modal-body");
-
-  if (type === "VIDEO") {
-    modalBody.innerHTML = `<video src="${url}" controls class="w-100"></video>`;
-  } else {
-    modalBody.innerHTML = `<img src="${url}" class="img-fluid w-100" alt="Portfolio">`;
+  if (!modal) {
+    console.error("Modal não encontrado");
+    return;
   }
+
+  const modalBody = modal.querySelector(".modal-body");
+  if (!modalBody) {
+    console.error("Modal body não encontrado");
+    return;
+  }
+
+  let content = "";
+  if (type === "VIDEO") {
+    content = `<video src="${url}" controls class="w-100"></video>`;
+  } else {
+    content = `<img src="${url}" class="img-fluid w-100" alt="Portfolio">`;
+  }
+
+  // Adiciona descrição se fornecida
+  if (description && description.trim() !== "") {
+    content += `<div class="mt-3 p-3 bg-light border-top"><p class="mb-0"><strong>Descrição:</strong> ${description}</p></div>`;
+  }
+
+  modalBody.innerHTML = content;
 
   const bsModal = new bootstrap.Modal(modal);
   bsModal.show();

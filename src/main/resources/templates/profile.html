@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meu Perfil - FindenHub</title>
+    <title>Meu Perfil - FindenPI</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,40 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
     />
-
-    <style>
-      body {
-        background: #e6edf4;
-      }
-      .profile-header {
-        background: linear-gradient ( #2c4a7a)
-        color: #1e2a38;
-        padding: 3rem 0;
-        margin-bottom: 2rem;
-      }
-      .profile-avatar {
-        width: 150px;
-        height: 150px;
-        background: #e6edf4;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1rem;
-        font-size: 4rem;
-        color: #1e2a38;
-      }
-      .profile-card {
-        border: none;
-        border-radius: 15px;
-      }
-      .section-header {
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 10px;
-        margin-bottom: 1.5rem;
-      }
-    </style>
+    <!-- CSS do Profile -->
+    <link rel="stylesheet" th:href="@{/css/profile.css}" />
   </head>
   <body>
     <!-- Navbar -->
@@ -74,7 +42,7 @@
         </div>
         <h2 th:text="${user.name}">Nome do Usuário</h2>
         <p class="mb-0">
-          <span class="badge bg-light text-primary fs-6">
+          <span class="badge bg-white text-primary fs-6">
             <i
               th:class="${user.userType.name() == 'ORGANIZER' ? 'bi bi-person-check' : 'bi bi-briefcase'}"
             ></i>
@@ -159,9 +127,9 @@
 
               <hr />
 
-              <!-- Ver Perfil Público -->
+              <!-- Ver Perfil Público - CORRIGIDO -->
+              <!-- Perfil Público (substitua o bloco que está aparecendo como texto por este) -->
               <div class="mb-3">
-                <small class="text-muted">Perfil Público</small>
                 <div class="d-grid mt-2">
                   <a
                     th:if="${user.userType.name() == 'SUPPLIER'}"
@@ -169,8 +137,9 @@
                     class="btn btn-outline-primary btn-sm"
                     target="_blank"
                   >
-                    <i class="bi bi-eye"></i> Ver Como Clientes Veem
+                    <i class="bi bi-eye"></i> Ver página
                   </a>
+
                   <a
                     th:if="${user.userType.name() == 'ORGANIZER'}"
                     th:href="@{'/organizer/profile/' + ${user.id}}"
@@ -187,7 +156,7 @@
           <!-- Estatísticas (apenas para Fornecedores) -->
           <div
             th:if="${user.userType.name() == 'SUPPLIER'}"
-            class="card profile-card"
+            class="card profile-card mb-4"
           >
             <div class="card-body p-4">
               <h5 class="card-title mb-3">
@@ -205,6 +174,18 @@
                   Avaliação Média (<span th:text="${user.totalReviews}">0</span>
                   avaliações)
                 </small>
+              </div>
+
+              <hr />
+
+              <div class="text-center">
+                <p class="mb-1">
+                  <i class="bi bi-images text-primary"></i>
+                  <strong id="portfolioCount" th:text="${portfolioCount ?: 0}"
+                    >0</strong
+                  >
+                  itens no portfólio
+                </p>
               </div>
             </div>
           </div>
@@ -385,6 +366,164 @@
             </div>
           </div>
 
+          <!-- ===== NOVA SEÇÃO: PORTFÓLIO (APENAS FORNECEDOR) - CORRIGIDO ===== -->
+          <div
+            th:if="${user.userType.name() == 'SUPPLIER'}"
+            class="card profile-card mb-4"
+          >
+            <div class="card-body p-4">
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <h4 class="card-title mb-0">
+                  <i class="bi bi-images"></i> Meu Portfólio
+                </h4>
+                <span class="badge bg-primary">
+                  <span
+                    id="portfolioCountBadge"
+                    th:text="${portfolioCount ?: 0}"
+                    >0</span
+                  >
+                  itens
+                </span>
+              </div>
+
+              <p class="text-muted mb-4">
+                Adicione fotos e vídeos dos seus trabalhos para atrair mais
+                clientes. Máximo 10MB por imagem e 100MB por vídeo.
+              </p>
+
+              <!-- Botões de Upload -->
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div
+                    class="upload-zone"
+                    onclick="document.getElementById('portfolioImageInput').click()"
+                  >
+                    <i class="bi bi-image"></i>
+                    <p class="mt-2 mb-1 fw-bold">Adicionar Fotos</p>
+                    <small class="text-muted">Clique para selecionar</small>
+                    <input
+                      type="file"
+                      id="portfolioImageInput"
+                      accept="image/*"
+                      multiple
+                      style="display: none"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div
+                    class="upload-zone"
+                    onclick="document.getElementById('portfolioVideoInput').click()"
+                  >
+                    <i class="bi bi-camera-video"></i>
+                    <p class="mt-2 mb-1 fw-bold">Adicionar Vídeos</p>
+                    <small class="text-muted">Clique para selecionar</small>
+                    <input
+                      type="file"
+                      id="portfolioVideoInput"
+                      accept="video/*"
+                      multiple
+                      style="display: none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Grid de Portfólio - CORRIGIDO -->
+              <div id="portfolioGrid" class="row g-3">
+                <!-- Items existentes -->
+                <div
+                  th:each="item : ${portfolioItems}"
+                  class="col-md-4 col-lg-3 portfolio-item"
+                  th:attr="data-item-id=${item.id}"
+                >
+                  <div class="card portfolio-card h-100">
+                    <div class="position-relative">
+                      <!-- Vídeo -->
+                      <th:block th:if="${item.mediaType.name() == 'VIDEO'}">
+                        <video
+                          th:src="${item.url}"
+                          class="card-img-top portfolio-media"
+                          style="height: 200px; object-fit: cover"
+                          th:attr="onclick=|viewPortfolioMedia('${item.url}', 'VIDEO')|"
+                        ></video>
+                        <div class="video-overlay">
+                          <i
+                            class="bi bi-play-circle-fill text-white"
+                            style="font-size: 3rem"
+                          ></i>
+                        </div>
+                      </th:block>
+
+                      <!-- Imagem -->
+                      <img
+                        th:if="${item.mediaType.name() == 'IMAGE'}"
+                        th:src="${item.url}"
+                        class="card-img-top portfolio-media"
+                        alt="Portfolio"
+                        style="height: 200px; object-fit: cover"
+                        th:attr="onclick=|viewPortfolioMedia('${item.url}', 'IMAGE')|"
+                      />
+
+                      <!-- Ações -->
+                      <div class="portfolio-actions">
+                        <button
+                          class="btn btn-sm btn-light"
+                          th:attr="onclick=|editPortfolioDescription('${item.id}')|"
+                          title="Editar descrição"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          th:attr="onclick=|deletePortfolioItem('${item.id}')|"
+                          title="Deletar"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="card-body p-2">
+                      <p
+                        class="card-text small text-muted mb-0 portfolio-description"
+                        th:id="|desc-${item.id}|"
+                        th:text="${item.description != null && !item.description.isEmpty() ? item.description : 'Sem descrição'}"
+                      >
+                        Sem descrição
+                      </p>
+                      <small class="text-muted">
+                        <i
+                          th:class="${item.mediaType.name() == 'VIDEO' ? 'bi bi-camera-video' : 'bi bi-image'}"
+                        ></i>
+                        <span
+                          th:text="${item.mediaType.name() == 'VIDEO' ? 'Vídeo' : 'Imagem'}"
+                        ></span>
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mensagem quando vazio -->
+                <div
+                  th:if="${portfolioItems == null || portfolioItems.isEmpty()}"
+                  class="col-12"
+                >
+                  <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle"></i>
+                    <p class="mb-0">
+                      Seu portfólio está vazio. Adicione fotos e vídeos dos seus
+                      trabalhos!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ===== FIM SEÇÃO PORTFÓLIO ===== -->
+
           <!-- Dicas -->
           <div class="card border-info">
             <div class="card-body">
@@ -401,6 +540,10 @@
                   fornecedores a confiarem em você
                 </li>
                 <li>Adicione uma descrição detalhada sobre sua experiência</li>
+                <li th:if="${user.userType.name() == 'SUPPLIER'}">
+                  Mantenha seu portfólio atualizado com fotos de trabalhos
+                  recentes
+                </li>
                 <li>
                   Mantenha telefone e localização atualizados para facilitar
                   contato
@@ -415,10 +558,35 @@
       </div>
     </div>
 
+    <!-- Modal para visualizar mídia -->
+    <div class="modal fade" id="mediaViewModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Visualizar</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <!-- Conteúdo será inserido dinamicamente -->
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Location Picker API -->
     <script src="/js/location-picker.js"></script>
+
+    <!-- File Uploader -->
+    <script src="/js/file-uploader.js"></script>
+
+    <!-- Portfolio Manager -->
+    <script src="/js/portfolio-manager.js"></script>
 
     <script>
       // Se já tem estado/cidade preenchidos (edição), carrega as cidades
@@ -442,6 +610,15 @@
             }, 500);
           }
         }, 500);
+
+        // Atualiza contador no badge também
+        const portfolioCount = document.getElementById("portfolioCount");
+        const portfolioCountBadge = document.getElementById(
+          "portfolioCountBadge"
+        );
+        if (portfolioCount && portfolioCountBadge) {
+          portfolioCountBadge.textContent = portfolioCount.textContent;
+        }
       });
     </script>
   </body>
