@@ -44,7 +44,7 @@
 
 /*
 .navbar .btn-primary {
-  margin-top: 4px; 
+  margin-top: 4px;
   margin-right: 5px;
   padding-top: 6px;
   padding-bottom: 6px;
@@ -96,7 +96,7 @@
 /*================ CORPO DA PÁGINA ================*/
 .corpo-pagina {
   display: grid;
-  /*grid-template-columns: 1fr 5fr 1fr;*/
+  grid-template-columns: 1fr 5fr 1fr;
   grid-template-rows: 9fr;
   
 }
@@ -106,7 +106,7 @@
 
 }
 /* =========
-   HERO SECTION
+HERO SECTION
    ========= */
 .hero {
   background: linear-gradient(135deg, var(--azul-inovador) 0%, var(--verde-ciano) 100%);
@@ -188,7 +188,7 @@
 .carousel-item img {
   padding-top: 30px;
   padding-bottom: 30px;
-  width: 100%;             
+  width: 100%;
   height: 400px; /* define uma altura fixa e igual pra todas */
   object-fit: cover;  /* corta o excesso mantendo o foco central */
   object-position: center; /* centraliza a parte visível da imagem */
@@ -198,7 +198,6 @@
 .carousel-control-next-icon {
   filter: invert(100%) brightness(200%); /* deixa as setas brancas e visíveis */
 }
-
 
 
 /* ===== CATEGORIAS DE SERVIÇOS ===== */
@@ -272,13 +271,13 @@
   
 .how-it-works .step-icon {
   background-color: #d01e29;
-  color: #d01e29; 
+  color: #d01e29;
   font-size: 3rem;
-  margin-bottom: 1rem;  
+  margin-bottom: 1rem;
 }
 
 .how-it-works {
-  color: var(--verde-ciano) !important; 
+  color: var(--verde-ciano) !important;
   font-size: 4rem;
 }
 
@@ -310,9 +309,6 @@
   font-style: italic;
   color: #555;
 }
-
-
- 
 
 
 /* ===== CTA FINAL ===== */
@@ -381,15 +377,3 @@
 .copy {
   font-size: 1.1rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
