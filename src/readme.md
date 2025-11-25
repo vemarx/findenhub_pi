@@ -159,7 +159,7 @@ findenhub/
 
 5. **Acesse no navegador**
    ```
-   http://localhost:5000
+   http://localhost:8081
    ```
 
 ---
@@ -168,7 +168,7 @@ findenhub/
 
 ### 1. Cadastro de Usuário
 
-1. Acesse `http://localhost:5000`
+1. Acesse `http://localhost:8081
 2. Clique em **"Cadastrar Grátis"**
 3. Escolha o tipo de conta:
    - **Organizador**: Para quem busca serviços
@@ -177,7 +177,7 @@ findenhub/
 
 ### 2. Login
 
-1. Acesse `http://localhost:5000/login`
+1. Acesse `http://localhost:8081/login`
 2. Entre com email e senha
 3. Será redirecionado para o dashboard apropriado
 
