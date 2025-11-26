@@ -21,6 +21,9 @@
     <link rel="stylesheet" th:href="@{/css/global.css}" />
     <link rel="stylesheet" th:href="@{/css/home.css}" />
 
+    
+
+
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -198,144 +201,159 @@
         <div class="row">
           <!-- Buffet -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img src="/img/buffet.svg" alt="Buffet" class="svg-icon" />
-              </div>
+      <a th:href="@{'/services/category/' + 1}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/buffet.svg" alt="Buffet" class="svg-icon" />
+          </div>
               <h5>Buffet</h5>
               <p class="text-muted small">0 serviços</p>
             </div>
+            </a>
           </div>
+
+          <!-- Bartender -->
+          <div class="col-md-3 mb-4 text-center">
+      <a th:href="@{'/services/category/' + 2}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/bartender.svg" alt="Cerimonial" class="svg-icon" />
+          </div>
+          <h5>Bartender</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Cerimonial -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img
-                  src="/img/cerimonial.svg"
-                  alt="Cerimonial"
-                  class="svg-icon"
-                />
-              </div>
-              <h5>Cerimonial</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+      <a th:href="@{'/services/category/' + 2}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/cerimonial.svg" alt="Cerimonial" class="svg-icon" />
           </div>
+          <h5>Cerimonial</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Locação -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img src="/img/espaco.svg" alt="Locação" class="svg-icon" />
-              </div>
-              <h5>Locação</h5>
-              <p class="text-muted small">1 serviço</p>
-            </div>
+      <a th:href="@{'/services/category/' + 3}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/espaco.svg" alt="Locação" class="svg-icon" />
           </div>
+          <h5>Locação de Espaços</h5>
+          <p class="text-muted small">1 serviço</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Fotografia -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img src="/img/foto.svg" alt="Fotografia" class="svg-icon" />
-              </div>
-              <h5>Fotografia</h5>
-              <p class="text-muted small">3 serviços</p>
-            </div>
+      <a th:href="@{'/services/category/' + 4}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/foto.svg" alt="Fotografia" class="svg-icon" />
           </div>
+          <h5>Fotografia</h5>
+          <p class="text-muted small">3 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Som e Iluminação -->
-          <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img
-                  src="/img/som.svg"
-                  alt="Som e iluminação"
-                  class="svg-icon"
-                />
-              </div>
-              <h5>Som e Iluminação</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+           <div class="col-md-3 mb-4 text-center">
+      <a th:href="@{'/services/category/' + 5}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/som.svg" alt="Som e Iluminação" class="svg-icon" />
           </div>
+          <h5>Som e Iluminação</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Dj e Banda -->
-          <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img src="/img/dj.svg" alt="Dj e Banda" class="svg-icon" />
-              </div>
-              <h5>Dj e Banda</h5>
-              <p class="text-muted small">1 serviço</p>
-            </div>
+           <div class="col-md-3 mb-4 text-center">
+      <a th:href="@{'/services/category/' + 6}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/dj.svg" alt="Dj e Banda" class="svg-icon" />
           </div>
+          <h5>Dj e Banda</h5>
+          <p class="text-muted small">1 serviço</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Segurança -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img
-                  src="/img/seguranca.svg"
-                  alt="Segurança"
-                  class="svg-icon"
-                />
-              </div>
-              <h5>Segurança</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+      <a th:href="@{'/services/category/' + 7}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/seguranca.svg" alt="Segurança" class="svg-icon" />
           </div>
+          <h5>Segurança</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Transporte -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img
-                  src="/img/transporte.svg"
-                  alt="Transporte"
-                  class="svg-icon"
-                />
-              </div>
-              <h5>Transporte</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+      <a th:href="@{'/services/category/' + 8}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/transporte.svg" alt="Transporte" class="svg-icon" />
           </div>
+          <h5>Transporte</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Decoração -->
           <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img src="/img/decor.svg" alt="Decoração" class="svg-icon" />
-              </div>
-              <h5>Decoração</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+      <a th:href="@{'/services/category/' + 9}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/decor.svg" alt="Decoração" class="svg-icon" />
           </div>
+          <h5>Decoração</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Convites -->
-          <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img src="/img/convite.svg" alt="Convites" class="svg-icon" />
-              </div>
-              <h5>Convites</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+         <div class="col-md-3 mb-4 text-center">
+      <a th:href="@{'/services/category/' + 10}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/convite.svg" alt="Convites" class="svg-icon" />
           </div>
+          <h5>Convites</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
 
           <!-- Brindes -->
-          <div class="col-md-3 mb-4 text-center">
-            <div class="card category-card">
-              <div class="category-icon">
-                <img
-                  src="/img/brindes.svg"
-                  alt="Brindes e lembranças"
-                  class="svg-icon"
-                />
-              </div>
-              <h5>Brindes</h5>
-              <p class="text-muted small">0 serviços</p>
-            </div>
+    <div class="col-md-3 mb-4 text-center">
+      <a th:href="@{'/services/category/' + 11}" class="text-decoration-none">
+        <div class="card category-card">
+          <div class="category-icon">
+            <img src="/img/brindes.svg" alt="Brindes" class="svg-icon" />
           </div>
+          <h5>Brindes</h5>
+          <p class="text-muted small">0 serviços</p>
+        </div>
+      </a>
+    </div>
         </div>
       </section>
       <div class="margin right"></div>
@@ -449,12 +467,12 @@
           <div class="col-md-4">
             <div class="card testimonial-card">
               <div class="card-body">
-                <h5 class="card-title">Maria Silva</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Eventos Silva</h6>
-                <p><strong>Serviço:</strong> DJ & Banda</p>
-                <div class="rating">⭐⭐⭐⭐☆</div>
+                <h5 class="card-title">Miguel Faria</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Safe Guard</h6>
+                <p><strong>Serviço:</strong> Segurança</p>
+                <div class="rating">⭐⭐⭐⭐⭐</div>
                 <p class="experience">
-                  "A banda foi incrível, animou a festa do início ao fim."
+                  "Equipe de confiança, responsabilidade e excelência.."
                 </p>
               </div>
             </div>
@@ -465,7 +483,7 @@
             <div class="card testimonial-card">
               <div class="card-body">
                 <h5 class="card-title">João Pereira</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Buffet Gourmet</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Buffet Requinte</h6>
                 <p><strong>Serviço:</strong> Buffet</p>
                 <div class="rating">⭐⭐⭐⭐⭐</div>
                 <p class="experience">
@@ -480,11 +498,11 @@
             <div class="card testimonial-card">
               <div class="card-body">
                 <h5 class="card-title">Ana Costa</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
-                <p><strong>Serviço:</strong> Decoração</p>
+                <h6 class="card-subtitle mb-2 text-muted">Mundo de Cores</h6>
+                <p><strong>Serviço:</strong> Cerimonial</p>
                 <div class="rating">⭐⭐⭐⭐⭐</div>
                 <p class="experience">
-                  "A decoração deixou o ambiente mágico e inesquecível."
+                  "A festa ficou linda, leve e totalmente do jeitinho que sonhamos."
                 </p>
               </div>
             </div>
@@ -494,12 +512,12 @@
           <div class="col-md-4">
             <div class="card testimonial-card">
               <div class="card-body">
-                <h5 class="card-title">Ana Costa</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
-                <p><strong>Serviço:</strong> Decoração</p>
+                <h5 class="card-title">Juliano Domingues</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Elo Studio Fotográfico</h6>
+                <p><strong>Serviço:</strong> Fotografia</p>
                 <div class="rating">⭐⭐⭐⭐⭐</div>
                 <p class="experience">
-                  "A decoração deixou o ambiente mágico e inesquecível."
+                  "A qualidade do trabalho o cuidado na edição fizeram toda a diferença!"
                 </p>
               </div>
             </div>
@@ -509,12 +527,12 @@
           <div class="col-md-4">
             <div class="card testimonial-card">
               <div class="card-body">
-                <h5 class="card-title">Ana Costa</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
-                <p><strong>Serviço:</strong> Decoração</p>
+                <h5 class="card-title">João Luiz</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Stellar Audio Visual</h6>
+                <p><strong>Serviço:</strong> Som e iluminação</p>
                 <div class="rating">⭐⭐⭐⭐⭐</div>
                 <p class="experience">
-                  "A decoração deixou o ambiente mágico e inesquecível."
+                  "A Stellar superou todas as minhas expectativas!Resultado impecável. "
                 </p>
               </div>
             </div>
@@ -524,12 +542,12 @@
           <div class="col-md-4">
             <div class="card testimonial-card">
               <div class="card-body">
-                <h5 class="card-title">Ana Costa</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Decorações Costa</h6>
-                <p><strong>Serviço:</strong> Decoração</p>
+                <h5 class="card-title">Marina Lima</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Aurora Hall Espaço para Eventos</h6>
+                <p><strong>Serviço:</strong> Locação de Espaço</p>
                 <div class="rating">⭐⭐⭐⭐⭐</div>
                 <p class="experience">
-                  "A decoração deixou o ambiente mágico e inesquecível."
+                  "Organizar meu evento no Aurora Hall foi simplesmente excepcional!"
                 </p>
               </div>
             </div>

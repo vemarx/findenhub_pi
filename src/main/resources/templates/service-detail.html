@@ -14,9 +14,8 @@
     />
 
     <!-- LINK PARA CSS-->
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/services.css}">
-  
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/services.css}" />
   </head>
   <body>
     <!-- Navbar -->
@@ -59,12 +58,19 @@
               <h1 th:text="${service.title}" class="mb-3">Título do Serviço</h1>
 
               <div class="mb-4">
-                <span class="badge bg-primary me-2" th:if="${category}">
-                  <span th:text="${category.icon}">🎨</span>
+                <!-- Categoria -->
+                <span
+                  class="badged-flex align-items-center gap-1"
+                  th:if="${category}"
+                >
                   <span th:text="${category.name}">Categoria</span>
                 </span>
-                <span class="badge bg-info" th:if="${service.location}">
-                  <i class="bi bi-geo-alt"></i>
+
+                <!-- Localização -->
+                <span
+                  class="badge btn-category d-flex align-items-center gap-1"
+                  th:if="${service.location}"
+                >
                   <span th:text="${service.location}">Localização</span>
                 </span>
               </div>
@@ -94,7 +100,7 @@
                 <div class="col-md-6" th:if="${service.capacity}">
                   <div class="card bg-light">
                     <div class="card-body text-center">
-                      <i class="bi bi-people-fill text-primary fs-3"></i>
+                      <i class="text-primary fs-3"></i>
                       <h6 class="mt-2">Capacidade</h6>
                       <p
                         class="mb-0"
@@ -108,7 +114,7 @@
                 <div class="col-md-6" th:if="${service.duration}">
                   <div class="card bg-light">
                     <div class="card-body text-center">
-                      <i class="bi bi-clock-fill text-primary fs-3"></i>
+                      <i class="text-primary fs-3"></i>
                       <h6 class="mt-2">Duração</h6>
                       <p class="mb-0" th:text="${service.duration}">4 horas</p>
                     </div>

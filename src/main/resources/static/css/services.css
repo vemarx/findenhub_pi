@@ -13,3 +13,41 @@ service-form.html
   font-size: 1.2rem;
   font-weight: bold;
 }
+
+/* ícone Perfil */
+.bi-person-circle::before {
+  color: #2C4A7A;
+  font-size: 4rem;
+  content: "\f4d7"; /* mantém o mesmo ícone Perfil */
+}
+
+/*
+.btn:hover {
+  color: var(--branco-gelo);
+  background-color: var(--verde-ciano);
+  border-color: ;var(--verde-ciano);
+}*/
+
+a:hover {
+  --bs-link-color-rgb: var(--bs-link-color-rgb);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--verde-ciano);
+  --bs-btn-border-color: var(--verde-ciano);
+  --bs-btn-hover-colo: var(--branco-neve);
+  --bs-btn-honver-bg: var(--cinza-medio);
+}
+
+.btn:hover {
+  color: var(--branco-neve);
+  background-color: var(--verde-ciano);
+  border-color: var(--verde-ciano);
+}
+
+
+
+
+
+
+

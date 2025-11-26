@@ -30,7 +30,7 @@
           />
         </a>
 
-        <a th:href="@{/dashboard}" class="btn btn-outline-primary">
+        <a th:href="@{/dashboard}" class="btn btn-personalizado">
           <i class="bi bi-speedometer2"></i> Dashboard
         </a>
       </div>
@@ -127,15 +127,10 @@
                 <a
                   th:each="cat : ${categories}"
                   th:href="@{'/services/category/' + ${cat.id}}"
-                  class="btn btn-outline-primary btn-sm text-start"
+                  class="btn btn-outline-secondary btn-sm text-start"
                 >
-                  <span th:text="${cat.icon}">🎨</span>
+                  <!-- Nome -->
                   <span th:text="${cat.name}">Categoria</span>
-                  <span
-                    class="badge bg-primary float-end"
-                    th:text="${cat.serviceCount}"
-                    >0</span
-                  >
                 </a>
               </div>
             </div>
@@ -165,8 +160,13 @@
 
                   <div class="mb-2">
                     <span class="badge bg-info" th:if="${service.location}">
-                      <i class="bi bi-geo-alt"></i>
-                      <span th:text="${service.location}">Local</span>
+                      <img
+                        src="/img/icons/localizacao.svg"
+                        class="svg-icon me-1"
+                        width="14"
+                        alt="Localização"
+                      />
+                      <span th:text="${service.location}">Localização</span>
                     </span>
                   </div>
 
